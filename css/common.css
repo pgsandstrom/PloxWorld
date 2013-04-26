@@ -1,0 +1,17 @@
+body {
+    font: 100%/1.5 sans-serif;
+    background: #F8CDB6;
+    color: #311;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.clear {
+    clear: both;
+}
+
+.inline-block {
+    display: inline-block;
+}
+

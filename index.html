@@ -3,6 +3,10 @@
 <head>
     <title>PloxWorld</title>
     <!--TODO must this be above all the angular-syntax?-->
+
+
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+
 </head>
 <body>
 
@@ -15,13 +19,13 @@ Hello dear friend :)
 <div ng-controller="Controller">
 
     <div id="map">
-        <div ng-repeat="planet in planets">
-            <h6 >{{planet.name}}</h6>
-            {{planet.x}},
-            {{planet.y}}
+        <!--planets-->
+        <div ng-repeat="object in planets" ng-class="print($angularjs)">
+            <div object-on-map>
+                {{object.name}}
+            </div>
         </div>
     </div>
-
 
     <div ng-repeat="planet in planets">
         <h6>{{planet.name}}</h6>
@@ -31,12 +35,14 @@ Hello dear friend :)
             {{person}}
         </div>
     </div>
-<button ng-click="movePlanet()">move planet</button>
+
+    <button ng-click="movePlanet()">move planet</button>
     <button ng-click="movePerson()">move person</button>
     <button ng-click="tic()">tic</button>
 </div>
 
 <!--XXX use minimilized angular someday in the FUTURE-->
+<!--XXX do we need sanitize?-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-sanitize.js"></script>
