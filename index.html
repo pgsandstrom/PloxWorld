@@ -1,15 +1,28 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="module">
 <head>
     <title>PloxWorld</title>
     <!--TODO must this be above all the angular-syntax?-->
 </head>
 <body>
+
+{{ 'World' | greet }}
+
 Hello dear friend :)
 
 1+1 = {{1+1}}
 
-<div ng-controller="Planet">
+<div ng-controller="Controller">
+
+    <div id="map">
+        <div ng-repeat="planet in planets">
+            <h6 >{{planet.name}}</h6>
+            {{planet.x}},
+            {{planet.y}}
+        </div>
+    </div>
+
+
     <div ng-repeat="planet in planets">
         <h6>{{planet.name}}</h6>
         {{planet.x}},
@@ -18,30 +31,18 @@ Hello dear friend :)
             {{person}}
         </div>
     </div>
-
-
-    <button ng-click="movePlanet()">move planet</button>
+<button ng-click="movePlanet()">move planet</button>
     <button ng-click="movePerson()">move person</button>
+    <button ng-click="tic()">tic</button>
 </div>
-
-<div ng-controller="Person">
-    <div ng-repeat="planet in planets">
-        <h6>{{planet.name}}</h6>
-        {{planet.x}},
-        {{planet.y}}
-    </div>
-
-
-    <button ng-click="movePlanet()">move planet</button>
-    <button ng-click="movePerson()">move person</button>
-</div>
-
 
 <!--XXX use minimilized angular someday in the FUTURE-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-sanitize.js"></script>
 <script src="js/planetGenerator.js"></script>
-<script src="js/planet.js"></script>
-<script src="js/person.js"></script>
+<script src="js/personGenerator.js"></script>
+<script src="js/module.js"></script>
+<script src="js/controller.js"></script>
 </body>
 </html>

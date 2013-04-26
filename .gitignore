@@ -1,0 +1,10 @@
+.classpath
+.project
+.idea/
+.settings/
+bin/
+lib/
+out/
+META-INF/persistence.xml
+src/main/resources/security.properties
+target/

@@ -2,10 +2,10 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    window.ploxworld.generateWorld = function () {
+    window.ploxworld.generatePlanets = function () {
         return [
-            {name: 'Per', x: 3, y: 5},
-            {name: 'Jakob', x: 2, y: 6}
+            {name: 'Earth', x: 300, y: 50},
+            {name: 'Mars', x: 20, y: 400}
         ];
     };
 })();
