@@ -1,21 +1,28 @@
 (function () {
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
-    var make = ploxworld.make = ploxworld.make || {};
 
-    make.planet = function(name, x, y){
 
-        var planet = function planet() {
+    ploxworld.makePlanet = function (objectName, x, y) {
+//        console.log("objectName: " + objectName);
+//        console.log("x: " + x);
 
+        var planet = {
+            objectName: objectName,
+            x: x,
+            y: y,
+            pop: 100,
+
+            tic: function () {
+                console.log("tic: " + planet.pop);
+
+                planet.pop = planet.pop * 1.0001;
+            }
         };
 
         return planet;
+
+
     };
 
-    window.ploxworld.planet.make = function () {
-        return [
-            {name: 'Earth', x: 200, y: 150},
-            {name: 'Mars', x: 250, y: 250}
-        ];
-    };
 })();

@@ -18,8 +18,11 @@ function Controller($scope) {
     };
 
     $scope.tic = function () {
-        angular.forEach($scope.persons, function (planet) {
+        angular.forEach($scope.planets, function (planet) {
+            planet.tic();
+        });
 
+        angular.forEach($scope.persons, function (person) {
         });
     };
 
