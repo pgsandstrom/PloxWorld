@@ -1,0 +1,32 @@
+body {
+    max-width: 1000px;
+}
+
+#title {
+
+}
+
+#menu {
+    width: 200px;
+    float: left;
+}
+
+#map {
+    float: left;
+    width: 600px;
+    height: 600px;
+    background: black;
+    position: relative;
+}
+
+#info {
+    width: 200px;
+    float: left;
+}
+
+#actions {
+    margin-left: 200px;
+    width: 400px;
+    float: left;
+}
+

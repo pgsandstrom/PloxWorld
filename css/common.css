@@ -11,7 +11,22 @@ body {
     clear: both;
 }
 
+.inline {
+    display: inline;
+}
+
+.block {
+    display: block;
+}
+
 .inline-block {
     display: inline-block;
 }
 
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}

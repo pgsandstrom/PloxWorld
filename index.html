@@ -2,40 +2,32 @@
 <html ng-app="module">
 <head>
     <title>PloxWorld</title>
-    <!--TODO must this be above all the angular-syntax?-->
-
-
     <link rel="stylesheet" type="text/css" href="css/common.css">
-
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
-<body>
+<body ng-controller="Controller">
 
-{{ 'World' | greet }}
+<div id="title" class="clear">
+    {{ 'World' | greet }}
+</div>
 
-Hello dear friend :)
+<div id="menu">
+    menus lol
+</div>
 
-1+1 = {{1+1}}
-
-<div ng-controller="Controller">
-
-    <div id="map">
-        <!--planets-->
-        <div ng-repeat="object in planets" ng-class="print($angularjs)">
-            <div object-on-map>
-                {{object.name}}
-            </div>
-        </div>
+<div id="map">
+    <!--planets-->
+    <div ng-repeat="object in planets" class="absolute" ng-style="{'top': object.y+'px','left': object.x+'px'}">
+        <button>{{object.name}}</button>
     </div>
+</div>
 
-    <div ng-repeat="planet in planets">
-        <h6>{{planet.name}}</h6>
-        {{planet.x}},
-        {{planet.y}}
-        <div ng-repeat="person in planet.persons">
-            {{person}}
-        </div>
-    </div>
 
+<div id="info">
+    <p class="inline"> info</p>
+</div>
+
+<div id="actions">
     <button ng-click="movePlanet()">move planet</button>
     <button ng-click="movePerson()">move person</button>
     <button ng-click="tic()">tic</button>
@@ -43,9 +35,14 @@ Hello dear friend :)
 
 <!--XXX use minimilized angular someday in the FUTURE-->
 <!--XXX do we need sanitize?-->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-sanitize.js"></script>
+<!--XXX use cdn when all is said and done-->
+<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>-->
+<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-sanitize.js"></script>-->
+<script src="js/jquery.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-sanitize.js"></script>
+<script src="js/jquery.min.js"></script>
 <script src="js/planetGenerator.js"></script>
 <script src="js/personGenerator.js"></script>
 <script src="js/module.js"></script>

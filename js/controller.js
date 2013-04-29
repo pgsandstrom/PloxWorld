@@ -7,13 +7,19 @@ function Controller($scope) {
     $scope.persons = ploxworld.generatePersons();
 
     $scope.print = function (val) {
-        console.log("val: " + val);
+//        console.log("val: " + val);
         //document.getElementById("myEl").style.position
     };
 
     $scope.movePlanet = function () {
         angular.forEach($scope.planets, function (planet) {
             planet.x = planet.x + 1;
+        });
+    };
+
+    $scope.tic = function () {
+        angular.forEach($scope.persons, function (planet) {
+
         });
     };
 

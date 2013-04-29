@@ -4,8 +4,8 @@
 
     window.ploxworld.generatePlanets = function () {
         return [
-            {name: 'Earth', x: 200, y: 50},
-            {name: 'Mars', x: 150, y: 50}
+            {name: 'Earth', x: 200, y: 150},
+            {name: 'Mars', x: 250, y: 250}
         ];
     };
 })();
