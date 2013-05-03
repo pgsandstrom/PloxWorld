@@ -2,6 +2,9 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
+    ploxworld.getRandomPlanet = function () {
+        return ploxworld.planets[Math.floor(Math.random() * ploxworld.planets.length)];
+    };
 
     ploxworld.makePlanet = function (objectName, x, y) {
 //        console.log("objectName: " + objectName);

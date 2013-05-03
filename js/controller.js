@@ -2,14 +2,9 @@ function Controller($scope) {
 
     "use strict";
 
+    //init stuff:
     $scope.planets = ploxworld.generatePlanets();
-
     $scope.persons = ploxworld.generatePersons();
-
-    $scope.print = function (val) {
-//        console.log("val: " + val);
-        //document.getElementById("myEl").style.position
-    };
 
     $scope.movePlanet = function () {
         angular.forEach($scope.planets, function (planet) {
@@ -23,6 +18,7 @@ function Controller($scope) {
         });
 
         angular.forEach($scope.persons, function (person) {
+            person.tic();
         });
     };
 
