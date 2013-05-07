@@ -17,7 +17,6 @@
             planet = ploxworld.getRandomPlanet();
         }
 
-
         var person = {
             objectName: objectName,
             planet: planet,
@@ -30,8 +29,6 @@
         };
 
         return person;
-
-
     };
 
 })();

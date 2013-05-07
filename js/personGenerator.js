@@ -2,7 +2,7 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    ploxworld.generatePersons = function ($scope) {
+    ploxworld.generatePersons = function () {
 
         ploxworld.persons = [ploxworld.makePerson("Bengt"),
             ploxworld.makePerson("Mars"),
