@@ -1,0 +1,17 @@
+planets has:
+
+---------------
+---variables---
+---------------
+
+population
+	- consumes supply
+	- does ????
+
+	
+----------------
+---production---
+----------------
+supply
+	- enables population
+	- requires nothing?
