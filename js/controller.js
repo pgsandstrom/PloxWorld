@@ -51,4 +51,9 @@ function Controller($scope) {
 
         });
     };
+
+    $("#map").on('click', '.planet', function () {
+        var planetName = this.getAttribute("planet-name");
+        //TODO do stuff
+    });
 }

@@ -2,6 +2,9 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
+    //resources:
+    var RESOURCE_SUPPLY = "supply";
+
     var MIN_SUPPLY_FOR_EXPORT = 50;
     var POP_DECREASE_AT_STARVATION = 0.99;
 
@@ -30,10 +33,10 @@
                 return planet.planetDistanceCost[a.objectName] - planet.planetDistanceCost[b.objectName];
             });
 
-            console.log(planet.objectName + " closest allies: ");
-            $.each(planet.closestAllied, function (index, closesAllied) {
-                console.log(closesAllied.objectName);
-            });
+//            console.log(planet.objectName + " closest allies: ");
+//            $.each(planet.closestAllied, function (index, closesAllied) {
+//                console.log(closesAllied.objectName);
+//            });
         });
 
         ploxworld.calculateTradeRoutes();
@@ -49,6 +52,7 @@
 
         calculateNeedLists();
 
+        ploxworld.traderoutes.length = 0;
         $.each(ploxworld.planets, function (index, planet) {
             planet.calculateTradeRoutes();
         });
@@ -56,7 +60,7 @@
 
     function calculateNeedLists() {
         if (supplyNeedList.length === 0) {
-            supplyNeedList = ploxworld.planets.slice();
+            supplyNeedList = ploxworld.planetList.slice();
         }
         supplyNeedList.sort(function closest(a, b) {
             return b.supplyNeedImportance - a.supplyNeedImportance;
@@ -138,7 +142,8 @@
                 var planet = supplyNeedList[i];
                 if (planet.supplyNeed > 0) {
                     var exportNumber = Math.min(planet.supplyNeed, supplyExport);
-                    //TODO lägg till en rutt
+                    var tradeRoute = new ploxworld.TradeRoute(this, planet, RESOURCE_SUPPLY, exportNumber);
+                    this.tradeRoutes.push(tradeRoute);
                     supplyExport -= exportNumber;
                     planet.supplyNeed -= exportNumber;
                 }

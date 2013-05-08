@@ -13,11 +13,25 @@
             return name;
         };
 
-        ploxworld.planets = [new ploxworld.Planet(takeFreeName(), 200, 250),
-            new ploxworld.Planet(takeFreeName(), 50, 350),
-            new ploxworld.Planet(takeFreeName(), 150, 350),
-            new ploxworld.Planet(takeFreeName(), 305, 100)
-        ];
+        ploxworld.planets = {};
+        ploxworld.planetList= [];
+
+
+        var planet = new ploxworld.Planet(takeFreeName(), 200, 250);
+        ploxworld.planets[planet.objectName] = planet;
+        ploxworld.planetList.push(planet);
+
+        planet = new ploxworld.Planet(takeFreeName(), 50, 350);
+        ploxworld.planets[planet.objectName] = planet;
+        ploxworld.planetList.push(planet);
+
+        planet = new ploxworld.Planet(takeFreeName(), 150, 350);
+        ploxworld.planets[planet.objectName] = planet;
+        ploxworld.planetList.push(planet);
+
+        planet = new ploxworld.Planet(takeFreeName(), 305, 100);
+        ploxworld.planets[planet.objectName] = planet;
+        ploxworld.planetList.push(planet);
 
         //calculate cost of travel
         for (var i = 0; i < ploxworld.planets.length; i++) {

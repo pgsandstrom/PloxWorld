@@ -13,6 +13,8 @@
         this.toPlanet = toPlanet;
         this.resource = resource;
         this.amount = amount;
+        ploxworld.traderoutes.push(this);
+        console.log("new traderoute from " + fromPlanet.objectName + " to " + toPlanet.objectName);
     };
 
     var TradeRoute = ploxworld.TradeRoute;

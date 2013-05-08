@@ -18,7 +18,7 @@
 <div id="map">
     <!--planets-->
     <div ng-repeat="object in planets" class="absolute" ng-style="{'top': object.y+'px','left': object.x+'px'}">
-        <button>{{object.objectName}}</button>
+        <button planet-name="{{object.objectName}}" class="planet">{{object.objectName}}</button>
     </div>
 </div>
 
