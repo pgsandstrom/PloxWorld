@@ -2,9 +2,12 @@ function Controller($scope) {
 
     "use strict";
 
+    var tics = 0;
+
     //init stuff:
     $scope.planets = ploxworld.generatePlanets();
     $scope.persons = ploxworld.generatePersons();
+    $scope.tradeRoutes = ploxworld.traderoutes;
 
     $scope.movePlanet = function () {
         angular.forEach($scope.planets, function (planet) {
@@ -13,6 +16,9 @@ function Controller($scope) {
     };
 
     $scope.tic = function () {
+
+        tics++;
+
         angular.forEach($scope.planets, function (planet) {
             planet.tic();
         });

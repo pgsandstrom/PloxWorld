@@ -30,8 +30,8 @@
                 var costDistance = Math.pow(realDistance, 1.1);
 //                console.log(planet1.objectName + " to " + planet2.objectName + " distance: " + realDistance);
 //                console.log(planet1.objectName + " to " + planet2.objectName + " cost: " + costDistance);
-                planet1.setPlanetDistance(planet2, costDistance);
-                planet2.setPlanetDistance(planet1, costDistance);
+                planet1.setPlanetDistanceCost(planet2, costDistance);
+                planet2.setPlanetDistanceCost(planet1, costDistance);
             }
         }
 
@@ -39,8 +39,8 @@
 //        for (i = 0; i < ploxworld.planets.length; i++) {
 //            var planet = ploxworld.planets[i];
 //            console.log("iterating " + planet.objectName);
-//            for (var otherPlanetName in  planet.planetDistance) {
-//                console.log(planet.objectName + " to " + otherPlanetName + " is " + planet.planetDistance[otherPlanetName]);
+//            for (var otherPlanetName in  planet.planetDistanceCost) {
+//                console.log(planet.objectName + " to " + otherPlanetName + " is " + planet.planetDistanceCost[otherPlanetName]);
 //            }
 //        }
 

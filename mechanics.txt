@@ -1,12 +1,20 @@
 planets has:
 
+	maxPop
+	pop
+	
+	supply
+	supplyProd
+	supplyNeed
+	supplyNeedImportance
+
 ---------------
 ---variables---
 ---------------
 
 population
 	- consumes supply
-	- does ????
+	- amplifies everything
 
 	
 ----------------
@@ -15,3 +23,13 @@ population
 supply
 	- enables population
 	- requires nothing?
+	
+	
+	
+-----------------------
+---calculating needs---
+-----------------------
+
+turns supply will last:	t
+importance:	 			i = set by emperor
+need:					n = 
