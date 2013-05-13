@@ -18,7 +18,20 @@
 <div id="map">
     <!--planets-->
     <div ng-repeat="object in planets" class="absolute" ng-style="{'top': object.y+'px','left': object.x+'px'}">
-        <button planet-name="{{object.objectName}}" class="planet">{{object.objectName}}</button>
+        <button ng-click="showPlanet(object)" class="planet">{{object.objectName}}</button>
+    </div>
+
+    <div id="selected-planet">
+
+        <button class="close-button">close</button>
+
+        <div id="planet-info">
+            <p>{{selectedPlanet.objectName}}</p>
+            <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
+            <p>Supply: {{selectedPlanet.supply}} (+{{selectedPlanet.supplyProd}})</p>
+            <p>Importance: {{selectedPlanet.importance}}</p>
+        </div>
+
     </div>
 </div>
 
@@ -28,9 +41,10 @@
 </div>
 
 <div id="actions">
-    <button ng-click="movePlanet()">move planet</button>
+    <button ng-click="movePlanet()" class="btn-primary">move planet</button>
     <button ng-click="movePerson()">move person</button>
     <button ng-click="tic()">tic</button>
+    <button id="test">test</button>
 </div>
 
 <!--XXX use minimilized angular someday in the FUTURE-->
@@ -39,11 +53,11 @@
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-sanitize.js"></script>-->
-<script src="js/common.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/angular-sanitize.js"></script>
-<script src="js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/dialogs.js"></script>
 <script src="js/traderoutes.js"></script>
 <script src="js/planet.js"></script>
 <script src="js/person.js"></script>

@@ -9,6 +9,9 @@ function Controller($scope) {
     $scope.persons = ploxworld.generatePersons();
     $scope.tradeRoutes = ploxworld.traderoutes;
 
+    $scope.selectedPlanet = ploxworld.getRandomPlanet();
+    console.log("selectedPlanet: " + $scope.selectedPlanet.objectName);
+
     $scope.movePlanet = function () {
         angular.forEach($scope.planets, function (planet) {
             planet.x = planet.x + 1;
@@ -52,8 +55,36 @@ function Controller($scope) {
         });
     };
 
-    $("#map").on('click', '.planet', function () {
-        var planetName = this.getAttribute("planet-name");
-        //TODO do stuff
-    });
+    $scope.showPlanet = function (planet) {
+        console.log("show planet: " + planet.objectName);
+        $scope.selectedPlanet = planet;
+//        $("#selected-planet").show();
+        ploxworld.showDialog("selected-planet");
+    };
+
+//    $("#close-planet-info").click(function () {
+//        $("#selected-planet").hide();
+//    });
+
+    $("#selected-planet").hide();
+
+    //some failed jquery code, FUCK that shit:
+
+//    $("#test").click(function () {
+////        var planetName = this.getAttribute("planet-name");
+////        $scope.selectedPlanet = ploxworld.planets[planetName];
+//        $scope.selectedPlanet = ploxworld.getRandomPlanet();
+////        console.log("clicked name: " + planetName);
+//        console.log("selected planet: " + $scope.selectedPlanet.objectName);
+//        $("#selected-planet").show();
+//    });
+//
+//    $("#map").on('click', '.planet', function () {
+//        var planetName = this.getAttribute("planet-name");
+//        $scope.selectedPlanet = ploxworld.planets[planetName];
+//        console.log("clicked name: " + planetName);
+//        console.log("selected planet: " + $scope.selectedPlanet.objectName);
+////        $("#selected-planet").show();
+//    });
+//
 }

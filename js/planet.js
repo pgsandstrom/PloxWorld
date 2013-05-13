@@ -12,7 +12,8 @@
 
     //support methods:
     ploxworld.getRandomPlanet = function () {
-        return ploxworld.planets[Math.floor(Math.random() * ploxworld.planets.length)];
+        var randomPlanet = ploxworld.planetList[Math.floor(Math.random() * ploxworld.planetList.length)];
+        return randomPlanet;
     };
 
     /**
@@ -136,7 +137,7 @@
         if (this.supplyNeed === 0 && this.supply > MIN_SUPPLY_FOR_EXPORT) {
             var supplyExport = this.supplyProd - this.getEaten();
             for (var i = 0; i < supplyNeedList.length; i++) {
-                if(supplyExport === 0) {
+                if (supplyExport === 0) {
                     break;
                 }
                 var planet = supplyNeedList[i];

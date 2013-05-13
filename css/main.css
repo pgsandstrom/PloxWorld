@@ -19,6 +19,22 @@ body {
     position: relative;
 }
 
+#selected-planet {
+    position: absolute;
+    background: white;
+    margin: 50px 50px;
+    width: 400px;
+    height: 400px;
+}
+
+#planet-info {
+    float:left
+}
+
+.close-button {
+    float:right
+}
+
 #info {
     width: 200px;
     float: left;
