@@ -22,6 +22,11 @@ function Controller($scope) {
 
         tics++;
 
+        angular.forEach($scope.tradeRoutes, function (tradeRoute) {
+            //TODO how?
+//            tradeRoute.tic();
+        });
+
         angular.forEach($scope.planets, function (planet) {
             planet.tic();
         });
@@ -58,13 +63,8 @@ function Controller($scope) {
     $scope.showPlanet = function (planet) {
         console.log("show planet: " + planet.objectName);
         $scope.selectedPlanet = planet;
-//        $("#selected-planet").show();
         ploxworld.showDialog("selected-planet");
     };
-
-//    $("#close-planet-info").click(function () {
-//        $("#selected-planet").hide();
-//    });
 
     $("#selected-planet").hide();
 

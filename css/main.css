@@ -17,6 +17,7 @@ body {
     height: 500px;
     background: black;
     position: relative;
+    color: white;
 }
 
 #selected-planet {
@@ -28,11 +29,12 @@ body {
 }
 
 #planet-info {
-    float:left
+    float: left;
+    color:black;
 }
 
 .close-button {
-    float:right
+    float: right;
 }
 
 #info {

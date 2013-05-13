@@ -17,8 +17,11 @@
 
 <div id="map">
     <!--planets-->
-    <div ng-repeat="object in planets" class="absolute" ng-style="{'top': object.y+'px','left': object.x+'px'}">
-        <button ng-click="showPlanet(object)" class="planet">{{object.objectName}}</button>
+    <!-- -15 comes from half the planet size, so the center of the planet image always is the planet position -->
+    <div ng-repeat="object in planets" class="absolute" ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
+        <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
+        <a ng-click="showPlanet(object)" href=""><img src="img/planet.png"/></a>
+        {{object.objectName}}
     </div>
 
     <div id="selected-planet">
@@ -58,6 +61,7 @@
 <script src="js/angular-sanitize.js"></script>
 <script src="js/common.js"></script>
 <script src="js/dialogs.js"></script>
+<script src="js/findPath.js"></script>
 <script src="js/traderoutes.js"></script>
 <script src="js/planet.js"></script>
 <script src="js/person.js"></script>

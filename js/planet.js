@@ -6,8 +6,9 @@
     var RESOURCE_SUPPLY = "supply";
 
     var MIN_SUPPLY_FOR_EXPORT = 50;
-    var POP_DECREASE_AT_STARVATION = 0.99;
+    var POP_DECREASE_AT_STARVATION = 0.01;
 
+    //all planets ordered after supply need:
     var supplyNeedList = [];
 
     //support methods:
@@ -27,12 +28,16 @@
             $.each(ploxworld.planets, function (index, otherPlanet) {
                 //TODO check that the planet is allied
                 if (planet !== otherPlanet) {
+                    //add to allied list:
                     planet.closestAllied.push(otherPlanet);
                 }
             });
             planet.closestAllied.sort(function closest(a, b) {
                 return planet.planetDistanceCost[a.objectName] - planet.planetDistanceCost[b.objectName];
             });
+
+            //calculate how to get to allies:
+            ploxworld.findPathAllied(planet);
 
 //            console.log(planet.objectName + " closest allies: ");
 //            $.each(planet.closestAllied, function (index, closesAllied) {
@@ -53,7 +58,8 @@
 
         calculateNeedLists();
 
-        ploxworld.traderoutes.length = 0;
+        ploxworld.resetTraderoutes();
+
         $.each(ploxworld.planets, function (index, planet) {
             planet.calculateTradeRoutes();
         });
@@ -111,7 +117,7 @@
         } else {
             //starvation!
             var popDecrease = Math.max(this.pop * POP_DECREASE_AT_STARVATION, 1);
-            this.pop = Math.max(this.pop - popDecrease, 1);
+            this.pop = (Math.max(this.pop - popDecrease, 1)) | 0;
         }
 
     };
@@ -133,7 +139,10 @@
     };
 
     Planet.prototype.calculateTradeRoutes = function () {
-        //TODO possible optimization, return when a faction cant export a resource anymore or something? Or set a variable...
+        //TODO a planet should still export even when insufficient food, if it is not important enough
+        //XXX a planet should maybe export food to their own nation first?
+        //TODO check that the planet is allied
+        //XXX possible optimization, figure it out
         if (this.supplyNeed === 0 && this.supply > MIN_SUPPLY_FOR_EXPORT) {
             var supplyExport = this.supplyProd - this.getEaten();
             for (var i = 0; i < supplyNeedList.length; i++) {

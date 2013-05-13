@@ -3,9 +3,12 @@
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
     ploxworld.traderoutes = [];
+    ploxworld.traderouteParts = [];
 
     //support methods:
-    //none lol
+    ploxworld.resetTraderoutes = function() {
+        ploxworld.traderoutes.length = 0;
+    };
 
     //object:
     ploxworld.TradeRoute = function TradeRoute(fromPlanet, toPlanet, resource, amount) {
@@ -19,8 +22,12 @@
 
     var TradeRoute = ploxworld.TradeRoute;
 
-    TradeRoute.prototype.getEaten = function () {
+    TradeRoute.prototype.temp = function () {
         return Math.floor(this.pop / 100);
     };
+
+
+    //Trade route part a line between two planets with a "load", only used for sweet graphix!
+    //TODO fix
 
 })();
