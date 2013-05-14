@@ -8,7 +8,7 @@
     var reachedPlanets;
 
     ploxworld.findPathAllied = function (planet) {
-        //XXX optimize by adding routes not only to the original planet u know
+        //XXX optimize by adding routes not only to the original planet u know etc
 
         planet.safeWayTo = {};
         partRoutes.length = 0;
@@ -41,7 +41,7 @@
             var newDistanceCost = planet.planetDistanceCost[alliedPlanet.objectName];
             if (newDistanceCost < MAX_DISTANCE_FOR_AI_TRADE) {
                 var earlierPath = earlierPartRoute ? earlierPartRoute.route : [];
-                var distanceCost = earlierPartRoute ? earlierPartRoute.travelDistance : [];
+                var distanceCost = earlierPartRoute ? earlierPartRoute.travelDistance : 0;
                 partRoutes.push(new PartRoute(earlierPath, alliedPlanet, distanceCost + newDistanceCost));
             } else {
 //                console.log("too long between " + planet.objectName + " and " + alliedPlanet.objectName + ", breaking");

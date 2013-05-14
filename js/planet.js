@@ -36,14 +36,17 @@
                 return planet.planetDistanceCost[a.objectName] - planet.planetDistanceCost[b.objectName];
             });
 
-            //calculate how to get to allies:
-            ploxworld.findPathAllied(planet);
-
 //            console.log(planet.objectName + " closest allies: ");
 //            $.each(planet.closestAllied, function (index, closesAllied) {
 //                console.log(closesAllied.objectName);
 //            });
         });
+
+        $.each(ploxworld.planets, function (index, planet) {
+            //calculate how to get to allies:
+            ploxworld.findPathAllied(planet);
+        });
+
 
         ploxworld.calculateTradeRoutes();
     };
@@ -63,6 +66,8 @@
         $.each(ploxworld.planets, function (index, planet) {
             planet.calculateTradeRoutes();
         });
+
+        ploxworld.draw();
     };
 
     function calculateNeedLists() {
@@ -124,6 +129,12 @@
 
     };
 
+    Planet.prototype.getDistance = function (x, y) {
+        var xDiff = Math.abs(x - this.x);
+        var yDiff = Math.abs(y - this.y);
+        return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+    };
+
     Planet.prototype.setPlanetDistanceCost = function (planet, distance) {
 //        console.log(this.objectName + " distance to " + planet.objectName + " is " + distance);
         this.planetDistanceCost[planet.objectName] = distance;
@@ -153,7 +164,7 @@
                     break;
                 }
                 var planet = supplyNeedList[i];
-                if (planet.supplyNeed > 0) {
+                if (planet.supplyNeed > 0 && this.safeWayTo[planet.objectName]) {
                     var exportNumber = Math.min(planet.supplyNeed, -this.supplyNeed);
                     var tradeRoute = new ploxworld.TradeRoute(this, planet, RESOURCE_SUPPLY, exportNumber);
                     this.tradeRoutes.push(tradeRoute);

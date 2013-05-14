@@ -16,6 +16,11 @@
 </div>
 
 <div id="map">
+
+    <div id="canvas-container">
+        <canvas width="960" height="600" id="canvas"/>
+    </div>
+
     <!--planets-->
     <!-- -15 comes from half the planet size, so the center of the planet image always is the planet position -->
     <div ng-repeat="object in planets" class="absolute"
@@ -31,8 +36,11 @@
 
         <div id="planet-info">
             <p>{{selectedPlanet.objectName}}</p>
+
             <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
+
             <p>Supply: {{selectedPlanet.supply}} (+{{selectedPlanet.supplyProd}})</p>
+
             <p>Importance: {{selectedPlanet.importance}}</p>
         </div>
 
@@ -57,6 +65,7 @@
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-sanitize.js"></script>-->
+<script src="js/seedrandom.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/angular-sanitize.js"></script>

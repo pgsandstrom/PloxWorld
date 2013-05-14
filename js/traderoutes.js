@@ -3,11 +3,15 @@
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
     ploxworld.traderoutes = [];
-    ploxworld.traderouteParts = [];
+
+    //this is used only for visualization of the trade routes:
+    // planet1name + "_" + planet2name -> TradeRoutePart
+    ploxworld.traderouteParts = {};
 
     //support methods:
-    ploxworld.resetTraderoutes = function() {
+    ploxworld.resetTraderoutes = function () {
         ploxworld.traderoutes.length = 0;
+        ploxworld.traderouteParts = {};
     };
 
     //object:
@@ -17,17 +21,70 @@
         this.resource = resource;
         this.amount = amount;
         ploxworld.traderoutes.push(this);
+        addRouteParts(this);
         console.log("new traderoute from " + fromPlanet.objectName + " to " + toPlanet.objectName);
     };
 
-    var TradeRoute = ploxworld.TradeRoute;
+    function addRouteParts(tradeRoute) {
 
-    TradeRoute.prototype.temp = function () {
-        return Math.floor(this.pop / 100);
+        var originalPlanet = tradeRoute.fromPlanet;
+        var fromPlanet = originalPlanet;
+        var toPlanet = tradeRoute.toPlanet;
+
+//        console.log("trade route parts from " + originalPlanet.objectName + " to " + toPlanet.objectName);
+
+        // iterate step by step adding TradeRoutePart:s until we reach the target planet:
+        while (true) {
+            var nextPlanet = fromPlanet.safeWayTo[toPlanet.objectName];
+
+//            console.log("step from " + fromPlanet.objectName + " to " + nextPlanet.objectName);
+
+//            try {
+            var key;
+            //make sure they always come in the same alphabetical order:
+            if (fromPlanet.objectName.localeCompare(nextPlanet.objectName) < 0) {
+                key = nextPlanet.objectName + "_" + fromPlanet.objectName;
+            } else {
+                key = fromPlanet.objectName + "_" + nextPlanet.objectName;
+            }
+//            } catch (e) {
+//                console.log("stacktrace: " + e.stack);
+//            }
+
+//            console.log("new trade route part from " + fromPlanet.objectName + " to " + nextPlanet.objectName);
+            var tradeRoutePart = ploxworld.traderouteParts[key];
+            if (!tradeRoutePart) {
+                tradeRoutePart = new TradeRoutePart(fromPlanet, nextPlanet, tradeRoute.amount);
+                ploxworld.traderouteParts[key] = tradeRoutePart;
+            } else {
+                tradeRoutePart.increase(tradeRoute.amount);
+            }
+
+            if (nextPlanet === toPlanet) {
+                break;
+            }
+
+            fromPlanet = nextPlanet;
+        }
+    }
+
+    /**
+     * represents trade traffic between two nodes. "count" is the number merchandise moved each turn.
+     * @param fromPlanet
+     * @param toPlanet
+     * @param amount The number of merchandise moved through this part
+     * @constructor
+     */
+    ploxworld.TradeRoutePart = function TradeRoutePart(fromPlanet, toPlanet, amount) {
+        this.fromPlanet = fromPlanet;
+        this.toPlanet = toPlanet;
+        this.amount = amount;
     };
 
+    var TradeRoutePart = ploxworld.TradeRoutePart;
 
-    //Trade route part a line between two planets with a "load", only used for sweet graphix!
-    //TODO fix
+    TradeRoutePart.prototype.increase = function (number) {
+        this.amount += number;
+    };
 
 })();

@@ -1,5 +1,5 @@
 body {
-    max-width: 1000px;
+    max-width: 1360px;
 }
 
 #title {
@@ -13,11 +13,12 @@ body {
 
 #map {
     float: left;
-    width: 500px;
-    height: 500px;
+    width: 960px;
+    height: 600px;
     background: black;
     position: relative;
     color: white;
+    font: 80%/0 sans-serif;
 }
 
 #selected-planet {
@@ -30,7 +31,7 @@ body {
 
 #planet-info {
     float: left;
-    color:black;
+    color: black;
 }
 
 .close-button {

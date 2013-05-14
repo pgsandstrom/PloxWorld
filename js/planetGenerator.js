@@ -2,9 +2,22 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
+    var WORLD_SIZE_X = 960;
+    var WORLD_SIZE_Y = 600;
+    var BORDER = 20;
+    var PLANETS_MIN_DISTANCE = 40;
+    var PLANET_COUNT = 25;
+
     ploxworld.generatePlanets = function () {
 
-        var names = ['Mercurius', 'Venus', 'Tellus', 'Mars', 'Jupiter', 'Saturnus', 'Neptunus', 'Uranus', 'Pluto', 'X'];
+        var seed = Math.random() * 2000000 | 0;
+        console.log("seed: " + seed);
+//        seed = 85984;
+        Math.seedrandom(seed);
+
+        var names = ['Mercurius', 'Venus', 'Tellus', 'Mars', 'Jupiter', 'Saturnus', 'Neptunus', 'Uranus', 'Pluto', 'X',
+            'Xero', 'Ygdra', 'Jakop', 'Crea', 'Ando', 'Estal', 'Zzyr', 'Sol', 'Tyl', 'Mega',
+            'Terra', 'Eve', 'Ada', 'Omega', 'Orion'];
 
         var takeFreeName = function () {
             var index = Math.floor(Math.random() * names.length);
@@ -14,24 +27,39 @@
         };
 
         ploxworld.planets = {};
-        ploxworld.planetList= [];
+        ploxworld.planetList = [];
 
 
-        var planet = new ploxworld.Planet(takeFreeName(), 200, 250);
-        ploxworld.planets[planet.objectName] = planet;
-        ploxworld.planetList.push(planet);
+//        var planet = new ploxworld.Planet(takeFreeName(), 200, 250);
+//        ploxworld.planets[planet.objectName] = planet;
+//        ploxworld.planetList.push(planet);
+//
+//        planet = new ploxworld.Planet(takeFreeName(), 50, 350);
+//        ploxworld.planets[planet.objectName] = planet;
+//        ploxworld.planetList.push(planet);
+//
+//        planet = new ploxworld.Planet(takeFreeName(), 150, 350);
+//        ploxworld.planets[planet.objectName] = planet;
+//        ploxworld.planetList.push(planet);
+//
+//        planet = new ploxworld.Planet(takeFreeName(), 305, 100);
+//        ploxworld.planets[planet.objectName] = planet;
+//        ploxworld.planetList.push(planet);
 
-        planet = new ploxworld.Planet(takeFreeName(), 50, 350);
-        ploxworld.planets[planet.objectName] = planet;
-        ploxworld.planetList.push(planet);
+        var planetCount = PLANET_COUNT;
+        while (planetCount) {
+            var x;
+            var y;
+            do {
+                x = (Math.random() * (WORLD_SIZE_X - BORDER * 3)) + BORDER; //*3 to prevent name from sticking out on the right
+                y = (Math.random() * (WORLD_SIZE_Y - BORDER * 2)) + BORDER;
+            } while (!validPosition(x, y));
 
-        planet = new ploxworld.Planet(takeFreeName(), 150, 350);
-        ploxworld.planets[planet.objectName] = planet;
-        ploxworld.planetList.push(planet);
-
-        planet = new ploxworld.Planet(takeFreeName(), 305, 100);
-        ploxworld.planets[planet.objectName] = planet;
-        ploxworld.planetList.push(planet);
+            var planet = new ploxworld.Planet(takeFreeName(), x, y);
+            ploxworld.planets[planet.objectName] = planet;
+            ploxworld.planetList.push(planet);
+            planetCount--;
+        }
 
         //calculate cost of travel
         for (var i = 0; i < ploxworld.planetList.length; i++) {
@@ -50,8 +78,8 @@
         }
 
 
-//        for (i = 0; i < ploxworld.planets.length; i++) {
-//            var planet = ploxworld.planets[i];
+//        for (i2 = 0; i2 < ploxworld.planets.length; i2++) {
+//            var planet = ploxworld.planets[i2];
 //            console.log("iterating " + planet.objectName);
 //            for (var otherPlanetName in  planet.planetDistanceCost) {
 //                console.log(planet.objectName + " to " + otherPlanetName + " is " + planet.planetDistanceCost[otherPlanetName]);
@@ -63,4 +91,15 @@
 
         return ploxworld.planets;
     };
+
+    function validPosition(x, y) {
+        for (var i2 = 0; i2 < ploxworld.planetList.length; i2++) {
+//            console.log("distance: " + ploxworld.planetList[i2].getDistance(x, y));
+            if (ploxworld.planetList[i2].getDistance(x, y) < PLANETS_MIN_DISTANCE) {
+//                console.log("lol to close");
+                return false;
+            }
+        }
+        return true;
+    }
 })();
