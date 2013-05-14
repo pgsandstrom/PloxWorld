@@ -1,6 +1,6 @@
 function Controller($scope) {
-
     "use strict";
+    var ploxworld = window.ploxworld = window.ploxworld || {};
 
     var tics = 0;
 
@@ -10,7 +10,7 @@ function Controller($scope) {
     $scope.tradeRoutes = ploxworld.traderoutes;
 
     $scope.selectedPlanet = ploxworld.getRandomPlanet();
-    console.log("selectedPlanet: " + $scope.selectedPlanet.objectName);
+//    console.log("selectedPlanet: " + $scope.selectedPlanet.objectName);
 
     $scope.movePlanet = function () {
         angular.forEach($scope.planets, function (planet) {
@@ -34,6 +34,10 @@ function Controller($scope) {
         angular.forEach($scope.persons, function (person) {
             person.tic();
         });
+    };
+
+    $scope.calculateTradeMap = function() {
+        ploxworld.calculateTradeMap();
     };
 
     $scope.addTodo = function () {

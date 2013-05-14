@@ -34,10 +34,10 @@
         ploxworld.planetList.push(planet);
 
         //calculate cost of travel
-        for (var i = 0; i < ploxworld.planets.length; i++) {
-            var planet1 = ploxworld.planets[i];
-            for (var j = i + 1; j < ploxworld.planets.length; j++) {
-                var planet2 = ploxworld.planets[j];
+        for (var i = 0; i < ploxworld.planetList.length; i++) {
+            var planet1 = ploxworld.planetList[i];
+            for (var j = i + 1; j < ploxworld.planetList.length; j++) {
+                var planet2 = ploxworld.planetList[j];
                 var xDiff = Math.abs(planet1.x - planet2.x);
                 var yDiff = Math.abs(planet1.y - planet2.y);
                 var realDistance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);

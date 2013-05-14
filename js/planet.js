@@ -92,8 +92,8 @@
 
         this.supply = 50 + Math.random() * 50 | 0;
         this.supplyProd = 1 + Math.random() * 5 | 0;
-        this.supplyNeed = -1;
-        this.supplyNeedImportance = -1;
+        this.supplyNeed = 0;   //negative value means they overproduce
+        this.supplyNeedImportance = 0;  //the value used to prioritize supply distribution
     };
 
     var Planet = ploxworld.Planet;
@@ -112,7 +112,9 @@
             this.supply = this.supply - eaten;
             if (this.supply > 0) {
                 this.supply--;
-                this.pop++;
+                if (this.pop < this.maxPop) {
+                    this.pop++;
+                }
             }
         } else {
             //starvation!
@@ -129,7 +131,7 @@
     };
 
     Planet.prototype.calculateNeeds = function () {
-        this.supplyNeed = Math.max(this.getEaten() - this.supplyProd, 0);
+        this.supplyNeed = this.getEaten() - this.supplyProd;
         if (this.supplyNeed === 0) {
             this.supplyNeedImportance = 0;
         } else {
@@ -143,18 +145,19 @@
         //XXX a planet should maybe export food to their own nation first?
         //TODO check that the planet is allied
         //XXX possible optimization, figure it out
-        if (this.supplyNeed === 0 && this.supply > MIN_SUPPLY_FOR_EXPORT) {
-            var supplyExport = this.supplyProd - this.getEaten();
+
+        //negative supplyNeed means they can export
+        if (this.supplyNeed < 0 && this.supply > MIN_SUPPLY_FOR_EXPORT) {
             for (var i = 0; i < supplyNeedList.length; i++) {
-                if (supplyExport === 0) {
+                if (this.supplyNeed >= 0) {
                     break;
                 }
                 var planet = supplyNeedList[i];
                 if (planet.supplyNeed > 0) {
-                    var exportNumber = Math.min(planet.supplyNeed, supplyExport);
+                    var exportNumber = Math.min(planet.supplyNeed, -this.supplyNeed);
                     var tradeRoute = new ploxworld.TradeRoute(this, planet, RESOURCE_SUPPLY, exportNumber);
                     this.tradeRoutes.push(tradeRoute);
-                    supplyExport -= exportNumber;
+                    this.supplyNeed += exportNumber;
                     planet.supplyNeed -= exportNumber;
                 }
             }
