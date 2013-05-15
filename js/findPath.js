@@ -32,8 +32,8 @@
     };
 
     function addNewPartRoutes(planet, earlierPartRoute) {
-        for (var i = 0; i < planet.closestAllied.length; i++) {
-            var alliedPlanet = planet.closestAllied[i];
+        for (var i = 0; i < planet.closestNonEnemy.length; i++) {
+            var alliedPlanet = planet.closestNonEnemy[i];
             if (reachedPlanets[alliedPlanet.objectName]) {
 //                console.log("planet " + alliedPlanet.objectName + " already reached from " + planet.objectName);
                 continue;

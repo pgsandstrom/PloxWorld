@@ -18,7 +18,7 @@
     };
 
     /**
-     * calculates the "closestAllied" for all planets, call when allied stuff changes. Also calls calculateTradeRoutes()
+     * calculates the "closestNonEnemy" for all planets, call when allied stuff changes. This also calls calculateTradeRoutes()
      */
     ploxworld.calculateTradeMap = function () {
         console.log("calculateTradeMap");
@@ -27,16 +27,16 @@
             if (ploxworld.planets.hasOwnProperty(planetKey)) {
                 var planet = ploxworld.planets[planetKey];
 
-                planet.closestAllied.length = 0;
+                planet.closestNonEnemy.length = 0;
                 for (var otherPlanetKey in ploxworld.planets) {
                     var otherPlanet = ploxworld.planets[otherPlanetKey];
-                    //TODO check that the planet is allied
-                    if (planet !== otherPlanet) {
+                    if (planet !== otherPlanet &&
+                        (planet.empire === otherPlanet.empire || planet.empire.getRelation(otherPlanet.empire).state >= ploxworld.RELATION_STATE_NEUTRAL)) {
                         //add to allied list:
-                        planet.closestAllied.push(otherPlanet);
+                        planet.closestNonEnemy.push(otherPlanet);
                     }
                 }
-                planet.closestAllied.sort(function closest(a, b) {
+                planet.closestNonEnemy.sort(function closest(a, b) {
                     return planet.planetDistanceCost[a.objectName] - planet.planetDistanceCost[b.objectName];
                 });
 
@@ -86,11 +86,11 @@
         this.y = y;
 
         this.planetDistanceCost = {};   //name -> distanceCost  (calculated once)
-        this.closestAllied = [];    //closest allied planets
-        this.safeWayTo = {};    //name -> planet. The next stop to reach a planet   //TODO build this
+        this.closestNonEnemy = [];    //closest non-enemy planet. Used for navigating traders
+        this.safeWayTo = {};    //name -> planet. The next stop to reach a planet
         this.tradeRoutes = [];
 
-//        this.empire;
+        this.empire = undefined;
         this.importance = 1;
 
         this.maxPop = 500 + Math.random() * 2000 | 0;
@@ -163,7 +163,6 @@
     Planet.prototype.calculateTradeRoutes = function () {
         //TODO a planet should still export even when insufficient food, if it is not important enough
         //XXX a planet should maybe export food to their own nation first?
-        //TODO check that the planet is allied
         //XXX possible optimization, figure it out
 
         //negative supplyNeed means they can export
@@ -175,7 +174,8 @@
                 var planet = supplyNeedList[i];
 
                 //if relations are not good enough, ignore:
-                if (this.empire.empireRelations[planet.empire.objectName] < ploxworld.RELATION_STATE_FRIENDLY) {
+                if (this.empire !== planet.empire && this.empire.getRelation(planet.empire).state < ploxworld.RELATION_STATE_FRIENDLY) {
+                    console.log("not friends, no trade!");
                     continue;
                 }
 

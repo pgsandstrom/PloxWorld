@@ -33,6 +33,10 @@
         this.empireRelations[toEmpire.objectName] = relation;
     };
 
+    Empire.prototype.getRelation = function (toEmpire) {
+        return this.empireRelations[toEmpire.objectName];
+    };
+
     //relations between empires:
     ploxworld.EmpireRelation = function EmpireRelation() {
         this.value = (Math.random() * 200 - 100) | 0;
