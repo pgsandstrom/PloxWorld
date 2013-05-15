@@ -23,15 +23,20 @@
     ploxworld.calculateTradeMap = function () {
         console.log("calculateTradeMap");
 
-        $.each(ploxworld.planets, function (index, planet) {
+        for (var planetKey in ploxworld.planets) {
+            var planet = ploxworld.planets[planetKey];
+//        $.each(ploxworld.planets, function (index, planet) {
             planet.closestAllied.length = 0;
-            $.each(ploxworld.planets, function (index, otherPlanet) {
+            for (var otherPlanetKey in ploxworld.planets) {
+                var otherPlanet = ploxworld.planets[otherPlanetKey];
+//            $.each(ploxworld.planets, function (index, otherPlanet) {
                 //TODO check that the planet is allied
                 if (planet !== otherPlanet) {
                     //add to allied list:
                     planet.closestAllied.push(otherPlanet);
                 }
-            });
+//            });
+            }
             planet.closestAllied.sort(function closest(a, b) {
                 return planet.planetDistanceCost[a.objectName] - planet.planetDistanceCost[b.objectName];
             });
@@ -40,8 +45,8 @@
 //            $.each(planet.closestAllied, function (index, closesAllied) {
 //                console.log(closesAllied.objectName);
 //            });
-        });
-
+//        });
+        }
         $.each(ploxworld.planets, function (index, planet) {
             //calculate how to get to allies:
             ploxworld.findPathAllied(planet);

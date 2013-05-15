@@ -20,9 +20,16 @@
         this.toPlanet = toPlanet;
         this.resource = resource;
         this.amount = amount;
+        this.pending = 0; //the amount of resources that should already have been sent
         ploxworld.traderoutes.push(this);
         addRouteParts(this);
         console.log("new traderoute from " + fromPlanet.objectName + " to " + toPlanet.objectName);
+    };
+
+    var TradeRoute = ploxworld.TradeRoute;
+
+    TradeRoute.prototype.tic = function () {
+        //TODO
     };
 
     function addRouteParts(tradeRoute) {

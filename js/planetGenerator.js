@@ -8,6 +8,10 @@
     var PLANETS_MIN_DISTANCE = 40;
     var PLANET_COUNT = 25;
 
+    ploxworld.planets = {};
+    ploxworld.planetList = [];
+
+    //XXX rename to "generate universe" or something
     ploxworld.generatePlanets = function () {
 
         var seed = Math.random() * 2000000 | 0;
@@ -28,23 +32,6 @@
 
         ploxworld.planets = {};
         ploxworld.planetList = [];
-
-
-//        var planet = new ploxworld.Planet(takeFreeName(), 200, 250);
-//        ploxworld.planets[planet.objectName] = planet;
-//        ploxworld.planetList.push(planet);
-//
-//        planet = new ploxworld.Planet(takeFreeName(), 50, 350);
-//        ploxworld.planets[planet.objectName] = planet;
-//        ploxworld.planetList.push(planet);
-//
-//        planet = new ploxworld.Planet(takeFreeName(), 150, 350);
-//        ploxworld.planets[planet.objectName] = planet;
-//        ploxworld.planetList.push(planet);
-//
-//        planet = new ploxworld.Planet(takeFreeName(), 305, 100);
-//        ploxworld.planets[planet.objectName] = planet;
-//        ploxworld.planetList.push(planet);
 
         var planetCount = PLANET_COUNT;
         while (planetCount) {
@@ -85,6 +72,8 @@
 //                console.log(planet.objectName + " to " + otherPlanetName + " is " + planet.planetDistanceCost[otherPlanetName]);
 //            }
 //        }
+
+        ploxworld.generateEmpires();
 
         //calculate initial trade map:
         ploxworld.calculateTradeMap();

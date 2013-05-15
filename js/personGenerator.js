@@ -2,12 +2,34 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
+    var PERSON_COUNT = 25;
+
+    ploxworld.persons = {};
+    ploxworld.personList = [];
+
     ploxworld.generatePersons = function () {
 
-        ploxworld.persons = [ploxworld.makePerson("Bengt"),
-            ploxworld.makePerson("Mars"),
-            ploxworld.makePerson("X")
-        ];
+        var names = ['Bengt'];
+
+        var takeFreeName = function () {
+            var index = Math.floor(Math.random() * names.length);
+            var name = names[index];
+            names.remove(index);
+            return name;
+        };
+
+        ploxworld.persons = {};
+        ploxworld.personList = [];
+
+        var personCount = PERSON_COUNT;
+        while (personCount) {
+            var person = ploxworld.makePerson(takeFreeName());
+            ploxworld.personList.push(person);
+            ploxworld.persons[person.objectName] = person;
+            personCount--;
+        }
+
         return ploxworld.persons;
     };
+
 })();

@@ -17,7 +17,7 @@
 
 <div id="map">
 
-    <div id="canvas-container">
+    <div id="canvas-container" class="absolute">
         <canvas width="960" height="600" id="canvas"/>
     </div>
 
@@ -26,11 +26,11 @@
     <div ng-repeat="object in planets" class="absolute"
          ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
         <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
-        <a ng-click="showPlanet(object)" href=""><img src="img/planet.png"/></a>
+        <a ng-click="showPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
         {{object.objectName}}
     </div>
 
-    <div id="selected-planet">
+    <div id="selected-planet" class="absolute">
 
         <button class="close-button">close</button>
 
@@ -75,8 +75,10 @@
 <script src="js/findPath.js"></script>
 <script src="js/traderoutes.js"></script>
 <script src="js/planet.js"></script>
-<script src="js/person.js"></script>
 <script src="js/planetGenerator.js"></script>
+<script src="js/empire.js"></script>
+<script src="js/empireGenerator.js"></script>
+<script src="js/person.js"></script>
 <script src="js/personGenerator.js"></script>
 <script src="js/module.js"></script>
 <script src="js/controller.js"></script>

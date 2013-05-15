@@ -19,7 +19,7 @@
 
         for (var tradeRoutePartKey in ploxworld.traderouteParts) {
             var tradeRoutePart = ploxworld.traderouteParts[tradeRoutePartKey];
-            
+
             var percentageOfColor = Math.min(tradeRoutePart.amount / NUMBER_TRADEROUTES_FOR_GREEN_LINE, 1);
             var hexNumber = (255 * percentageOfColor) | 0;
             var color = '#' + (255 - hexNumber).toString(16) + (hexNumber).toString(16) + '00';

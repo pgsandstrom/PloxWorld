@@ -8,6 +8,7 @@
     var dialogs = ploxworld.dialogs;
 
     ploxworld.showDialog = function (dialogId) {
+        console.log("show dialog");
         var $dialog = $('#' + dialogId);
         dialogs.push($dialog);
         $dialog.show();

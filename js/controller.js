@@ -24,7 +24,7 @@ function Controller($scope) {
 
         angular.forEach($scope.tradeRoutes, function (tradeRoute) {
             //TODO how?
-//            tradeRoute.tic();
+            tradeRoute.tic();
         });
 
         angular.forEach($scope.planets, function (planet) {
