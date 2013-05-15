@@ -27,7 +27,7 @@
          ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
         <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
         <a ng-click="showPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
-        {{object.objectName}}
+        <span ng-style="{'color': (object.getColor())}">{{object.objectName}}<span/>
     </div>
 
     <div id="selected-planet" class="absolute">
@@ -65,10 +65,12 @@
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-sanitize.js"></script>-->
-<script src="js/seedrandom.js"></script>
+<script src="js/underscore-min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/angular-sanitize.js"></script>
+<script src="js/seedrandom.js"></script>
+
 <script src="js/common.js"></script>
 <script src="js/canvas.js"></script>
 <script src="js/dialogs.js"></script>

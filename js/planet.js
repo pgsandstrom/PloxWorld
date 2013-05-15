@@ -24,30 +24,25 @@
         console.log("calculateTradeMap");
 
         for (var planetKey in ploxworld.planets) {
-            var planet = ploxworld.planets[planetKey];
-//        $.each(ploxworld.planets, function (index, planet) {
-            planet.closestAllied.length = 0;
-            for (var otherPlanetKey in ploxworld.planets) {
-                var otherPlanet = ploxworld.planets[otherPlanetKey];
-//            $.each(ploxworld.planets, function (index, otherPlanet) {
-                //TODO check that the planet is allied
-                if (planet !== otherPlanet) {
-                    //add to allied list:
-                    planet.closestAllied.push(otherPlanet);
-                }
-//            });
-            }
-            planet.closestAllied.sort(function closest(a, b) {
-                return planet.planetDistanceCost[a.objectName] - planet.planetDistanceCost[b.objectName];
-            });
+            if (ploxworld.planets.hasOwnProperty(planetKey)) {
+                var planet = ploxworld.planets[planetKey];
 
-//            console.log(planet.objectName + " closest allies: ");
-//            $.each(planet.closestAllied, function (index, closesAllied) {
-//                console.log(closesAllied.objectName);
-//            });
-//        });
+                planet.closestAllied.length = 0;
+                for (var otherPlanetKey in ploxworld.planets) {
+                    var otherPlanet = ploxworld.planets[otherPlanetKey];
+                    //TODO check that the planet is allied
+                    if (planet !== otherPlanet) {
+                        //add to allied list:
+                        planet.closestAllied.push(otherPlanet);
+                    }
+                }
+                planet.closestAllied.sort(function closest(a, b) {
+                    return planet.planetDistanceCost[a.objectName] - planet.planetDistanceCost[b.objectName];
+                });
+
+            }
         }
-        $.each(ploxworld.planets, function (index, planet) {
+        _.each(ploxworld.planets, function (planet) {
             //calculate how to get to allies:
             ploxworld.findPathAllied(planet);
         });
@@ -60,7 +55,7 @@
      * Calculates the actual trade routes. First calculates needs and stuff
      */
     ploxworld.calculateTradeRoutes = function () {
-        $.each(ploxworld.planets, function (index, planet) {
+        _.each(ploxworld.planets, function (planet) {
             planet.calculateNeeds();
         });
 
@@ -68,7 +63,7 @@
 
         ploxworld.resetTraderoutes();
 
-        $.each(ploxworld.planets, function (index, planet) {
+        _.each(ploxworld.planets, function (planet) {
             planet.calculateTradeRoutes();
         });
 
@@ -95,6 +90,7 @@
         this.safeWayTo = {};    //name -> planet. The next stop to reach a planet   //TODO build this
         this.tradeRoutes = [];
 
+//        this.empire;
         this.importance = 1;
 
         this.maxPop = 500 + Math.random() * 2000 | 0;
@@ -118,7 +114,7 @@
 
         var eaten = this.getEaten();
         if (eaten < this.supply) {
-            //TODO make this more dynamic or something:
+            //XXX make this more dynamic or something:
             this.supply = this.supply - eaten;
             if (this.supply > 0) {
                 this.supply--;
@@ -138,6 +134,14 @@
         var xDiff = Math.abs(x - this.x);
         var yDiff = Math.abs(y - this.y);
         return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+    };
+
+    Planet.prototype.setEmpire = function (empire) {
+        this.empire = empire;
+    };
+
+    Planet.prototype.getColor = function () {
+        return this.empire.color;
     };
 
     Planet.prototype.setPlanetDistanceCost = function (planet, distance) {
@@ -169,6 +173,12 @@
                     break;
                 }
                 var planet = supplyNeedList[i];
+
+                //if relations are not good enough, ignore:
+                if (this.empire.empireRelations[planet.empire.objectName] < ploxworld.RELATION_STATE_FRIENDLY) {
+                    continue;
+                }
+
                 if (planet.supplyNeed > 0 && this.safeWayTo[planet.objectName]) {
                     var exportNumber = Math.min(planet.supplyNeed, -this.supplyNeed);
                     var tradeRoute = new ploxworld.TradeRoute(this, planet, RESOURCE_SUPPLY, exportNumber);

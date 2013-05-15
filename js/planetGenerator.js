@@ -2,8 +2,8 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    var WORLD_SIZE_X = 960;
-    var WORLD_SIZE_Y = 600;
+    ploxworld.WORLD_SIZE_X = 960;
+    ploxworld.WORLD_SIZE_Y = 600;
     var BORDER = 20;
     var PLANETS_MIN_DISTANCE = 40;
     var PLANET_COUNT = 25;
@@ -38,8 +38,8 @@
             var x;
             var y;
             do {
-                x = (Math.random() * (WORLD_SIZE_X - BORDER * 3)) + BORDER; //*3 to prevent name from sticking out on the right
-                y = (Math.random() * (WORLD_SIZE_Y - BORDER * 2)) + BORDER;
+                x = (Math.random() * (ploxworld.WORLD_SIZE_X - BORDER * 3)) + BORDER; //*3 to prevent name from sticking out on the right
+                y = (Math.random() * (ploxworld.WORLD_SIZE_Y - BORDER * 2)) + BORDER;
             } while (!validPosition(x, y));
 
             var planet = new ploxworld.Planet(takeFreeName(), x, y);
