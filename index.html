@@ -30,6 +30,12 @@
         <span ng-style="{'color': (object.getColor())}">{{object.objectName}}<span/>
     </div>
 
+    <!--ships-->
+    <div ng-repeat="object in ships" class="absolute"
+         ng-style="{'top': (object.position.y-6)+'px','left': (object.position.x-3)+'px'}">
+        <img src="img/ship.png"/>
+    </div>
+
     <div id="selected-planet" class="absolute">
 
         <button class="close-button">close</button>
@@ -76,12 +82,14 @@
 <script src="js/dialogs.js"></script>
 <script src="js/findPath.js"></script>
 <script src="js/traderoutes.js"></script>
+<script src="js/ship.js"></script>
 <script src="js/planet.js"></script>
 <script src="js/planetGenerator.js"></script>
 <script src="js/empire.js"></script>
 <script src="js/empireGenerator.js"></script>
 <script src="js/person.js"></script>
 <script src="js/personGenerator.js"></script>
+
 <script src="js/module.js"></script>
 <script src="js/controller.js"></script>
 </body>

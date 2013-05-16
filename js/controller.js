@@ -7,6 +7,7 @@ function Controller($scope) {
     //init stuff:
     $scope.planets = ploxworld.generatePlanets();
     $scope.persons = ploxworld.generatePersons();
+    $scope.ships = ploxworld.ships;
     $scope.tradeRoutes = ploxworld.traderoutes;
 
     $scope.selectedPlanet = ploxworld.getRandomPlanet();
@@ -33,6 +34,10 @@ function Controller($scope) {
 
         angular.forEach($scope.persons, function (person) {
             person.tic();
+        });
+
+        angular.forEach($scope.ships, function (ship) {
+            ship.tic();
         });
     };
 

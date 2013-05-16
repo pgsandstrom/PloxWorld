@@ -3,7 +3,7 @@
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
     //resources:
-    var RESOURCE_SUPPLY = "supply";
+    ploxworld.RESOURCE_SUPPLY = "supply";
 
     var MIN_SUPPLY_FOR_EXPORT = 50;
     var POP_DECREASE_AT_STARVATION = 0.01;
@@ -85,6 +85,7 @@
         this.x = x;
         this.y = y;
 
+        this.planetDistance = {};   //name -> distance  (calculated once)
         this.planetDistanceCost = {};   //name -> distanceCost  (calculated once)
         this.closestNonEnemy = [];    //closest non-enemy planet. Used for navigating traders
         this.safeWayTo = {};    //name -> planet. The next stop to reach a planet
@@ -144,10 +145,13 @@
         return this.empire.color;
     };
 
-    Planet.prototype.setPlanetDistanceCost = function (planet, distance) {
-//        console.log(this.objectName + " distance to " + planet.objectName + " is " + distance);
-        this.planetDistanceCost[planet.objectName] = distance;
-//        console.log("result: " + this.planetDistanceCost[planet.objectName]);
+    Planet.prototype.setPlanetDistance = function (planet, distance) {
+        this.planetDistance[planet.objectName] = distance;
+    };
+
+    Planet.prototype.setPlanetDistanceCost = function (planet, distanceCost) {
+//        console.log(this.objectName + " distanceCost to " + planet.objectName + " is " + distanceCost);
+        this.planetDistanceCost[planet.objectName] = distanceCost;
     };
 
     Planet.prototype.calculateNeeds = function () {
@@ -168,6 +172,8 @@
         //negative supplyNeed means they can export
         if (this.supplyNeed < 0 && this.supply > MIN_SUPPLY_FOR_EXPORT) {
             for (var i = 0; i < supplyNeedList.length; i++) {
+
+                //abort if we have no more resources to export
                 if (this.supplyNeed >= 0) {
                     break;
                 }
@@ -175,13 +181,14 @@
 
                 //if relations are not good enough, ignore:
                 if (this.empire !== planet.empire && this.empire.getRelation(planet.empire).state < ploxworld.RELATION_STATE_FRIENDLY) {
-                    console.log("not friends, no trade!");
+//                    console.log("not friends, no trade!");
                     continue;
                 }
 
+                //does the planet need resources, and can we get to it?
                 if (planet.supplyNeed > 0 && this.safeWayTo[planet.objectName]) {
                     var exportNumber = Math.min(planet.supplyNeed, -this.supplyNeed);
-                    var tradeRoute = new ploxworld.TradeRoute(this, planet, RESOURCE_SUPPLY, exportNumber);
+                    var tradeRoute = new ploxworld.TradeRoute(this, planet, ploxworld.RESOURCE_SUPPLY, exportNumber);
                     this.tradeRoutes.push(tradeRoute);
                     this.supplyNeed += exportNumber;
                     planet.supplyNeed -= exportNumber;

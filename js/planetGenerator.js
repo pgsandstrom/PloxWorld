@@ -60,7 +60,9 @@
 //                console.log(planet1.objectName + " to " + planet2.objectName + " distance: " + realDistance);
 //                console.log(planet1.objectName + " to " + planet2.objectName + " cost: " + costDistance);
                 planet1.setPlanetDistanceCost(planet2, costDistance);
+                planet1.setPlanetDistance(planet2, costDistance);
                 planet2.setPlanetDistanceCost(planet1, costDistance);
+                planet2.setPlanetDistance(planet1, costDistance);
             }
         }
 

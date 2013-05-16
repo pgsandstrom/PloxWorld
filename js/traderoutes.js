@@ -29,7 +29,11 @@
     var TradeRoute = ploxworld.TradeRoute;
 
     TradeRoute.prototype.tic = function () {
-        //TODO
+        this.pending += this.amount;
+        if(this.pending > 5) {
+            new ploxworld.TradeShip(this.fromPlanet, this.toPlanet, {resource:5});
+            this.pending -= 5;
+        }
     };
 
     function addRouteParts(tradeRoute) {
