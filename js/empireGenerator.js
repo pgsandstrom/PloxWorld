@@ -83,9 +83,9 @@
         }
 
         //For testing FIXME
-        var fromPlanet = ploxworld.planets["Tellus"];
-        var toPlanet = ploxworld.planets["Mars"];
-        new ploxworld.TradeShip(fromPlanet, toPlanet, {});
+//        var fromPlanet = ploxworld.planets["Tellus"];
+//        var toPlanet = ploxworld.planets["Mars"];
+//        new ploxworld.TradeShip(fromPlanet, toPlanet, {});
 
         return ploxworld.empires;
     };
