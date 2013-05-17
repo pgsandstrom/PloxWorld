@@ -8,6 +8,26 @@ myAppModule.filter('greet', function () {
     };
 });
 
+//var fadeToggleDirective = function () {
+//    "use strict";
+//    return {
+//        link: function (scope, element, attrs) {
+//            scope.$watch(attrs.uiFadeToggle, function (val, oldVal) {
+//                    if (val === oldVal) {
+//                        return; // Skip inital call
+//                    }
+//                    console.log("plox det happened: " + val + ", " + oldVal);
+//                    console.log("plox: " + element.style);
+//
+//                    $(element).css({"top": val });
+//                }
+//            )
+//            ;
+//        }
+//    };
+//};
+//
+//myAppModule.directive('uiFadeToggle', fadeToggleDirective);
 
 //myAppModule.directive('objectOnMap', function factory ($document) {
 //    "use strict";

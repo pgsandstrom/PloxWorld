@@ -69,6 +69,10 @@ function Controller($scope) {
         });
     };
 
+    $scope.majs = function (planet) {
+        console.log("magic is in the air!");
+    }
+
     $scope.showPlanet = function (planet) {
         console.log("show planet: " + planet.objectName);
         $scope.selectedPlanet = planet;

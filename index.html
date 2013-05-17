@@ -4,6 +4,7 @@
     <title>PloxWorld</title>
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/animation.css">
 </head>
 <body ng-controller="Controller">
 
@@ -31,7 +32,7 @@
     </div>
 
     <!--ships-->
-    <div ng-repeat="object in ships" class="absolute"
+    <div ng-repeat="object in ships" class="absolute ship" ui-fade-toggle="object.position.x"
          ng-style="{'top': (object.position.y-6)+'px','left': (object.position.x-3)+'px'}">
         <img src="img/ship.png"/>
     </div>
@@ -70,11 +71,9 @@
 <!--XXX use cdn when all is said and done-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>-->
-<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-sanitize.js"></script>-->
 <script src="js/underscore-min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/angular.min.js"></script>
-<script src="js/angular-sanitize.js"></script>
 <script src="js/seedrandom.js"></script>
 
 <script src="js/common.js"></script>
