@@ -34,9 +34,7 @@
             context.lineTo(tradeRoutePart.toPlanet.x, tradeRoutePart.toPlanet.y);
             context.strokeStyle = color;
             context.stroke();
-            console.log("color: " + context.strokeStyle);
-            console.log("percentageOfColor: " + percentageOfColor);
-            console.log("hexNumber: " + hexNumber);
+//            console.log("color: " + context.strokeStyle);
         }
 
 

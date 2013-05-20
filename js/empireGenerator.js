@@ -82,7 +82,7 @@
             }
         }
 
-        //For testing FIXME
+        //For testing
 //        var fromPlanet = ploxworld.planets["Tellus"];
 //        var toPlanet = ploxworld.planets["Mars"];
 //        new ploxworld.TradeShip(fromPlanet, toPlanet, {});

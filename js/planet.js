@@ -2,9 +2,6 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    //resources:
-    ploxworld.RESOURCE_SUPPLY = "supply";
-
     var MIN_SUPPLY_FOR_EXPORT = 50;
     var POP_DECREASE_AT_STARVATION = 0.01;
 
@@ -55,6 +52,7 @@
      * Calculates the actual trade routes. First calculates needs and stuff
      */
     ploxworld.calculateTradeRoutes = function () {
+        console.log("calculateTradeRoutes");
         _.each(ploxworld.planets, function (planet) {
             planet.calculateNeeds();
         });
@@ -118,13 +116,13 @@
             //XXX make this more dynamic or something:
             this.supply = this.supply - eaten;
             if (this.supply > 0) {
-                this.supply--;
                 if (this.pop < this.maxPop) {
                     this.pop++;
                 }
             }
         } else {
             //starvation!
+//            console.log("starvation at " + this.objectName);
             var popDecrease = Math.max(this.pop * POP_DECREASE_AT_STARVATION, 1);
             this.pop = (Math.max(this.pop - popDecrease, 1)) | 0;
         }
@@ -186,7 +184,7 @@
                 }
 
                 //does the planet need resources, and can we get to it?
-                if (planet.supplyNeed > 0 && this.safeWayTo[planet.objectName]) {
+                if (planet.supplyNeed >= 0 && this.safeWayTo[planet.objectName]) {
                     var exportNumber = Math.min(planet.supplyNeed, -this.supplyNeed);
                     var tradeRoute = new ploxworld.TradeRoute(this, planet, ploxworld.RESOURCE_SUPPLY, exportNumber);
                     this.tradeRoutes.push(tradeRoute);

@@ -23,15 +23,15 @@
         this.pending = 0; //the amount of resources that should already have been sent
         ploxworld.traderoutes.push(this);
         addRouteParts(this);
-        console.log("new traderoute from " + fromPlanet.objectName + " to " + toPlanet.objectName);
+//        console.log("new traderoute from " + fromPlanet.objectName + " to " + toPlanet.objectName);
     };
 
     var TradeRoute = ploxworld.TradeRoute;
 
     TradeRoute.prototype.tic = function () {
         this.pending += this.amount;
-        if(this.pending > 5) {
-            new ploxworld.TradeShip(this.fromPlanet, this.toPlanet, {resource:5});
+        if (this.pending > 5) {
+            new ploxworld.TradeShip(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, 5)});
             this.pending -= 5;
         }
     };
@@ -50,17 +50,13 @@
 
 //            console.log("step from " + fromPlanet.objectName + " to " + nextPlanet.objectName);
 
-//            try {
             var key;
             //make sure they always come in the same alphabetical order:
-            if (fromPlanet.objectName.localeCompare(nextPlanet.objectName) < 0) {
+            if (fromPlanet.objectName.localeCompare(nextPlanet.objectName) > 0) {
                 key = nextPlanet.objectName + "_" + fromPlanet.objectName;
             } else {
                 key = fromPlanet.objectName + "_" + nextPlanet.objectName;
             }
-//            } catch (e) {
-//                console.log("stacktrace: " + e.stack);
-//            }
 
 //            console.log("new trade route part from " + fromPlanet.objectName + " to " + nextPlanet.objectName);
             var tradeRoutePart = ploxworld.traderouteParts[key];

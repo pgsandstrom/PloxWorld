@@ -19,7 +19,7 @@ function Controller($scope) {
         });
     };
 
-    $scope.tic = function () {
+    $scope.tic = ploxworld.tic = function () {
 
         tics++;
 
@@ -38,6 +38,11 @@ function Controller($scope) {
         angular.forEach($scope.planets, function (planet) {
             planet.tic();
         });
+
+        //XXX maybe do this an even 20 turns after alliance change instead, to avoid redundancy?
+        if(tics % 20 === 0) {
+           ploxworld.calculateTradeRoutes();
+        }
     };
 
     $scope.calculateTradeMap = function () {
@@ -68,10 +73,6 @@ function Controller($scope) {
         });
     };
 
-    $scope.majs = function (planet) {
-        console.log("magic is in the air!");
-    }
-
     $scope.showPlanet = function (planet) {
         console.log("show planet: " + planet.objectName);
         $scope.selectedPlanet = planet;
@@ -79,6 +80,11 @@ function Controller($scope) {
     };
 
     $("#selected-planet").hide();
+
+    //forward the time some, so the world is a bit populated:
+    for(var i=0;i<50;i++) {
+        ploxworld.tic();
+    }
 
     //some failed jquery code, FUCK that shit:
 

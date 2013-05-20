@@ -57,11 +57,13 @@
         this.position = position;
         this.cargo = cargo;
 
-        //this feels kind of haxxy
+        //this feels kind of haxxy...
         ploxworld.ships.add(this);
     };
 
     var Ship = ploxworld.Ship;
+
+
 
     // define the TradeShip class
     ploxworld.TradeShip = function TradeShip(fromPlanet, toPlanet, cargo) {
@@ -75,6 +77,14 @@
     };
 
     var TradeShip = ploxworld.TradeShip;
+
+    //FIXME should be on Ship
+    TradeShip.prototype.offload = function() {
+        var me = this;
+        _.forEach(this.cargo, function (value, key) {
+            value.addTo(me.position.planet);
+        });
+    };
 
     //this is the lame way of extending:
 //    TradeShip.prototype = new Ship();
@@ -93,7 +103,7 @@
         } else {
             //is at planet, make decision!
             if (this.position.planet === this.toPlanet) {
-                //TODO offload resources
+                this.offload();
                 ploxworld.ships.remove(this);
             } else {
                 //travel to next planet:
@@ -103,7 +113,16 @@
                     this.tic(); //this should lead to a "travel tic"
                 } else {
                     console.log("omg no way to travel");
-                    //TODO omg, no longer a path to the planet
+                    this.toPlanet = this.fromPlanet;
+                    nextPlanet = this.position.planet.safeWayTo[this.toPlanet.objectName];
+                    if (nextPlanet !== undefined) {
+                        console.log("returning home");
+                        this.position = new Position(ploxworld.POSITION_TYPE_TRAVELING, this.position.planet, nextPlanet);
+                    } else {
+                        console.log("forever lost, offloading");
+                        this.offload();
+                        ploxworld.ships.remove(this);
+                    }
                 }
             }
         }
