@@ -3,15 +3,27 @@ function Controller($scope) {
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
 
-    //init stuff:
+    //scope variables:
     $scope.tics = 0;
-    $scope.planets = ploxworld.generatePlanets();
-    $scope.persons = ploxworld.generatePersons();
-    $scope.ships = ploxworld.ships;
-    $scope.tradeRoutes = ploxworld.traderoutes;
-
-    //info stuff:
+    $scope.planets = undefined;
+    $scope.persons = undefined;
+    $scope.ships = undefined;
+    $scope.tradeRoutes = undefined;
     $scope.totPop = 0;
+
+    $scope.startGame = function () {
+        $scope.tics = 0;
+        $scope.planets = ploxworld.generatePlanets();
+        $scope.persons = ploxworld.generatePersons();
+        $scope.ships = ploxworld.ships;
+        $scope.tradeRoutes = ploxworld.traderoutes;
+        $scope.totPop = 0;
+
+        //forward the time some, so the world is a bit populated:
+        for (var i = 0; i < 50; i++) {
+            ploxworld.tic();
+        }
+    };
 
     $scope.selectedPlanet = ploxworld.getRandomPlanet();
 //    console.log("selectedPlanet: " + $scope.selectedPlanet.objectName);
@@ -53,6 +65,60 @@ function Controller($scope) {
         ploxworld.calculateTradeMap();
     };
 
+    $scope.renderRelationMap = ploxworld.renderRelationMap = function () {
+        //XXX should this really be here in the controller?
+        console.log("renderRelationMap");
+
+        var container = $("#empire-relations");
+
+        container.empty();
+
+        var root = $(document.createElement('div'));
+        var empireList = ploxworld.empireList;
+
+        var empireNames = $(document.createElement('div'));
+        empireNames.addClass("float-left");
+
+        //the empty square:
+        var empireName = $(document.createElement('div'));
+        empireName.addClass("relation-name");
+        empireNames.append(empireName);
+
+        //empire names
+        _.forEach(empireList, function (empire) {
+            var empireName = $(document.createElement('div'));
+            empireName.addClass("relation-name");
+            empireName.css("background", empire.color);
+            empireName.text(empire.objectName);
+            empireNames.append(empireName);
+        });
+        root.append(empireNames);
+
+        //the relations:
+        _.forEach(empireList, function (empire) {
+            var empireRow = $(document.createElement('div'));
+            empireRow.addClass("float-left");
+            var empireColorSquare = $(document.createElement('div'));
+            empireColorSquare.addClass("relation-square");
+            empireColorSquare.css("background", empire.color);
+            empireRow.append(empireColorSquare);
+            _.forEach(empireList, function (otherEmpire) {
+                var relationSquare = $(document.createElement('div'));
+                relationSquare.addClass("relation-square");
+                if (empire === otherEmpire) {
+                    relationSquare.css("background", "black");
+                } else {
+                    relationSquare.css("background", empire.empireRelations[otherEmpire.objectName].getColor()); //TODO base it on relation instead
+                }
+                empireRow.append(relationSquare);
+            });
+            root.append(empireRow);
+        });
+
+
+        container.append(root);
+    };
+
     $scope.addTodo = function () {
         $scope.todos.push({text: $scope.todoText, done: false});
         $scope.todoText = '';
@@ -83,7 +149,8 @@ function Controller($scope) {
         ploxworld.showDialog("selected-planet");
     };
 
-    $(document).keyup(function (event) {
+    //must  be keydown to prevent window from scrolling on space etc.
+    $(document).keydown(function (event) {
         //code to ignore buttons, if I would like that:
         if (event.target.tagName === 'BUTTON' && (event.which === 32 || event.which === 13)) { // space and enter
             return;
@@ -93,11 +160,13 @@ function Controller($scope) {
         switch (event.which) {
             case 27: // esc
                 ploxworld.closeDialog();
+                event.preventDefault();
                 break;
             case 32:// space
                 $scope.$apply(function () {
                     ploxworld.tic();
                 });
+                event.preventDefault();
                 break;
 
         }
@@ -105,10 +174,7 @@ function Controller($scope) {
 
     $("#selected-planet").hide();
 
-    //forward the time some, so the world is a bit populated:
-    for (var i = 0; i < 50; i++) {
-        ploxworld.tic();
-    }
+    $scope.startGame();
 
     //some failed jquery code, FUCK that shit:
 

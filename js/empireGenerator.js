@@ -82,6 +82,9 @@
             }
         }
 
+        //render the empires relationships:
+        ploxworld.renderRelationMap();
+
         //For testing
 //        var fromPlanet = ploxworld.planets["Tellus"];
 //        var toPlanet = ploxworld.planets["Mars"];

@@ -49,3 +49,14 @@ body {
     float: left;
 }
 
+.relation-name {
+    height: 20px;
+    border: 1px solid black
+}
+
+.relation-square {
+    height: 20px;
+    width: 20px;
+    border: 1px solid black
+}
+

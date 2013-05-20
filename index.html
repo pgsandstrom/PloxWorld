@@ -58,17 +58,57 @@
 
 <div id="info">
     <ul class="nav nav-tabs">
-        <li id="tab-galaxy" class="active" >
-            <a href="#tab1" data-toggle="tab">Galaxy</a>
-        </li>
-        <li id="tab-empires" ><a href="#tab2" data-toggle="tab">Empires</a></li>
+        <li id="tab-galaxy"><a href="#tab1" data-toggle="tab">Galaxy</a></li>
+        <li id="tab-empires" class="active"><a href="#tab2" data-toggle="tab">Empires</a></li>
         <li id="tab-whaeva"><a href="#">whaeva</a></li>
     </ul>
 
     <div class="tab-content">
-        <div id="tab1" class="tab-pane active">Stardate: {{4000+tics/10}}</div>
-        <div id="tab1" class="tab-pane active">Total population: {{totPop}}</div>
-        <div id="tab2" class="tab-pane">tab2 content</div>
+        <div id="tab1" class="tab-pane ">
+            <p> Stardate: {{4000+tics/10}}</p>
+
+            <p> Total population: {{totPop}}</p>
+        </div>
+
+        <div id="tab2" class="tab-pane active">
+
+            <h5>Empire relations</h5>
+
+            <div id="empire-relations"></div>
+
+            <!--<div style="float:left">-->
+            <!--<div class="relation-name" style="background: white">.</div>-->
+            <!--<div class="relation-name" style="background: red">ett lag</div>-->
+            <!--<div class="relation-name" style="background: green">a</div>-->
+            <!--<div class="relation-name" style="background: blue">a</div>-->
+            <!--</div>-->
+
+            <!--<div style="float:left">-->
+            <!--<div class="relation-square" style="background: chartreuse"></div>-->
+            <!--<div class="relation-square" style="background: firebrick"></div>-->
+            <!--<div class="relation-square" style="background: chartreuse"></div>-->
+            <!--<div class="relation-square" style="background: firebrick"></div>-->
+            <!--</div>-->
+            <!--<div style="float:left">-->
+            <!--<div class="relation-square" style="background: chartreuse"></div>-->
+            <!--<div class="relation-square" style="background: firebrick"></div>-->
+            <!--<div class="relation-square" style="background: chartreuse"></div>-->
+            <!--<div class="relation-square" style="background: firebrick"></div>-->
+            <!--</div>-->
+            <!--<div style="float:left">-->
+            <!--<div class="relation-square" style="background: firebrick"></div>-->
+            <!--<div class="relation-square" style="background: chartreuse"></div>-->
+            <!--<div class="relation-square" style="background: firebrick"></div>-->
+            <!--<div class="relation-square" style="background: chartreuse"></div>-->
+            <!--</div>-->
+            <!--<div style="float:left">-->
+            <!--<div class="relation-square" style="background: chartreuse"></div>-->
+            <!--<div class="relation-square" style="background: firebrick"></div>-->
+            <!--<div class="relation-square" style="background: chartreuse"></div>-->
+            <!--<div class="relation-square" style="background: firebrick"></div>-->
+            <!--</div>-->
+
+        </div>
     </div>
 </div>
 

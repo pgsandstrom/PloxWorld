@@ -53,6 +53,18 @@
 
     var EmpireRelation = ploxworld.EmpireRelation;
 
-//    EmpireRelation.prototype.test = function () {
-//    };
+    EmpireRelation.prototype.getColor = function () {
+        switch (this.state) {
+            case ploxworld.RELATION_STATE_WAR:
+                return "red";
+            case ploxworld.RELATION_STATE_NEUTRAL:
+                return "gray";
+            case ploxworld.RELATION_STATE_FRIENDLY:
+                return "green";
+                break;
+            case ploxworld.RELATION_STATE_ALLIANCE:
+                return "blue";
+                break;
+        }
+    };
 })();
