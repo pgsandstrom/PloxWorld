@@ -23,25 +23,24 @@ function Controller($scope) {
 
         tics++;
 
-        angular.forEach($scope.tradeRoutes, function (tradeRoute) {
-            //TODO how?
-            tradeRoute.tic();
-        });
-
-        angular.forEach($scope.planets, function (planet) {
-            planet.tic();
+        angular.forEach($scope.ships, function (ship) {
+            ship.tic();
         });
 
         angular.forEach($scope.persons, function (person) {
             person.tic();
         });
 
-        angular.forEach($scope.ships, function (ship) {
-            ship.tic();
+        angular.forEach($scope.tradeRoutes, function (tradeRoute) {
+            tradeRoute.tic();
+        });
+
+        angular.forEach($scope.planets, function (planet) {
+            planet.tic();
         });
     };
 
-    $scope.calculateTradeMap = function() {
+    $scope.calculateTradeMap = function () {
         ploxworld.calculateTradeMap();
     };
 
