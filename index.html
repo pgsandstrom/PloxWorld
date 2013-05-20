@@ -17,33 +17,37 @@
     menus lol
 </div>
 
-<div id="map">
+<div id="map-container">
+    <div id="map">
 
-    <div id="canvas-container" class="absolute">
-        <canvas width="960" height="600" id="canvas"/>
-    </div>
+        <div id="canvas-container" class="absolute">
+            <canvas width="960" height="600" id="canvas"/>
+        </div>
 
-    <!--planets-->
-    <!-- -15 comes from half the planet size, so the center of the planet image always is the planet position -->
-    <div ng-repeat="object in planets" class="absolute"
-         ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
-        <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
-        <a ng-click="showPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
+        <!--planets-->
+        <!-- -15 comes from half the planet size, so the center of the planet image always is the planet position -->
+        <div ng-repeat="object in planets" class="absolute"
+             ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
+            <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
+            <a ng-click="showPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
         <span ng-style="{'color': (object.getColor())}">{{object.objectName}}<span/>
-    </div>
+        </div>
 
-    <!--ships-->
-    <div ng-repeat="object in ships" class="absolute ship" ui-fade-toggle="object.position.x"
-         ng-style="{'top': (object.position.y-6)+'px','left': (object.position.x-3)+'px'}">
-        <img src="img/ship.png"/>
-    </div>
+        <!--ships-->
+        <div ng-repeat="object in ships" class="absolute ship" ui-fade-toggle="object.position.x"
+             ng-style="{'top': (object.position.y-6)+'px','left': (object.position.x-3)+'px'}">
+            <img src="img/ship.png"/>
+        </div>
 
+
+    </div>
     <div id="selected-planet" class="absolute">
 
         <button class="close-button">close</button>
 
         <div id="planet-info">
-            <p>{{selectedPlanet.objectName}}</p>
+            <h5>{{selectedPlanet.objectName}}</h5>
+            <h6><a ng-click="showEmpire(object)" href="javascript:void(0)">Part of {{selectedPlanet.empire.objectName}}</a></h6>
 
             <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
 
@@ -113,9 +117,8 @@
 </div>
 
 <div id="actions">
-    <button ng-click="movePlanet()" class="btn-primary">move planet</button>
-    <button ng-click="movePerson()" class="btn-primary">move person</button>
     <button ng-click="tic()" class="btn-primary">tic</button>
+    <button ng-click="startGame()" class="btn-primary">new game</button>
     <button ng-click="calculateTradeMap()" class="btn-primary">test</button>
 </div>
 

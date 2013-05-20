@@ -11,12 +11,6 @@
 
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-//        context.moveTo(50, 50);
-//        context.lineTo(250, 300);
-//
-//        context.moveTo(50, 80);
-//        context.lineTo(250, 300);
-
         for (var tradeRoutePartKey in ploxworld.traderouteParts) {
             var tradeRoutePart = ploxworld.traderouteParts[tradeRoutePartKey];
 
@@ -36,7 +30,6 @@
             context.stroke();
 //            console.log("color: " + context.strokeStyle);
         }
-
 
     };
 

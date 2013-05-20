@@ -11,13 +11,16 @@ body {
     float: left;
 }
 
-#map {
+#map-container {
     float: left;
     width: 960px;
     height: 600px;
     background: black;
     position: relative;
     color: white;
+}
+
+#map {
     font: 80%/0 sans-serif;
 }
 
@@ -30,8 +33,10 @@ body {
 }
 
 #planet-info {
+    font: 100%/1.5 sans-serif;
     float: left;
     color: black;
+    margin: 10px 10px;
 }
 
 .close-button {

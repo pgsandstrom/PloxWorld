@@ -5,8 +5,6 @@
     ploxworld.POSITION_TYPE_PLANET = 1;
     ploxworld.POSITION_TYPE_TRAVELING = 2;
 
-    ploxworld.ships = new Set();
-
     /**
      *
      * @param positionType One of the POSITION_TYPE_ constants

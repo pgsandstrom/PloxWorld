@@ -10,8 +10,10 @@ function Controller($scope) {
     $scope.ships = undefined;
     $scope.tradeRoutes = undefined;
     $scope.totPop = 0;
+    $scope.selectedPlanet = undefined;
 
     $scope.startGame = function () {
+        //TODO why does everything crash when this is run twice?
         $scope.tics = 0;
         $scope.planets = ploxworld.generatePlanets();
         $scope.persons = ploxworld.generatePersons();
@@ -24,9 +26,6 @@ function Controller($scope) {
             ploxworld.tic();
         }
     };
-
-    $scope.selectedPlanet = ploxworld.getRandomPlanet();
-//    console.log("selectedPlanet: " + $scope.selectedPlanet.objectName);
 
     $scope.movePlanet = function () {
         angular.forEach($scope.planets, function (planet) {
@@ -114,7 +113,6 @@ function Controller($scope) {
             });
             root.append(empireRow);
         });
-
 
         container.append(root);
     };

@@ -4,9 +4,6 @@
 
     var PERSON_COUNT = 25;
 
-    ploxworld.persons = {};
-    ploxworld.personList = [];
-
     ploxworld.generatePersons = function () {
 
         var names = ['Bengt'];
@@ -18,6 +15,7 @@
             return name;
         };
 
+        //global variables:
         ploxworld.persons = {};
         ploxworld.personList = [];
 

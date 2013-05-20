@@ -5,9 +5,6 @@
     var MIN_SUPPLY_FOR_EXPORT = 50;
     var POP_DECREASE_AT_STARVATION = 0.01;
 
-    //all planets ordered after supply need:
-    var supplyNeedList = [];
-
     //support methods:
     ploxworld.getRandomPlanet = function () {
         var randomPlanet = ploxworld.planetList[Math.floor(Math.random() * ploxworld.planetList.length)];
@@ -69,10 +66,10 @@
     };
 
     function calculateNeedLists() {
-        if (supplyNeedList.length === 0) {
-            supplyNeedList = ploxworld.planetList.slice();
+        if (ploxworld.supplyNeedList.length === 0) {
+            ploxworld.supplyNeedList = ploxworld.planetList.slice();
         }
-        supplyNeedList.sort(function closest(a, b) {
+        ploxworld.supplyNeedList.sort(function closest(a, b) {
             return b.supplyNeedImportance - a.supplyNeedImportance;
         });
     }
@@ -169,13 +166,13 @@
 
         //negative supplyNeed means they can export
         if (this.supplyNeed < 0 && this.supply > MIN_SUPPLY_FOR_EXPORT) {
-            for (var i = 0; i < supplyNeedList.length; i++) {
+            for (var i = 0; i < ploxworld.supplyNeedList.length; i++) {
 
                 //abort if we have no more resources to export
                 if (this.supplyNeed >= 0) {
                     break;
                 }
-                var planet = supplyNeedList[i];
+                var planet = ploxworld.supplyNeedList[i];
 
                 //if relations are not good enough, ignore:
                 if (this.empire !== planet.empire && this.empire.getRelation(planet.empire).state < ploxworld.RELATION_STATE_FRIENDLY) {

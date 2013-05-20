@@ -5,8 +5,8 @@
     var EMPIRE_COUNT = 4;
     var MIN_START_PLANETS = 3;
 
-    ploxworld.empires = {};
-    ploxworld.empireList = [];
+//    ploxworld.empires = {};
+//    ploxworld.empireList = [];
 
     ploxworld.generateEmpires = function () {
 
@@ -22,6 +22,7 @@
             return {"name": name, "color": color};
         };
 
+        //global variables:
         ploxworld.empires = {};
         ploxworld.empireList = [];
 

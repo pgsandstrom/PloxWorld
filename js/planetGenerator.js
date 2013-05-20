@@ -8,9 +8,6 @@
     var PLANETS_MIN_DISTANCE = 40;
     var PLANET_COUNT = 25;
 
-    ploxworld.planets = {};
-    ploxworld.planetList = [];
-
     //XXX rename to "generate universe" or something
     ploxworld.generatePlanets = function () {
 
@@ -30,8 +27,13 @@
             return name;
         };
 
+        //instanciate the global variables here, so we know they are reset when starting a new round!
         ploxworld.planets = {};
         ploxworld.planetList = [];
+
+        //all planets ordered after supply need:
+        ploxworld.supplyNeedList = [];
+        ploxworld.ships = new Set();
 
         var planetCount = PLANET_COUNT;
         while (planetCount) {

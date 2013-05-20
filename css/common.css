@@ -11,10 +11,6 @@ body {
     clear: both;
 }
 
-.inline {
-    display: inline;
-}
-
 .block {
     display: block;
 }
