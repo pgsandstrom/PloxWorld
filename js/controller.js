@@ -2,13 +2,16 @@ function Controller($scope) {
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    var tics = 0;
 
     //init stuff:
+    $scope.tics = 0;
     $scope.planets = ploxworld.generatePlanets();
     $scope.persons = ploxworld.generatePersons();
     $scope.ships = ploxworld.ships;
     $scope.tradeRoutes = ploxworld.traderoutes;
+
+    //info stuff:
+    $scope.totPop = 0;
 
     $scope.selectedPlanet = ploxworld.getRandomPlanet();
 //    console.log("selectedPlanet: " + $scope.selectedPlanet.objectName);
@@ -20,8 +23,7 @@ function Controller($scope) {
     };
 
     $scope.tic = ploxworld.tic = function () {
-
-        tics++;
+        $scope.tics++;
 
         angular.forEach($scope.ships, function (ship) {
             ship.tic();
@@ -35,13 +37,15 @@ function Controller($scope) {
             tradeRoute.tic();
         });
 
+        $scope.totPop = 0;
         angular.forEach($scope.planets, function (planet) {
             planet.tic();
+            $scope.totPop += planet.pop;
         });
 
         //XXX maybe do this an even 20 turns after alliance change instead, to avoid redundancy?
-        if(tics % 20 === 0) {
-           ploxworld.calculateTradeRoutes();
+        if ($scope.tics % 20 === 0) {
+            ploxworld.calculateTradeRoutes();
         }
     };
 
@@ -79,10 +83,30 @@ function Controller($scope) {
         ploxworld.showDialog("selected-planet");
     };
 
+    $(document).keyup(function (event) {
+        //code to ignore buttons, if I would like that:
+        if (event.target.tagName === 'BUTTON' && (event.which === 32 || event.which === 13)) { // space and enter
+            return;
+        }
+//        console.log("keyup: " + event.which);
+
+        switch (event.which) {
+            case 27: // esc
+                ploxworld.closeDialog();
+                break;
+            case 32:// space
+                $scope.$apply(function () {
+                    ploxworld.tic();
+                });
+                break;
+
+        }
+    });
+
     $("#selected-planet").hide();
 
     //forward the time some, so the world is a bit populated:
-    for(var i=0;i<50;i++) {
+    for (var i = 0; i < 50; i++) {
         ploxworld.tic();
     }
 
@@ -104,5 +128,6 @@ function Controller($scope) {
 //        console.log("selected planet: " + $scope.selectedPlanet.objectName);
 ////        $("#selected-planet").show();
 //    });
-//
+
+//    $("#tab-empires a").tab('show');
 }

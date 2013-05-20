@@ -2,7 +2,7 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    //TODO I bet there is a angularjs way to handle dialogs instead...
+    //XXX I bet there is a angularjs way to handle dialogs instead...
 
     ploxworld.dialogs = [];
     var dialogs = ploxworld.dialogs;
@@ -26,10 +26,5 @@
         }
     };
 
-    $(document).keyup(function (e) {
-        if (e.which === 27) {
-            ploxworld.closeDialog();
-        }
-    });
 })();
 

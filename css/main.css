@@ -1,5 +1,5 @@
 body {
-    max-width: 1360px;
+    max-width: 1460px;
 }
 
 #title {
@@ -39,7 +39,7 @@ body {
 }
 
 #info {
-    width: 200px;
+    width: 300px;
     float: left;
 }
 

@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/animation.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body ng-controller="Controller">
 
@@ -56,14 +57,26 @@
 
 
 <div id="info">
-    <p class="inline"> info</p>
+    <ul class="nav nav-tabs">
+        <li id="tab-galaxy" class="active" >
+            <a href="#tab1" data-toggle="tab">Galaxy</a>
+        </li>
+        <li id="tab-empires" ><a href="#tab2" data-toggle="tab">Empires</a></li>
+        <li id="tab-whaeva"><a href="#">whaeva</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="tab1" class="tab-pane active">Stardate: {{4000+tics/10}}</div>
+        <div id="tab1" class="tab-pane active">Total population: {{totPop}}</div>
+        <div id="tab2" class="tab-pane">tab2 content</div>
+    </div>
 </div>
 
 <div id="actions">
     <button ng-click="movePlanet()" class="btn-primary">move planet</button>
-    <button ng-click="movePerson()">move person</button>
-    <button ng-click="tic()">tic</button>
-    <button ng-click="calculateTradeMap()">test</button>
+    <button ng-click="movePerson()" class="btn-primary">move person</button>
+    <button ng-click="tic()" class="btn-primary">tic</button>
+    <button ng-click="calculateTradeMap()" class="btn-primary">test</button>
 </div>
 
 <!--XXX use minimilized angular someday in the FUTURE-->
@@ -74,6 +87,7 @@
 <script src="js/underscore-min.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/angular.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script src="js/seedrandom.js"></script>
 
 <script src="js/common.js"></script>

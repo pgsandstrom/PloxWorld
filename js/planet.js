@@ -184,7 +184,7 @@
                 }
 
                 //does the planet need resources, and can we get to it?
-                if (planet.supplyNeed >= 0 && this.safeWayTo[planet.objectName]) {
+                if (planet.supplyNeed > 0 && this.safeWayTo[planet.objectName]) {
                     var exportNumber = Math.min(planet.supplyNeed, -this.supplyNeed);
                     var tradeRoute = new ploxworld.TradeRoute(this, planet, ploxworld.RESOURCE_SUPPLY, exportNumber);
                     this.tradeRoutes.push(tradeRoute);
