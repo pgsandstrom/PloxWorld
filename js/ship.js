@@ -6,6 +6,7 @@
     ploxworld.POSITION_TYPE_TRAVELING = 2;
 
     /**
+     * The position of a ship
      *
      * @param positionType One of the POSITION_TYPE_ constants
      * @param planet The current planet, or planet traveling from
@@ -45,14 +46,12 @@
         }
     };
 
-    //super class:
-    ploxworld.Ship = function Ship(position, cargo) {
-//        console.log("ship constructor");
+    ploxworld.Ship = function Ship(planet, cargo) {
         this.speed = 30;
         this.health = 5;
         this.attack = 2;
         this.aim = 3;
-        this.position = position;
+        this.position = new ploxworld.Position(ploxworld.POSITION_TYPE_PLANET, planet, undefined);
         this.cargo = cargo;
 
         //this feels kind of haxxy...
@@ -61,65 +60,30 @@
 
     var Ship = ploxworld.Ship;
 
-    Ship.prototype.offload = function() {
+    Ship.prototype.setOwner = function (owner) {
+        this.owner = owner;
+    };
+
+    Ship.prototype.offload = function () {
         var me = this;
-        _.forEach(this.cargo, function (value, key) {
+        _.forEach(this.cargo, function (value) {
             value.addTo(me.position.planet);
         });
     };
 
-    // define the TradeShip class
-    ploxworld.TradeShip = function TradeShip(fromPlanet, toPlanet, cargo) {
-//        console.log("tradeship constructor");
-        // Call the parent constructor
-        var position = new Position(ploxworld.POSITION_TYPE_PLANET, fromPlanet);
-        Ship.call(this, position, cargo);
-
-        this.fromPlanet = fromPlanet;
-        this.toPlanet = toPlanet;
-    };
-
-    var TradeShip = ploxworld.TradeShip;
-
-    //this is the lame way of extending:
-//    TradeShip.prototype = new Ship();
-//    TradeShip.prototype.constructor = TradeShip;
-
-    //inherit in our cool and awesome way:
-    extend(Ship, TradeShip);
-
-    TradeShip.prototype.tic = function () {
+    Ship.prototype.tic = function () {
 //        console.log("ship tic!");
         if (this.position.positionType === ploxworld.POSITION_TYPE_TRAVELING) {
-            if (this.position.travel(this.speed)) {
-                //arrived!
-                this.position = new Position(ploxworld.POSITION_TYPE_PLANET, this.position.toPlanet);
-            }
+            this.travel();
         } else {
-            //is at planet, make decision!
-            if (this.position.planet === this.toPlanet) {
-                this.offload();
-                ploxworld.ships.remove(this);
-            } else {
-                //travel to next planet:
-                var nextPlanet = this.position.planet.safeWayTo[this.toPlanet.objectName];
-                if (nextPlanet !== undefined) {
-                    this.position = new Position(ploxworld.POSITION_TYPE_TRAVELING, this.position.planet, nextPlanet);
-                    this.tic(); //this should lead to a "travel tic"
-                } else {
-                    console.log("omg no way to travel");
-                    this.toPlanet = this.fromPlanet;
-                    nextPlanet = this.position.planet.safeWayTo[this.toPlanet.objectName];
-                    if (nextPlanet !== undefined) {
-                        console.log("returning home");
-                        this.position = new Position(ploxworld.POSITION_TYPE_TRAVELING, this.position.planet, nextPlanet);
-                    } else {
-                        console.log("forever lost, offloading");
-                        this.offload();
-                        ploxworld.ships.remove(this);
-                    }
-                }
-            }
+            this.owner.decision(this);
+        }
+    };
+
+    Ship.prototype.travel = function () {
+        if (this.position.travel(this.speed)) {
+            //arrived!
+            this.position = new Position(ploxworld.POSITION_TYPE_PLANET, this.position.toPlanet);
         }
     };
 

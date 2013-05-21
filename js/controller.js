@@ -3,19 +3,18 @@ function Controller($scope) {
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
 
-    //scope variables:
-    $scope.tics = 0;
-    $scope.planets = undefined;
-    $scope.persons = undefined;
-    $scope.ships = undefined;
-    $scope.tradeRoutes = undefined;
-    $scope.totPop = 0;
-    $scope.selectedPlanet = undefined;
+
 
     $scope.startGame = function () {
+
+        ploxworld.resetPersonNamePool();
+
         $scope.tics = 0;
         $scope.planets = ploxworld.generatePlanets();
         $scope.persons = ploxworld.generatePersons();
+        ploxworld.generateEmpires();
+        ploxworld.calculateTradeMap();
+
         $scope.ships = ploxworld.ships;
         $scope.tradeRoutes = ploxworld.traderoutes;
         $scope.totPop = 0;
@@ -35,18 +34,24 @@ function Controller($scope) {
     $scope.tic = ploxworld.tic = function () {
         $scope.tics++;
 
-        angular.forEach($scope.ships, function (ship) {
-            ship.tic();
-        });
+        //TODO first ask player about command?
 
+        //each person makes decision, like where to travel etc
         angular.forEach($scope.persons, function (person) {
             person.tic();
         });
 
+        //all the ships move
+        angular.forEach($scope.ships, function (ship) {
+            ship.tic();
+        });
+
+        //trade routes create ships
         angular.forEach($scope.tradeRoutes, function (tradeRoute) {
             tradeRoute.tic();
         });
 
+        //planet calculates their new status
         $scope.totPop = 0;
         angular.forEach($scope.planets, function (planet) {
             planet.tic();

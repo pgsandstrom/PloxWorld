@@ -31,7 +31,8 @@
     TradeRoute.prototype.tic = function () {
         this.pending += this.amount;
         if (this.pending > 5) {
-            new ploxworld.TradeShip(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, 5)});
+//            new ploxworld.TradeShip(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, 5)});
+            ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, 5)});
             this.pending -= 5;
         }
     };

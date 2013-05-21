@@ -16,16 +16,15 @@
         };
 
         //global variables:
-        ploxworld.persons = {};
-        ploxworld.personList = [];
+        ploxworld.persons = new Set();
 
-        var personCount = PERSON_COUNT;
-        while (personCount) {
-            var person = ploxworld.makePerson(takeFreeName());
-            ploxworld.personList.push(person);
-            ploxworld.persons[person.objectName] = person;
-            personCount--;
-        }
+//        var personCount = PERSON_COUNT;
+//        while (personCount) {
+//            var person = ploxworld.makePerson(takeFreeName());
+//            ploxworld.persons[person.objectName] = person;
+//            personCount--;
+//        }
+
 
         return ploxworld.persons;
     };

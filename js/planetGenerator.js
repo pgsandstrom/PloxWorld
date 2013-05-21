@@ -77,11 +77,6 @@
 //            }
 //        }
 
-        ploxworld.generateEmpires();
-
-        //calculate initial trade map:
-        ploxworld.calculateTradeMap();
-
         return ploxworld.planets;
     };
 

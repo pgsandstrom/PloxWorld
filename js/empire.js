@@ -7,7 +7,7 @@
     ploxworld.RELATION_STATE_FRIENDLY = 1;    // will trade
     ploxworld.RELATION_STATE_ALLIANCE = 2;    // share wars
 
-
+    //TODO should take ruler
     ploxworld.makeEmpire = function (name, color) {
         return new Empire(name, color);
     };
@@ -20,7 +20,7 @@
         this.empireRelations = {};
 
         ploxworld.empireList.forEach(function (empire) {
-            var empireRelation = new EmpireRelation();
+            var empireRelation = new EmpireRelation(50);    //TODO should take the relation between the rulers
 
             me.addRelation(empire, empireRelation);
             empire.addRelation(me, empireRelation);
@@ -37,14 +37,18 @@
         return this.empireRelations[toEmpire.objectName];
     };
 
-    //relations between empires:
-    ploxworld.EmpireRelation = function EmpireRelation() {
-        this.value = (Math.random() * 200 - 100) | 0;
-        if (this.value < -50) {
+    /**
+     * Diplomatic state between empires
+     * @param value The relation value between the rulers
+     * @constructor
+     */
+    ploxworld.EmpireRelation = function EmpireRelation(value) {
+//        this.value = (Math.random() * 200 - 100) | 0;
+        if (value < -50) {
             this.state = ploxworld.RELATION_STATE_WAR;
-        } else if (this.value > 50) {
+        } else if (value > 50) {
             this.state = ploxworld.RELATION_STATE_ALLIANCE;
-        } else if (this.value > 40) {
+        } else if (value > 40) {
             this.state = ploxworld.RELATION_STATE_FRIENDLY;
         } else {
             this.state = ploxworld.RELATION_STATE_NEUTRAL;
