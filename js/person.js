@@ -169,6 +169,9 @@
     ploxworld.AiPerson = function AiPerson(name, isMale, ship) {
         //call makeAiPerson instead of this constructor
 
+        this.planet = undefined; //which planet he owns
+        this.empire = undefined; //which empire he owns
+
         Person.call(this, name, isMale, ship);
     };
 
@@ -176,7 +179,15 @@
 
     extend(Person, AiPerson);
 
-    AiPerson.prototype.tic = function() {
+    AiPerson.prototype.setPlanet = function (planet) {
+        this.planet = planet;
+    };
+
+    AiPerson.prototype.setEmpire = function (empire) {
+        this.empire = empire;
+    };
+
+    AiPerson.prototype.tic = function () {
         //TODO
         this.decision = decisionWait();
     };

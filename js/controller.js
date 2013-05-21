@@ -3,8 +3,6 @@ function Controller($scope) {
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
 
-
-
     $scope.startGame = function () {
 
         ploxworld.resetPersonNamePool();
@@ -152,6 +150,18 @@ function Controller($scope) {
         ploxworld.showDialog("selected-planet");
     };
 
+    $scope.showEmpire = function (empire) {
+        console.log("show empire: " + empire.objectName);
+        $scope.selectedEmpire = empire;
+        ploxworld.showDialog("selected-empire");
+    };
+
+    $scope.showPerson = function (person) {
+        console.log("show person: " + person.objectName);
+        $scope.selectedPerson = person;
+        ploxworld.showDialog("selected-person");
+    };
+
     //must  be keydown to prevent window from scrolling on space etc.
     $(document).keydown(function (event) {
         //code to ignore buttons, if I would like that:
@@ -175,7 +185,10 @@ function Controller($scope) {
         }
     });
 
+    //XXX hide in html instead
     $("#selected-planet").hide();
+    $("#selected-empire").hide();
+    $("#selected-person").hide();
 
     $scope.startGame();
 

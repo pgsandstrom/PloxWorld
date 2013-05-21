@@ -41,13 +41,15 @@
 
 
     </div>
-    <div id="selected-planet" class="absolute">
+    <div id="selected-planet" class="dialog">
 
         <button class="close-button">close</button>
 
-        <div id="planet-info">
+        <div class="dialog-content">
             <h5>{{selectedPlanet.objectName}}</h5>
-            <h6><a ng-click="showEmpire(object)" href="javascript:void(0)">Part of {{selectedPlanet.empire.objectName}}</a></h6>
+            <h6><a ng-click="showEmpire(selectedPlanet.empire)" href="javascript:void(0)">Part of {{selectedPlanet.empire.objectName}}</a></h6>
+
+            <h6><a ng-click="showPerson(selectedPlanet.owner)" href="javascript:void(0)">Leader: {{selectedPlanet.owner.objectName}}</a></h6>
 
             <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
 
@@ -56,6 +58,27 @@
             <p>Importance: {{selectedPlanet.importance}}</p>
         </div>
 
+    </div>
+
+    <div id="selected-empire" class="dialog">
+
+        <button class="close-button">close</button>
+
+        <div class="dialog-content">
+            <h5>{{selectedEmpire.objectName}}</h5>
+            <h6><a ng-click="showPerson(selectedEmpire.owner)" href="javascript:void(0)">Leader: {{selectedEmpire.owner.objectName}}</a></h6>
+        </div>
+    </div>
+
+    <div id="selected-person" class="dialog">
+
+        <button class="close-button">close</button>
+
+        <div class="dialog-content">
+            <h5>{{selectedPerson.objectName}}</h5>
+            <h4 ng-show="selectedPerson.empire"><a ng-click="showEmpire(selectedPerson.empire)" href="javascript:void(0)">Leader of {{selectedPerson.empire.objectName}}</a></h4>
+            <h4 ng-show="selectedPerson.planet"><a ng-click="showPlanet(selectedPerson.planet)" href="javascript:void(0)">Owner of {{selectedPerson.planet.objectName}}</a></h4>
+        </div>
     </div>
 </div>
 

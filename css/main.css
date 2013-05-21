@@ -24,21 +24,6 @@ body {
     font: 80%/0 sans-serif;
 }
 
-#selected-planet {
-    position: absolute;
-    background: white;
-    margin: 50px 50px;
-    width: 400px;
-    height: 400px;
-}
-
-#planet-info {
-    font: 100%/1.5 sans-serif;
-    float: left;
-    color: black;
-    margin: 10px 10px;
-}
-
 .close-button {
     float: right;
 }
@@ -63,5 +48,20 @@ body {
     height: 20px;
     width: 20px;
     border: 1px solid black
+}
+
+.dialog {
+    position: absolute;
+    background: white;
+    margin: 50px 50px;
+    width: 400px;
+    height: 400px;
+}
+
+.dialog-content {
+    font: 100%/1.5 sans-serif;
+    float: left;
+    color: black;
+    margin: 10px 10px;
 }
 

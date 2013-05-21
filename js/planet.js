@@ -132,6 +132,10 @@
         return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
     };
 
+    Planet.prototype.setOwner = function (person) {
+        this.owner = person;
+    };
+
     Planet.prototype.setEmpire = function (empire) {
         this.empire = empire;
     };

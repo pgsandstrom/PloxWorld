@@ -39,6 +39,7 @@
         while (true) {
             var empirePlanetCountMap = {};
             _.each(ploxworld.empires, function (empire) {
+                empire.planets = new Set();
                 empire.x = (Math.random() * (ploxworld.WORLD_SIZE_X - 200)) + 100;
                 empire.y = (Math.random() * (ploxworld.WORLD_SIZE_Y - 200)) + 100;
                 empirePlanetCountMap[empire.objectName] = 0;
@@ -52,15 +53,18 @@
                         closestEmpire = empire;
                         empireDistance = planet.getDistance(empire.x, empire.y);
                         empirePlanetCountMap[empire.objectName]++;
-                        planet.empire = empire;
+                        planet.setEmpire(empire);
+                        empire.planets.add(planet);
                     } else {
                         var newDistance = planet.getDistance(empire.x, empire.y);
                         if (newDistance < empireDistance) {
+                            closestEmpire.planets.remove(planet);
                             empirePlanetCountMap[closestEmpire.objectName]--;
                             empirePlanetCountMap[empire.objectName]++;
                             closestEmpire = empire;
                             empireDistance = newDistance;
-                            planet.empire = empire;
+                            planet.setEmpire(empire);
+                            empire.planets.add(planet);
                         }
                     }
                 });
@@ -79,11 +83,16 @@
             }
 
             if (valid) {
+                //assign leaders to the empires:
+                _.each(ploxworld.empires, function (empire) {
+                    var planet = empire.planets.getRandom();
+                    empire.setOwner(planet.owner);
+                    planet.owner.setEmpire(empire);
+                });
+
                 break;
             }
         }
-
-        //TODO assign leaders to the empires
 
         //render the empires relationships:
         ploxworld.renderRelationMap();

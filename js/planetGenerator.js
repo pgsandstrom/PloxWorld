@@ -50,8 +50,9 @@
             planetCount--;
 
             //assign leader:
-            var leader = ploxworld.makeAiPerson(undefined, planet);
-            //TODO
+            var leader = ploxworld.makeAiPerson(undefined, undefined, planet);
+            leader.setPlanet(planet);
+            planet.setOwner(leader);
         }
 
         //calculate cost of travel

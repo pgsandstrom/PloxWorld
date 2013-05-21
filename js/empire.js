@@ -17,6 +17,7 @@
         var me = this;
         this.objectName = name;
         this.color = color;
+//        this.planet = new Set();
         this.empireRelations = {};
 
         ploxworld.empireList.forEach(function (empire) {
@@ -28,6 +29,11 @@
     };
 
     var Empire = ploxworld.Empire;
+
+    Empire.prototype.setOwner = function (person) {
+        console.log("empire owner: " + person.objectName);
+        this.owner = person;
+    };
 
     Empire.prototype.addRelation = function (toEmpire, relation) {
         this.empireRelations[toEmpire.objectName] = relation;
@@ -65,10 +71,8 @@
                 return "gray";
             case ploxworld.RELATION_STATE_FRIENDLY:
                 return "green";
-                break;
             case ploxworld.RELATION_STATE_ALLIANCE:
                 return "blue";
-                break;
         }
     };
 })();

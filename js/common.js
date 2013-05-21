@@ -1,10 +1,22 @@
+//I know that this is evil, changin Array like this... but you know...
 Array.prototype.remove = function (from, to) {
     var rest = this.slice((to || from) + 1 || this.length);
     this.length = from < 0 ? this.length + from : from;
     return this.push.apply(this, rest);
 };
 
-//taken from http://stackoverflow.com/questions/4152931/javascript-inheritance-call-super-constructor-or-use-prototype-chain
+Array.prototype.getRandom = function () {
+    return this[Math.floor(Math.random() * this.length)];
+};
+
+Array.prototype.takeRandom = function () {
+    var index = Math.floor(Math.random() * this.length);
+    var item = this[index];
+    this.remove(index);
+    return item;
+};
+
+//extension stuff taken from http://stackoverflow.com/questions/4152931/javascript-inheritance-call-super-constructor-or-use-prototype-chain
 
 // This is a constructor that is used to setup inheritance without
 // invoking the base's constructor. It does nothing, so it doesn't
@@ -47,6 +59,31 @@ function extend(base, sub) {
 
     Set.prototype.remove = function (object) {
         delete this[object.__hash];
+    };
+
+    Set.prototype.getRandom = function () {
+        var result;
+        var count = 0;
+        for (var prop in this) {
+            if (this.hasOwnProperty(prop)) {
+                if (Math.random() < 1 / ++count) {
+                    result = prop;
+                }
+            }
+        }
+        return this[result];
+    };
+
+    Set.prototype.takeRandom = function () {
+        var result;
+        var count = 0;
+        for (var prop in this) {
+            if (Math.random() < 1 / ++count) {
+                result = prop;
+            }
+        }
+        this.remove(result);
+        return result;
     };
 
 //    var mySet = new Set();

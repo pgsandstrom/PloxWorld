@@ -3,6 +3,7 @@
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
     //XXX I bet there is a angularjs way to handle dialogs instead...
+    //TODO dialogs are still completely broken, they only show up in the order I specified in the html
 
     ploxworld.dialogs = [];
     var dialogs = ploxworld.dialogs;
