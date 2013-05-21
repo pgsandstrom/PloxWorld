@@ -13,7 +13,6 @@ function Controller($scope) {
     $scope.selectedPlanet = undefined;
 
     $scope.startGame = function () {
-        //TODO why does everything crash when this is run twice?
         $scope.tics = 0;
         $scope.planets = ploxworld.generatePlanets();
         $scope.persons = ploxworld.generatePersons();
@@ -107,7 +106,7 @@ function Controller($scope) {
                 if (empire === otherEmpire) {
                     relationSquare.css("background", "black");
                 } else {
-                    relationSquare.css("background", empire.empireRelations[otherEmpire.objectName].getColor()); //TODO base it on relation instead
+                    relationSquare.css("background", empire.empireRelations[otherEmpire.objectName].getColor());
                 }
                 empireRow.append(relationSquare);
             });

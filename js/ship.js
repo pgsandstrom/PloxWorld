@@ -61,7 +61,12 @@
 
     var Ship = ploxworld.Ship;
 
-
+    Ship.prototype.offload = function() {
+        var me = this;
+        _.forEach(this.cargo, function (value, key) {
+            value.addTo(me.position.planet);
+        });
+    };
 
     // define the TradeShip class
     ploxworld.TradeShip = function TradeShip(fromPlanet, toPlanet, cargo) {
@@ -76,20 +81,12 @@
 
     var TradeShip = ploxworld.TradeShip;
 
-    //FIXME should be on Ship
-    TradeShip.prototype.offload = function() {
-        var me = this;
-        _.forEach(this.cargo, function (value, key) {
-            value.addTo(me.position.planet);
-        });
-    };
-
     //this is the lame way of extending:
 //    TradeShip.prototype = new Ship();
 //    TradeShip.prototype.constructor = TradeShip;
 
     //inherit in our cool and awesome way:
-    extend(TradeShip, Ship);
+    extend(Ship, TradeShip);
 
     TradeShip.prototype.tic = function () {
 //        console.log("ship tic!");
