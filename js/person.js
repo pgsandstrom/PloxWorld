@@ -37,36 +37,32 @@
 
     /**
      *
-     * @param name
-     * @param planet
-     * @returns {ploxworld.TradePerson}
-     */
-    ploxworld.makeTradePerson = function (fromPlanet, toPlanet, cargo) {
-
-        var isMale = !!Math.round(Math.random());
-
-        var name;
-        if (isMale) {
-            name = takeMaleName();
-        } else {
-            name = takeFemaleName();
-        }
-
-        var ship = new ploxworld.Ship(fromPlanet, cargo);
-
-        return new TradePerson(name, isMale, fromPlanet, toPlanet, ship);
-    };
-
-    /**
-     *
      * @param name The name is the unique identifier of the person
      * @param isMale
+     * @param ship
      * @constructor
      */
-    ploxworld.Person = function Person(name, isMale) {
+    ploxworld.Person = function Person(name, isMale, ship) {
+
+        if (isMale === undefined) {
+            isMale = !!Math.round(Math.random());
+        }
+
+        if (name === undefined) {
+            if (isMale) {
+                name = takeMaleName();
+            } else {
+                name = takeFemaleName();
+            }
+        }
+
         this.objectName = name;
         this.isMale = isMale;
         this.relations = new Set();
+//        this.decision = ;
+
+        this.ship = ship;
+        this.ship.setOwner(this);
 
         ploxworld.persons.add(this);
     };
@@ -77,7 +73,7 @@
         var me = this;
 
         //remove relations:
-        _.forEach(this.relations, function(relation) {
+        _.forEach(this.relations, function (relation) {
             //XXX test this
             relation.getOther(me).removeRelation(relation);
         });
@@ -94,15 +90,25 @@
         this.relations.remove(relation);
     };
 
-    ploxworld.TradePerson = function TradePerson(name, isMale, fromPlanet, toPlanet, ship) {
+    /**
+     *
+     * @param name
+     * @param planet
+     * @returns {ploxworld.TradePerson}
+     */
+    ploxworld.makeTradePerson = function (atPlanet, toPlanet, cargo) {
+
+        var ship = ploxworld.makeShip(atPlanet, cargo);
+
+        return new TradePerson(undefined, undefined, ship, atPlanet, toPlanet);
+    };
+
+    ploxworld.TradePerson = function TradePerson(name, isMale, ship, atPlanet, toPlanet) {
         //call makeTradePerson instead of this constructor
 
-        this.fromPlanet = fromPlanet;
+        this.fromPlanet = atPlanet;
         this.toPlanet = toPlanet;
-        this.ship = ship;
-        this.ship.setOwner(this);
-//        this.decision = ;
-        Person.call(this, name, isMale);
+        Person.call(this, name, isMale, ship);
     };
 
     var TradePerson = ploxworld.TradePerson;
@@ -143,31 +149,37 @@
     };
 
     /**
-     *
-     * @param objectName
-     * @param planet If undefined, a random planet is assigned
+     * Any undefined parameter is randomized
+     * @param name
+     * @param isMale
+     * @param planet
      * @returns {ploxworld.AiPerson}
      */
-    ploxworld.makeAiPerson = function (objectName, planet) {
-//        console.log("objectName: " + objectName);
-//        console.log("x: " + x);
+    ploxworld.makeAiPerson = function (name, isMale, planet) {
 
         if (planet === undefined) {
             planet = ploxworld.getRandomPlanet();
         }
 
-        return new AiPerson(planet);
+        var ship = ploxworld.makeShip(planet);
+
+        return new AiPerson(name, isMale, ship);
     };
 
-    ploxworld.AiPerson = function AiPerson(planet) {
+    ploxworld.AiPerson = function AiPerson(name, isMale, ship) {
         //call makeAiPerson instead of this constructor
 
-        //TODO extend person
-        ploxworld.persons.add(this);
+        Person.call(this, name, isMale, ship);
     };
 
     var AiPerson = ploxworld.AiPerson;
 
+    extend(Person, AiPerson);
+
+    AiPerson.prototype.tic = function() {
+        //TODO
+        this.decision = decisionWait();
+    };
 
     //the decisions that persons can make, that the ship executes:
 

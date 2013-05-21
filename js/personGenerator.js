@@ -15,9 +15,6 @@
             return name;
         };
 
-        //global variables:
-        ploxworld.persons = new Set();
-
 //        var personCount = PERSON_COUNT;
 //        while (personCount) {
 //            var person = ploxworld.makePerson(takeFreeName());

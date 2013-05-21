@@ -8,6 +8,7 @@ function Controller($scope) {
     $scope.startGame = function () {
 
         ploxworld.resetPersonNamePool();
+        ploxworld.persons = new Set();
 
         $scope.tics = 0;
         $scope.planets = ploxworld.generatePlanets();

@@ -46,7 +46,19 @@
         }
     };
 
+    ploxworld.makeShip = function(planet, cargo) {
+        if(planet === undefined) {
+            ploxworld.getRandomPlanet();
+        }
+        if(cargo === undefined) {
+            cargo = {};
+        }
+
+        return new Ship(planet, cargo);
+    };
+
     ploxworld.Ship = function Ship(planet, cargo) {
+        //call makeShip instead of this constructor
         this.speed = 30;
         this.health = 5;
         this.attack = 2;

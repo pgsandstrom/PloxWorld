@@ -48,6 +48,10 @@
             ploxworld.planets[planet.objectName] = planet;
             ploxworld.planetList.push(planet);
             planetCount--;
+
+            //assign leader:
+            var leader = ploxworld.makeAiPerson(undefined, planet);
+            //TODO
         }
 
         //calculate cost of travel
@@ -67,7 +71,6 @@
                 planet2.setPlanetDistance(planet1, costDistance);
             }
         }
-
 
 //        for (i2 = 0; i2 < ploxworld.planets.length; i2++) {
 //            var planet = ploxworld.planets[i2];

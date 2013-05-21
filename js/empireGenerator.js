@@ -83,6 +83,8 @@
             }
         }
 
+        //TODO assign leaders to the empires
+
         //render the empires relationships:
         ploxworld.renderRelationMap();
 
