@@ -14,14 +14,14 @@
         dialogs.push($dialog);
         $dialog.show();
 
-        jQuery('.close-button', $dialog).bind('click', ploxworld.closeDialog);
+        $('.close', $dialog).bind('click', ploxworld.closeDialog);
     };
 
     ploxworld.closeDialog = function () {
         var $dialog = dialogs.pop();
         if ($dialog !== undefined) {
             $($dialog).hide();
-            jQuery('.close-button', $dialog).unbind('click');
+            $('.close', $dialog).unbind('click');
         } else {
             console.log("no dialog open");
         }

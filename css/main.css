@@ -24,8 +24,9 @@ body {
     font: 80%/0 sans-serif;
 }
 
-.close-button {
-    float: right;
+.close {
+    margin-right:5px;
+    margin-top:3px;
 }
 
 #info {
