@@ -175,7 +175,7 @@ function Controller($scope) {
         if (event.target.tagName === 'BUTTON' && (event.which === 32 || event.which === 13)) { // space and enter
             return;
         }
-        console.log("keydown: " + event.which);
+//        console.log("keydown: " + event.which);
 
         switch (event.which) {
             case 27: // esc

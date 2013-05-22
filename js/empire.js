@@ -14,25 +14,34 @@
 
     ploxworld.Empire = function Empire(name, color) {
         //TODO just use name instead?
-        var me = this;
         this.objectName = name;
         this.color = color;
-//        this.planet = new Set();
         this.empireRelations = {};
-
-        ploxworld.empireList.forEach(function (empire) {
-            var empireRelation = new EmpireRelation(50);    //TODO should take the relation between the rulers
-
-            me.addRelation(empire, empireRelation);
-            empire.addRelation(me, empireRelation);
-        });
     };
 
     var Empire = ploxworld.Empire;
 
-    Empire.prototype.setOwner = function (person) {
+    Empire.prototype.setOwner = function (person, randomizeRelations) {
+        var me = this;
         console.log("empire owner: " + person.objectName);
         this.owner = person;
+
+        //calculate the new relations:
+        ploxworld.empireList.forEach(function (empire) {
+
+            if(!empire.owner || empire.owner === me.owner) {
+                return;
+            }
+
+            var relation = empire.owner.getRelation(me.owner);
+            var empireRelation;
+            if (!relation) {
+                relation = person.createRelation(empire.owner, randomizeRelations);
+            }
+            empireRelation = new EmpireRelation(relation.value);
+            me.addRelation(empire, empireRelation);
+            empire.addRelation(me, empireRelation);
+        });
     };
 
     Empire.prototype.addRelation = function (toEmpire, relation) {
@@ -53,7 +62,6 @@
      * @constructor
      */
     ploxworld.EmpireRelation = function EmpireRelation(value) {
-//        this.value = (Math.random() * 200 - 100) | 0;
         if (value < -50) {
             this.state = ploxworld.RELATION_STATE_WAR;
         } else if (value > 50) {

@@ -86,7 +86,7 @@
                 //assign leaders to the empires:
                 _.each(ploxworld.empires, function (empire) {
                     var planet = empire.planets.getRandom();
-                    empire.setOwner(planet.owner);
+                    empire.setOwner(planet.owner, true);
                     planet.owner.setEmpire(empire);
                 });
 

@@ -21,13 +21,16 @@
         return name;
     };
 
-    var relation = function (person1, person2, value) {
+    var Relation = function (person1, person2, value) {
         this.person1 = person1;
         this.person2 = person2;
+        if(!value) {
+            value = (Math.random() * 200 - 100) | 0;
+        }
         this.value = value;
     };
 
-    relation.prototype.getOther = function (me) {
+    Relation.prototype.getOther = function (me) {
         if (this.person1 === me) {
             return this.person2;
         } else {
@@ -58,7 +61,7 @@
 
         this.objectName = name;
         this.isMale = isMale;
-        this.relations = new Set();
+        this.relations = new Map(); // person -> Relation
 //        this.decision = ;
 
         this.ship = ship;
@@ -75,7 +78,7 @@
         //remove relations:
         _.forEach(this.relations, function (relation) {
             //XXX test this
-            relation.getOther(me).removeRelation(relation);
+            relation.getOther(me).removeRelation(me);
         });
 
         ploxworld.persons.remove(this);
@@ -86,8 +89,37 @@
         }
     };
 
-    Person.prototype.removeRelation = function (relation) {
-        this.relations.remove(relation);
+    Person.prototype.createRelation = function (person, randomizeRelations) {
+        if (this.relations.get(person)) {
+            throw new Error("wtf relation already existed");
+        }
+        if (this === person) {
+            throw new Error("wtf relation to myself?");
+        }
+
+        var relation;
+        if (randomizeRelations) {
+            relation = new Relation(this, person);
+        } else {
+            relation = new Relation(this, person, 0);
+        }
+
+        this.addRelation(relation);
+        person.addRelation(relation);
+
+        return relation;
+    };
+
+    Person.prototype.addRelation = function (relation) {
+        this.relations.add(relation.getOther(this), relation);
+    };
+
+    Person.prototype.getRelation = function (person) {
+        this.relations.get(person);
+    };
+
+    Person.prototype.removeRelation = function (person) {
+        this.relations.remove(person);
     };
 
     /**
