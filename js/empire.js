@@ -7,14 +7,23 @@
     ploxworld.RELATION_STATE_FRIENDLY = 1;    // will trade
     ploxworld.RELATION_STATE_ALLIANCE = 2;    // share wars
 
-    //TODO should take ruler
-    ploxworld.makeEmpire = function (name, color) {
-        return new Empire(name, color);
+    /**
+     * If owner is not set, it needs to be set later, or the game will flip out
+     * @param name
+     * @param color
+     * @param owner
+     * @returns {ploxworld.Empire}
+     */
+    ploxworld.makeEmpire = function (name, color, owner) {
+        var empire = new Empire(name, color);
+        if(owner) {
+            empire.setOwner(owner);
+        }
+        return empire;
     };
 
     ploxworld.Empire = function Empire(name, color) {
-        //TODO just use name instead?
-        this.objectName = name;
+        this.name = name;
         this.color = color;
         this.empireRelations = {};
     };
@@ -23,7 +32,7 @@
 
     Empire.prototype.setOwner = function (person, randomizeRelations) {
         var me = this;
-        console.log("empire owner: " + person.objectName);
+        console.log("empire owner: " + person.name);
         this.owner = person;
 
         //calculate the new relations:
@@ -45,11 +54,11 @@
     };
 
     Empire.prototype.addRelation = function (toEmpire, relation) {
-        this.empireRelations[toEmpire.objectName] = relation;
+        this.empireRelations[toEmpire.name] = relation;
     };
 
     Empire.prototype.getRelation = function (toEmpire) {
-        return this.empireRelations[toEmpire.objectName];
+        return this.empireRelations[toEmpire.name];
     };
 
     Empire.prototype.getColor = function () {

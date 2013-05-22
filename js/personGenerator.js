@@ -18,7 +18,7 @@
 //        var personCount = PERSON_COUNT;
 //        while (personCount) {
 //            var person = ploxworld.makePerson(takeFreeName());
-//            ploxworld.persons[person.objectName] = person;
+//            ploxworld.persons[person.name] = person;
 //            personCount--;
 //        }
 

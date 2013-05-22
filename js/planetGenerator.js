@@ -45,7 +45,7 @@
             } while (!validPosition(x, y));
 
             var planet = new ploxworld.Planet(takeFreeName(), x, y);
-            ploxworld.planets[planet.objectName] = planet;
+            ploxworld.planets[planet.name] = planet;
             ploxworld.planetList.push(planet);
             planetCount--;
 
@@ -64,8 +64,8 @@
                 var yDiff = Math.abs(planet1.y - planet2.y);
                 var realDistance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
                 var costDistance = Math.pow(realDistance, 1.1);
-//                console.log(planet1.objectName + " to " + planet2.objectName + " distance: " + realDistance);
-//                console.log(planet1.objectName + " to " + planet2.objectName + " cost: " + costDistance);
+//                console.log(planet1.name + " to " + planet2.name + " distance: " + realDistance);
+//                console.log(planet1.name + " to " + planet2.name + " cost: " + costDistance);
                 planet1.setPlanetDistanceCost(planet2, costDistance);
                 planet1.setPlanetDistance(planet2, costDistance);
                 planet2.setPlanetDistanceCost(planet1, costDistance);
@@ -75,9 +75,9 @@
 
 //        for (i2 = 0; i2 < ploxworld.planets.length; i2++) {
 //            var planet = ploxworld.planets[i2];
-//            console.log("iterating " + planet.objectName);
+//            console.log("iterating " + planet.name);
 //            for (var otherPlanetName in  planet.planetDistanceCost) {
-//                console.log(planet.objectName + " to " + otherPlanetName + " is " + planet.planetDistanceCost[otherPlanetName]);
+//                console.log(planet.name + " to " + otherPlanetName + " is " + planet.planetDistanceCost[otherPlanetName]);
 //            }
 //        }
 

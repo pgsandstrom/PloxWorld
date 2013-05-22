@@ -22,7 +22,7 @@
     var Supply = ploxworld.Supply;
 
     Supply.prototype.addTo = function (planet) {
-//        console.log("offloading to " + planet.objectName);
+//        console.log("offloading to " + planet.name);
         planet.supply += this.amount;
         this.amount = 0;
     };

@@ -14,18 +14,18 @@
         partRoutes.length = 0;
         reachedPlanets = {};
 
-        reachedPlanets[planet.objectName] = planet;
+        reachedPlanets[planet.name] = planet;
 
         //add the first part-routes, originating from the planet itself:
         addNewPartRoutes(planet, undefined);
 
         while (partRoutes.length) {
             var partRoute = partRoutes.splice(0, 1)[0];
-            if (!reachedPlanets[partRoute.atPlanet.objectName]) {
+            if (!reachedPlanets[partRoute.atPlanet.name]) {
                 //new planet reached
                 var reachedPlanet = partRoute.atPlanet;
-                planet.safeWayTo[reachedPlanet.objectName] = partRoute.route[0];
-                reachedPlanets[reachedPlanet.objectName] = reachedPlanet;
+                planet.safeWayTo[reachedPlanet.name] = partRoute.route[0];
+                reachedPlanets[reachedPlanet.name] = reachedPlanet;
                 addNewPartRoutes(reachedPlanet, partRoute);
             }
         }
@@ -34,17 +34,17 @@
     function addNewPartRoutes(planet, earlierPartRoute) {
         for (var i = 0; i < planet.closestNonEnemy.length; i++) {
             var alliedPlanet = planet.closestNonEnemy[i];
-            if (reachedPlanets[alliedPlanet.objectName]) {
-//                console.log("planet " + alliedPlanet.objectName + " already reached from " + planet.objectName);
+            if (reachedPlanets[alliedPlanet.name]) {
+//                console.log("planet " + alliedPlanet.name + " already reached from " + planet.name);
                 continue;
             }
-            var newDistanceCost = planet.planetDistanceCost[alliedPlanet.objectName];
+            var newDistanceCost = planet.planetDistanceCost[alliedPlanet.name];
             if (newDistanceCost < MAX_DISTANCE_FOR_AI_TRADE) {
                 var earlierPath = earlierPartRoute ? earlierPartRoute.route : [];
                 var distanceCost = earlierPartRoute ? earlierPartRoute.travelDistance : 0;
                 partRoutes.push(new PartRoute(earlierPath, alliedPlanet, distanceCost + newDistanceCost));
             } else {
-//                console.log("too long between " + planet.objectName + " and " + alliedPlanet.objectName + ", breaking");
+//                console.log("too long between " + planet.name + " and " + alliedPlanet.name + ", breaking");
                 break;
             }
         }

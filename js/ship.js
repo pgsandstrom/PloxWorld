@@ -21,7 +21,7 @@
         this.x = planet.x;
         this.y = planet.y;
         if (toPlanet) {
-            this.distanceLeft = planet.planetDistance[toPlanet.objectName];
+            this.distanceLeft = planet.planetDistance[toPlanet.name];
         }
     };
 
@@ -37,7 +37,7 @@
             //calculate position:
             var xDiff = this.planet.x - this.toPlanet.x;
             var yDiff = this.planet.y - this.toPlanet.y;
-            var distance = this.planet.planetDistance[this.toPlanet.objectName];
+            var distance = this.planet.planetDistance[this.toPlanet.name];
             var ratio = this.distanceLeft / distance;
             this.x = this.toPlanet.x + xDiff * ratio;
             this.y = this.toPlanet.y + yDiff * ratio;

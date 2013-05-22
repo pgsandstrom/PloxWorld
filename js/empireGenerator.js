@@ -31,7 +31,7 @@
             var identity = getIdentity();
             var empire = ploxworld.makeEmpire(identity.name, identity.color);
             ploxworld.empireList.push(empire);
-            ploxworld.empires[empire.objectName] = empire;
+            ploxworld.empires[empire.name] = empire;
             empireCount--;
         }
 
@@ -42,7 +42,7 @@
                 empire.planets = new Set();
                 empire.x = (Math.random() * (ploxworld.WORLD_SIZE_X - 200)) + 100;
                 empire.y = (Math.random() * (ploxworld.WORLD_SIZE_Y - 200)) + 100;
-                empirePlanetCountMap[empire.objectName] = 0;
+                empirePlanetCountMap[empire.name] = 0;
             });
 
             _.each(ploxworld.planets, function (planet) {
@@ -52,15 +52,15 @@
                     if (closestEmpire === undefined) {
                         closestEmpire = empire;
                         empireDistance = planet.getDistance(empire.x, empire.y);
-                        empirePlanetCountMap[empire.objectName]++;
+                        empirePlanetCountMap[empire.name]++;
                         planet.setEmpire(empire);
                         empire.planets.add(planet);
                     } else {
                         var newDistance = planet.getDistance(empire.x, empire.y);
                         if (newDistance < empireDistance) {
                             closestEmpire.planets.remove(planet);
-                            empirePlanetCountMap[closestEmpire.objectName]--;
-                            empirePlanetCountMap[empire.objectName]++;
+                            empirePlanetCountMap[closestEmpire.name]--;
+                            empirePlanetCountMap[empire.name]++;
                             closestEmpire = empire;
                             empireDistance = newDistance;
                             planet.setEmpire(empire);

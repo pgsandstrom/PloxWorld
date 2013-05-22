@@ -91,7 +91,7 @@ function Controller($scope) {
             var empireName = $(document.createElement('div'));
             empireName.addClass("relation-name");
             empireName.css("background", empire.color);
-            empireName.text(empire.objectName);
+            empireName.text(empire.name);
             empireNames.append(empireName);
         });
         root.append(empireNames);
@@ -110,7 +110,7 @@ function Controller($scope) {
                 if (empire === otherEmpire) {
                     relationSquare.css("background", "black");
                 } else {
-                    relationSquare.css("background", empire.empireRelations[otherEmpire.objectName].getColor());
+                    relationSquare.css("background", empire.empireRelations[otherEmpire.name].getColor());
                 }
                 empireRow.append(relationSquare);
             });
@@ -209,7 +209,7 @@ function Controller($scope) {
 ////        $scope.selectedPlanet = ploxworld.planets[planetName];
 //        $scope.selectedPlanet = ploxworld.getRandomPlanet();
 ////        console.log("clicked name: " + planetName);
-//        console.log("selected planet: " + $scope.selectedPlanet.objectName);
+//        console.log("selected planet: " + $scope.selectedPlanet.name);
 //        $("#selected-planet").show();
 //    });
 //
@@ -217,7 +217,7 @@ function Controller($scope) {
 //        var planetName = this.getAttribute("planet-name");
 //        $scope.selectedPlanet = ploxworld.planets[planetName];
 //        console.log("clicked name: " + planetName);
-//        console.log("selected planet: " + $scope.selectedPlanet.objectName);
+//        console.log("selected planet: " + $scope.selectedPlanet.name);
 ////        $("#selected-planet").show();
 //    });
 

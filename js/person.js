@@ -59,7 +59,7 @@
             }
         }
 
-        this.objectName = name;
+        this.name = name;
         this.isMale = isMale;
         this.relations = new Map(); // person -> Relation
 //        this.decision = ;
@@ -83,9 +83,9 @@
 
         ploxworld.persons.remove(this);
         if (this.isMale) {
-            ploxworld.maleNames.push(this.objectName);
+            ploxworld.maleNames.push(this.name);
         } else {
-            ploxworld.femaleNames.push(this.objectName);
+            ploxworld.femaleNames.push(this.name);
         }
     };
 
@@ -159,13 +159,13 @@
                 this.remove();
             } else {
                 //travel to next planet:
-                var nextPlanet = position.planet.safeWayTo[this.toPlanet.objectName];
+                var nextPlanet = position.planet.safeWayTo[this.toPlanet.name];
                 if (nextPlanet !== undefined) {
                     this.decision = decisionTravelTo(nextPlanet);
                 } else {
                     console.log("omg no way to travel");
                     this.toPlanet = this.fromPlanet;
-                    nextPlanet = this.position.planet.safeWayTo[this.toPlanet.objectName];
+                    nextPlanet = this.position.planet.safeWayTo[this.toPlanet.name];
                     if (nextPlanet !== undefined) {
                         console.log("returning home");
                         this.decision = decisionTravelTo(nextPlanet);
@@ -234,7 +234,7 @@
 
     var decisionTravelTo = function (toPlanet) {
         return function (ship) {
-//            console.log("travel to " + toPlanet.objectName);
+//            console.log("travel to " + toPlanet.name);
             ship.position = new ploxworld.Position(ploxworld.POSITION_TYPE_TRAVELING, ship.position.planet, toPlanet);
             ship.travel();
         };

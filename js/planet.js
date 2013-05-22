@@ -31,7 +31,7 @@
                     }
                 }
                 planet.closestNonEnemy.sort(function closest(a, b) {
-                    return planet.planetDistanceCost[a.objectName] - planet.planetDistanceCost[b.objectName];
+                    return planet.planetDistanceCost[a.name] - planet.planetDistanceCost[b.name];
                 });
 
             }
@@ -75,8 +75,8 @@
     }
 
     //object:
-    ploxworld.Planet = function Planet(objectName, x, y) {
-        this.objectName = objectName;
+    ploxworld.Planet = function Planet(name, x, y) {
+        this.name = name;
         this.x = x;
         this.y = y;
 
@@ -119,7 +119,7 @@
             }
         } else {
             //starvation!
-//            console.log("starvation at " + this.objectName);
+//            console.log("starvation at " + this.name);
             var popDecrease = Math.max(this.pop * POP_DECREASE_AT_STARVATION, 1);
             this.pop = (Math.max(this.pop - popDecrease, 1)) | 0;
         }
@@ -145,12 +145,12 @@
     };
 
     Planet.prototype.setPlanetDistance = function (planet, distance) {
-        this.planetDistance[planet.objectName] = distance;
+        this.planetDistance[planet.name] = distance;
     };
 
     Planet.prototype.setPlanetDistanceCost = function (planet, distanceCost) {
-//        console.log(this.objectName + " distanceCost to " + planet.objectName + " is " + distanceCost);
-        this.planetDistanceCost[planet.objectName] = distanceCost;
+//        console.log(this.name + " distanceCost to " + planet.name + " is " + distanceCost);
+        this.planetDistanceCost[planet.name] = distanceCost;
     };
 
     Planet.prototype.calculateNeeds = function () {
@@ -185,7 +185,7 @@
                 }
 
                 //does the planet need resources, and can we get to it?
-                if (planet.supplyNeed > 0 && this.safeWayTo[planet.objectName]) {
+                if (planet.supplyNeed > 0 && this.safeWayTo[planet.name]) {
                     var exportNumber = Math.min(planet.supplyNeed, -this.supplyNeed);
                     var tradeRoute = new ploxworld.TradeRoute(this, planet, ploxworld.RESOURCE_SUPPLY, exportNumber);
                     this.tradeRoutes.push(tradeRoute);

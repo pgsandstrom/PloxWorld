@@ -23,7 +23,7 @@
         this.pending = 0; //the amount of resources that should already have been sent
         ploxworld.traderoutes.push(this);
         addRouteParts(this);
-//        console.log("new traderoute from " + fromPlanet.objectName + " to " + toPlanet.objectName);
+//        console.log("new traderoute from " + fromPlanet.name + " to " + toPlanet.name);
     };
 
     var TradeRoute = ploxworld.TradeRoute;
@@ -43,23 +43,23 @@
         var fromPlanet = originalPlanet;
         var toPlanet = tradeRoute.toPlanet;
 
-//        console.log("trade route parts from " + originalPlanet.objectName + " to " + toPlanet.objectName);
+//        console.log("trade route parts from " + originalPlanet.name + " to " + toPlanet.name);
 
         // iterate step by step adding TradeRoutePart:s until we reach the target planet:
         while (true) {
-            var nextPlanet = fromPlanet.safeWayTo[toPlanet.objectName];
+            var nextPlanet = fromPlanet.safeWayTo[toPlanet.name];
 
-//            console.log("step from " + fromPlanet.objectName + " to " + nextPlanet.objectName);
+//            console.log("step from " + fromPlanet.name + " to " + nextPlanet.name);
 
             var key;
             //make sure they always come in the same alphabetical order:
-            if (fromPlanet.objectName.localeCompare(nextPlanet.objectName) > 0) {
-                key = nextPlanet.objectName + "_" + fromPlanet.objectName;
+            if (fromPlanet.name.localeCompare(nextPlanet.name) > 0) {
+                key = nextPlanet.name + "_" + fromPlanet.name;
             } else {
-                key = fromPlanet.objectName + "_" + nextPlanet.objectName;
+                key = fromPlanet.name + "_" + nextPlanet.name;
             }
 
-//            console.log("new trade route part from " + fromPlanet.objectName + " to " + nextPlanet.objectName);
+//            console.log("new trade route part from " + fromPlanet.name + " to " + nextPlanet.name);
             var tradeRoutePart = ploxworld.traderouteParts[key];
             if (!tradeRoutePart) {
                 tradeRoutePart = new TradeRoutePart(fromPlanet, nextPlanet, tradeRoute.amount);

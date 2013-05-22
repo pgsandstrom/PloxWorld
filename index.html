@@ -40,7 +40,7 @@
                  ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
                 <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
                 <a ng-click="showPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
-                <span ng-style="{'color': (object.getColor())}">{{object.objectName}}</span>
+                <span ng-style="{'color': (object.getColor())}">{{object.name}}</span>
             </div>
 
             <!--ships-->
@@ -61,19 +61,19 @@
                     ALL LE PLANETS:
                     <div ng-repeat="object in planets">
                         <a ng-click="showPlanet(object)" href="javascript:void(0)"><span
-                                ng-style="{'color': (object.getColor())}">{{object.objectName}}</span></a>
+                                ng-style="{'color': (object.getColor())}">{{object.name}}</span></a>
                     </div>
                 </div>
 
                 <div id="selected-planet" ng-show="selectedPlanet">
 
                     <div class="dialog-content">
-                        <h5>{{selectedPlanet.objectName}}</h5>
+                        <h5>{{selectedPlanet.name}}</h5>
                         <h6><a ng-click="showEmpire(selectedPlanet.empire)" href="javascript:void(0)">
-                            Part of {{selectedPlanet.empire.objectName}}</a></h6>
+                            Part of {{selectedPlanet.empire.name}}</a></h6>
 
                         <h6><a ng-click="showPerson(selectedPlanet.owner)" href="javascript:void(0)">
-                            Leader: {{selectedPlanet.owner.objectName}}</a></h6>
+                            Leader: {{selectedPlanet.owner.name}}</a></h6>
 
                         <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
 
@@ -92,7 +92,7 @@
                     ALL LE EMPIRES:
                     <div ng-repeat="object in empires">
                         <a ng-click="showEmpire(object)" href="javascript:void(0)"><span
-                                ng-style="{'color': (object.getColor())}">{{object.objectName}}</span></a>
+                                ng-style="{'color': (object.getColor())}">{{object.name}}</span></a>
                     </div>
                 </div>
 
@@ -101,9 +101,9 @@
                     <button class="close">&times;</button>
 
                     <div class="dialog-content">
-                        <h5>{{selectedEmpire.objectName}}</h5>
+                        <h5>{{selectedEmpire.name}}</h5>
                         <h6><a ng-click="showPerson(selectedEmpire.owner)" href="javascript:void(0)">
-                            Leader: {{selectedEmpire.owner.objectName}}</a></h6>
+                            Leader: {{selectedEmpire.owner.name}}</a></h6>
                     </div>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                     ALL LE PERSONS:
                     <div ng-repeat="object in persons">
                         <a ng-click="showPerson(object)" href="javascript:void(0)">
-                            <span>{{object.objectName}}</span></a>
+                            <span>{{object.name}}</span></a>
                     </div>
                 </div>
 
@@ -123,13 +123,13 @@
                     <button class="close">&times;</button>
 
                     <div class="dialog-content">
-                        <h5>{{selectedPerson.objectName}}</h5>
+                        <h5>{{selectedPerson.name}}</h5>
                         <h4 ng-show="selectedPerson.empire"><a ng-click="showEmpire(selectedPerson.empire)"
                                                                href="javascript:void(0)">
-                            Leader of {{selectedPerson.empire.objectName}}</a></h4>
+                            Leader of {{selectedPerson.empire.name}}</a></h4>
                         <h4 ng-show="selectedPerson.planet"><a ng-click="showPlanet(selectedPerson.planet)"
                                                                href="javascript:void(0)">
-                            Owner of {{selectedPerson.planet.objectName}}</a></h4>
+                            Owner of {{selectedPerson.planet.name}}</a></h4>
                     </div>
                 </div>
             </div>
