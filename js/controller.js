@@ -11,7 +11,7 @@ function Controller($scope) {
         $scope.tics = 0;
         $scope.planets = ploxworld.generatePlanets();
         $scope.persons = ploxworld.generatePersons();
-        ploxworld.generateEmpires();
+        $scope.empires = ploxworld.generateEmpires();
         ploxworld.calculateTradeMap();
 
         $scope.ships = ploxworld.ships;
@@ -145,50 +145,60 @@ function Controller($scope) {
     };
 
     $scope.showPlanet = function (planet) {
-        console.log("show planet: " + planet.objectName);
-        $scope.selectedPlanet = planet;
-        ploxworld.showDialog("selected-planet");
+        if (planet) {
+            $scope.selectedPlanet = planet;
+        }
+        $("#tab-overview-planets a").tab('show');
     };
 
     $scope.showEmpire = function (empire) {
-        console.log("show empire: " + empire.objectName);
-        $scope.selectedEmpire = empire;
-        ploxworld.showDialog("selected-empire");
+        if (empire) {
+            $scope.selectedEmpire = empire;
+        }
+        $("#tab-overview-empires a").tab('show');
     };
 
     $scope.showPerson = function (person) {
-        console.log("show person: " + person.objectName);
-        $scope.selectedPerson = person;
-        ploxworld.showDialog("selected-person");
+        if (person) {
+            $scope.selectedPerson = person;
+        }
+        $("#tab-overview-persons a").tab('show');
     };
 
-    //must  be keydown to prevent window from scrolling on space etc.
+    $scope.hideTabs = function () {
+        $("#tab-overview-hide a").tab('show');
+    };
+
+    //must be keydown to prevent window from scrolling on space etc.
     $(document).keydown(function (event) {
         //code to ignore buttons, if I would like that:
         if (event.target.tagName === 'BUTTON' && (event.which === 32 || event.which === 13)) { // space and enter
             return;
         }
-//        console.log("keyup: " + event.which);
+        console.log("keydown: " + event.which);
 
         switch (event.which) {
             case 27: // esc
-                ploxworld.closeDialog();
+                $scope.hideTabs();
                 event.preventDefault();
                 break;
-            case 32:// space
+            case 32: // space
                 $scope.$apply(function () {
                     ploxworld.tic();
                 });
                 event.preventDefault();
                 break;
-
+            case 49: // 1
+                $scope.showPerson();
+                break;
+            case 50: // 2
+                $scope.showPlanet();
+                break;
+            case 51: // 2
+                $scope.showEmpire();
+                break;
         }
     });
-
-    //XXX hide in html instead
-    $("#selected-planet").hide();
-    $("#selected-empire").hide();
-    $("#selected-person").hide();
 
     $scope.startGame();
 

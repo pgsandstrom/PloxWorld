@@ -43,6 +43,10 @@
         return this.empireRelations[toEmpire.objectName];
     };
 
+    Empire.prototype.getColor = function () {
+        return this.color;
+    };
+
     /**
      * Diplomatic state between empires
      * @param value The relation value between the rulers

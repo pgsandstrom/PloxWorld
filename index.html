@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="module">
 <head>
+    <meta charset="utf-8">
     <title>PloxWorld</title>
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -17,71 +18,127 @@
     menus lol
 </div>
 
-<div id="map-container">
-    <div id="map">
+<div class="float-left">
 
-        <div id="canvas-container" class="absolute">
-            <canvas width="960" height="600" id="canvas"/>
+    <ul id="navbar" class="nav nav-pills">
+        <li id="tab-overview-persons"><a href="#overview-persons" data-toggle="tab">1. Persons</a></li>
+        <li id="tab-overview-planets"><a href="#overview-planets" data-toggle="tab">2. Planets</a></li>
+        <li id="tab-overview-empires"><a href="#overview-empires" data-toggle="tab">3. Empires</a></li>
+        <li id="tab-overview-hide" class="hide"><a href="#overview-hide" data-toggle="tab"></a></li>
+        <!--hax to hide tabs-->
+    </ul>
+
+    <div id="map-container">
+        <div id="map">
+            <div id="canvas-container" class="absolute">
+                <canvas width="960" height="600" id="canvas"/>
+            </div>
+
+            <!--planets-->
+            <!-- -15 comes from half the planet size, so the center of the planet image always is the planet position -->
+            <div ng-repeat="object in planets" class="absolute"
+                 ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
+                <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
+                <a ng-click="showPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
+                <span ng-style="{'color': (object.getColor())}">{{object.objectName}}</span>
+            </div>
+
+            <!--ships-->
+            <div ng-repeat="object in ships" class="absolute ship" ui-fade-toggle="object.position.x"
+                 ng-style="{'top': (object.position.y-6)+'px','left': (object.position.x-3)+'px'}">
+                <img src="img/ship.png"/>
+            </div>
+
+
         </div>
 
-        <!--planets-->
-        <!-- -15 comes from half the planet size, so the center of the planet image always is the planet position -->
-        <div ng-repeat="object in planets" class="absolute"
-             ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
-            <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
-            <a ng-click="showPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
-        <span ng-style="{'color': (object.getColor())}">{{object.objectName}}<span/>
-        </div>
-
-        <!--ships-->
-        <div ng-repeat="object in ships" class="absolute ship" ui-fade-toggle="object.position.x"
-             ng-style="{'top': (object.position.y-6)+'px','left': (object.position.x-3)+'px'}">
-            <img src="img/ship.png"/>
-        </div>
+        <div class="tab-content">
 
 
-    </div>
-    <div id="selected-planet" class="dialog">
+            <div id="overview-planets" class="dialog tab-pane">
 
-        <button class="close">&times;</button>
+                <div class="float-left item-list">
+                    ALL LE PLANETS:
+                    <div ng-repeat="object in planets">
+                        <a ng-click="showPlanet(object)" href="javascript:void(0)"><span
+                                ng-style="{'color': (object.getColor())}">{{object.objectName}}</span></a>
+                    </div>
+                </div>
 
-        <div class="dialog-content">
-            <h5>{{selectedPlanet.objectName}}</h5>
-            <h6><a ng-click="showEmpire(selectedPlanet.empire)" href="javascript:void(0)">Part of {{selectedPlanet.empire.objectName}}</a></h6>
+                <div id="selected-planet" ng-show="selectedPlanet">
 
-            <h6><a ng-click="showPerson(selectedPlanet.owner)" href="javascript:void(0)">Leader: {{selectedPlanet.owner.objectName}}</a></h6>
+                    <div class="dialog-content">
+                        <h5>{{selectedPlanet.objectName}}</h5>
+                        <h6><a ng-click="showEmpire(selectedPlanet.empire)" href="javascript:void(0)">
+                            Part of {{selectedPlanet.empire.objectName}}</a></h6>
 
-            <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
+                        <h6><a ng-click="showPerson(selectedPlanet.owner)" href="javascript:void(0)">
+                            Leader: {{selectedPlanet.owner.objectName}}</a></h6>
 
-            <p>Supply: {{selectedPlanet.supply}} (+{{selectedPlanet.supplyProd}})</p>
+                        <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
 
-            <p>Importance: {{selectedPlanet.importance}}</p>
-        </div>
+                        <p>Supply: {{selectedPlanet.supply}} (+{{selectedPlanet.supplyProd}})</p>
 
-    </div>
+                        <p>Importance: {{selectedPlanet.importance}}</p>
+                    </div>
 
-    <div id="selected-empire" class="dialog">
+                </div>
 
-        <button class="close">&times;</button>
+                <button class="close">&times;</button>
+            </div>
+            <div id="overview-empires" class="dialog tab-pane">
 
-        <div class="dialog-content">
-            <h5>{{selectedEmpire.objectName}}</h5>
-            <h6><a ng-click="showPerson(selectedEmpire.owner)" href="javascript:void(0)">Leader: {{selectedEmpire.owner.objectName}}</a></h6>
-        </div>
-    </div>
+                <div class="float-left item-list">
+                    ALL LE EMPIRES:
+                    <div ng-repeat="object in empires">
+                        <a ng-click="showEmpire(object)" href="javascript:void(0)"><span
+                                ng-style="{'color': (object.getColor())}">{{object.objectName}}</span></a>
+                    </div>
+                </div>
 
-    <div id="selected-person" class="dialog">
+                <div id="selected-empire" ng-show="selectedEmpire">
 
-        <button class="close">&times;</button>
+                    <button class="close">&times;</button>
 
-        <div class="dialog-content">
-            <h5>{{selectedPerson.objectName}}</h5>
-            <h4 ng-show="selectedPerson.empire"><a ng-click="showEmpire(selectedPerson.empire)" href="javascript:void(0)">Leader of {{selectedPerson.empire.objectName}}</a></h4>
-            <h4 ng-show="selectedPerson.planet"><a ng-click="showPlanet(selectedPerson.planet)" href="javascript:void(0)">Owner of {{selectedPerson.planet.objectName}}</a></h4>
+                    <div class="dialog-content">
+                        <h5>{{selectedEmpire.objectName}}</h5>
+                        <h6><a ng-click="showPerson(selectedEmpire.owner)" href="javascript:void(0)">
+                            Leader: {{selectedEmpire.owner.objectName}}</a></h6>
+                    </div>
+                </div>
+            </div>
+
+            <div id="overview-persons" class="dialog tab-pane">
+
+                <div  class="float-left item-list">
+                    ALL LE PERSONS:
+                    <div ng-repeat="object in persons">
+                        <a ng-click="showPerson(object)" href="javascript:void(0)">
+                            <span>{{object.objectName}}</span></a>
+                    </div>
+                </div>
+
+                <div id="selected-person" ng-show="selectedPerson">
+
+                    <button class="close">&times;</button>
+
+                    <div class="dialog-content">
+                        <h5>{{selectedPerson.objectName}}</h5>
+                        <h4 ng-show="selectedPerson.empire"><a ng-click="showEmpire(selectedPerson.empire)"
+                                                               href="javascript:void(0)">
+                            Leader of {{selectedPerson.empire.objectName}}</a></h4>
+                        <h4 ng-show="selectedPerson.planet"><a ng-click="showPlanet(selectedPerson.planet)"
+                                                               href="javascript:void(0)">
+                            Owner of {{selectedPerson.planet.objectName}}</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div id="overview-hide" class="tab-pane">
+                <!--hax to hide tabs-->
+            </div>
         </div>
     </div>
 </div>
-
 
 <div id="info">
     <ul class="nav nav-tabs">
@@ -91,7 +148,7 @@
     </ul>
 
     <div class="tab-content">
-        <div id="tab1" class="tab-pane ">
+        <div id="tab1" class="tab-pane">
             <p> Stardate: {{4000+tics/10}}</p>
 
             <p> Total population: {{totPop}}</p>
@@ -158,7 +215,6 @@
 
 <script src="js/common.js"></script>
 <script src="js/canvas.js"></script>
-<script src="js/dialogs.js"></script>
 <script src="js/findPath.js"></script>
 
 <script src="js/resources.js"></script>

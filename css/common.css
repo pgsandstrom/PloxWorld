@@ -30,3 +30,7 @@ body {
 .float-left {
     float: left;
 }
+
+.float-top {
+    float: top;
+}

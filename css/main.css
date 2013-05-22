@@ -15,18 +15,18 @@ body {
     float: left;
     width: 960px;
     height: 600px;
-    background: black;
     position: relative;
-    color: white;
+    background: black;
 }
 
 #map {
     font: 80%/0 sans-serif;
+    color: white;
 }
 
 .close {
-    margin-right:5px;
-    margin-top:3px;
+    margin-right: 5px;
+    margin-top: 3px;
 }
 
 #info {
@@ -38,6 +38,10 @@ body {
     margin-left: 200px;
     width: 400px;
     float: left;
+}
+
+#navbar {
+    margin-bottom: 0px;
 }
 
 .relation-name {
@@ -55,8 +59,8 @@ body {
     position: absolute;
     background: white;
     margin: 50px 50px;
-    width: 400px;
-    height: 400px;
+    width: 860px;
+    height: 500px;
 }
 
 .dialog-content {
@@ -66,3 +70,8 @@ body {
     margin: 10px 10px;
 }
 
+.item-list {
+    height: 500px;
+    width: 140px;
+    overflow: auto;
+}
