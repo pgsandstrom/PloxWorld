@@ -2,7 +2,7 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    var PREFERED_MIN_STORAGE = 65; //planets wants to have storage that lasts this many turns
+    var PREFERED_MIN_STORAGE = 75; //planets wants to have storage that lasts this many turns
     var MIN_SUPPLY_FOR_EXPORT = 50;
     var POP_INCREASE = 1.001;
     var POP_DECREASE_AT_STARVATION = 1 / (POP_INCREASE * POP_INCREASE);
@@ -59,80 +59,9 @@
         ploxworld.resetTraderoutes();
 
         ploxworld.calculateSupplyRoutes();
-
-//        _.each(ploxworld.planets, function (planet) {
-//            planet.calculateTradeRoutes();
-//        });
+        ploxworld.calculateProductionScienceRoutes();
 
         ploxworld.draw();
-    };
-
-    ploxworld.calculateSupplyRoutes = function () {
-        var planetSupplyList = ploxworld.planetList;
-        planetSupplyList.sort(function closest(a, b) {
-            //TODO prefer planets that are bad at other stuff
-            return b.supplyMultiplier - a.supplyMultiplier;
-        });
-
-
-        for (var i = 0; i < planetSupplyList.length; i++) {
-            var planet = planetSupplyList[i];
-//            console.log("supply multiplier: " + planet.supplyMultiplier);
-            var supplyForExport = 0;
-            var popToSupply;
-            if (planet.supplyNeed > 0) {
-                popToSupply = Math.ceil(planet.supplyNeed / planet.supplyMultiplier);
-                var supplyCreated = popToSupply * planet.supplyMultiplier;
-                supplyForExport += supplyCreated - planet.supplyNeed;
-                planet.supplyNeed = 0;
-                planet.freePop -= popToSupply;
-                planet.supplyWork += popToSupply;
-            }
-            var index = planetSupplyList.length - 1;
-            while (true) {
-                var planetExportTo = planetSupplyList[index];
-                index--;
-
-                if (planet === planetExportTo) {
-                    //this means that we have visited all less effective planets, so we end the loop.
-//                    console.log("cant export to own planet");
-                    break;
-                }
-
-                if (planetExportTo.supplyNeed === 0) {
-                    continue;
-                }
-
-                //check if we can create a trade route:
-                if (!planet.safeWayTo[planetExportTo.name]) {
-                    continue;
-                }
-
-                //must be friends to trade:
-                if (planet.empire !== planetExportTo.empire && planet.empire.getRelation(planetExportTo.empire).state < ploxworld.RELATION_STATE_FRIENDLY) {
-                    continue;
-                }
-
-                //calculate the data:
-                var popToSupplyNeeded = Math.ceil((planetExportTo.supplyNeed - supplyForExport) / planet.supplyMultiplier);
-                popToSupply = Math.min(planet.freePop, popToSupplyNeeded);
-                supplyForExport += popToSupply * planet.supplyMultiplier;
-                var actualExport = Math.min(supplyForExport, planetExportTo.supplyNeed);
-
-                //perform the changes:
-                planetExportTo.supplyNeed -= actualExport;
-                supplyForExport -= actualExport;
-                planet.freePop -= popToSupply;
-                planet.supplyWork += popToSupply;
-                var tradeRoute = new ploxworld.TradeRoute(planet, planetExportTo, ploxworld.RESOURCE_SUPPLY, actualExport);
-                planet.export.push(tradeRoute);  //TODO wtf this is only exports... save all traderoutes? In that case, clera them in resetProduction()
-                planetExportTo.import.push(tradeRoute);  //TODO wtf this is only exports... save all traderoutes? In that case, clera them in resetProduction()
-
-                if (planet.freePop === 0 && supplyForExport === 0) {
-                    break;
-                }
-            }
-        }
     };
 
     //object:
@@ -166,7 +95,7 @@
 //        this.supplyWork;
 
         this.material = 50 + Math.random() * 50 | 0;
-        this.supplyMultiplier = 1 + Math.random() * 5 | 0;
+        this.materialMultiplier = 1 + Math.random() * 5 | 0;
 //        this.materialWork;
 
         this.scienceMultiplier = 1 + Math.random() * 5 | 0;
@@ -240,13 +169,17 @@
         this.supplyNeed = this.getEaten();
         //maybe we wanna store some supply:
         if (this.supply < this.getEaten() * PREFERED_MIN_STORAGE) {
-            this.supplyNeed++;
+            this.supplyNeed += this.pop / 5 | 0;
         }
         this.supplyWork = 0;
         this.supplyWork = 0;
         this.materialWork = 0;  //TODO storing material and crystal, how does that work?
         this.scienceWork = 0;
         this.crystalWork = 0;
+
+        //temp variables used when calculating traderoutes:
+        this.materialForExport = 0;
+        this.crystalForExport = 0;
 
         this.export.length = 0;
         this.import.length = 0;

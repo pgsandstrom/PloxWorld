@@ -4,6 +4,10 @@
 
     //resources:
     ploxworld.RESOURCE_SUPPLY = "supply";
+    ploxworld.RESOURCE_PRODUCTION = "production";
+    ploxworld.RESOURCE_MATERIAL = "material";
+    ploxworld.RESOURCE_SCIENCE = "science";
+    ploxworld.RESOURCE_CRYSTAL = "crystal";
 
 
     ploxworld.makeResource = function (type, amount) {

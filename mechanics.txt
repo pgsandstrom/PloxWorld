@@ -1,3 +1,5 @@
+TODO: 416035 produced negative (Ada och Mega)
+
 Balanseringen går till såhär:
 
 sortera planeterna efter effektivitet i produktionen.

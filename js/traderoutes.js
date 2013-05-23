@@ -29,15 +29,14 @@
         this.pending = 0; //the amount of resources that should already have been sent
         ploxworld.traderoutes.push(this);
         addRouteParts(this);
-//        console.log("new traderoute from " + fromPlanet.name + " to " + toPlanet.name);
     };
 
     var TradeRoute = ploxworld.TradeRoute;
 
     TradeRoute.prototype.tic = function () {
         this.pending += this.amount;
-        if (this.pending > 15) {
-//            new ploxworld.TradeShip(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, 5)});
+        //send a tradeship something like every second to third turn
+        if (this.pending > this.fromPlanet.pop * 3 || this.pending >= this.amount * 3) {
             ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, this.pending)});
             this.fromPlanet[this.resource] -= this.pending;
             this.pending = 0;

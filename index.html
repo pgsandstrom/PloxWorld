@@ -83,14 +83,16 @@
 
                         <div ng-repeat="object in selectedPlanet.export">
                             export {{object.amount}} {{object.resource}} to
-                            <a ng-click="showPlanet(object.toPlanet)" href="javascript:void(0)">{{object.toPlanet.name}}</a>
+                            <a ng-click="showPlanet(object.toPlanet)" href="javascript:void(0)">
+                                {{object.toPlanet.name}}</a>
                         </div>
 
                         <p>IMPORT:</p>
 
                         <div ng-repeat="object in selectedPlanet.import">
                             import {{object.amount}} {{object.resource}} from
-                            <a ng-click="showPlanet(object.fromPlanet)" href="javascript:void(0)">{{object.fromPlanet.name}}</a>
+                            <a ng-click="showPlanet(object.fromPlanet)" href="javascript:void(0)">
+                                {{object.fromPlanet.name}}</a>
                         </div>
                     </div>
 
@@ -229,6 +231,7 @@
 <script src="js/findPath.js"></script>
 
 <script src="js/resources.js"></script>
+<script src="js/traderoutesCalculate.js"></script>
 <script src="js/traderoutes.js"></script>
 <script src="js/ship.js"></script>
 <script src="js/planet.js"></script>

@@ -2,7 +2,7 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    var NUMBER_TRADEROUTES_FOR_GREEN_LINE = 4;
+    var NUMBER_TRADEROUTES_FOR_GREEN_LINE = 14;
 
     var canvas = $("#canvas")[0];
     var context = canvas.getContext('2d');
