@@ -19,7 +19,7 @@ function Controller($scope) {
         $scope.totPop = 0;
 
         //forward the time some, so the world is a bit populated:
-        for (var i = 0; i < 50; i++) {
+        for (var i = 0; i < 0; i++) {
             ploxworld.tic();
         }
     };

@@ -16,6 +16,12 @@
 
     //object:
     ploxworld.TradeRoute = function TradeRoute(fromPlanet, toPlanet, resource, amount) {
+        if (!fromPlanet) {
+            throw new Error("fromPlanet was false");
+        }
+        if (!toPlanet) {
+            throw new Error("fromPlanet was false");
+        }
         this.fromPlanet = fromPlanet;
         this.toPlanet = toPlanet;
         this.resource = resource;
@@ -30,10 +36,11 @@
 
     TradeRoute.prototype.tic = function () {
         this.pending += this.amount;
-        if (this.pending > 5) {
+        if (this.pending > 15) {
 //            new ploxworld.TradeShip(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, 5)});
-            ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, 5)});
-            this.pending -= 5;
+            ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, this.pending)});
+            this.fromPlanet[this.resource] -= this.pending;
+            this.pending = 0;
         }
     };
 

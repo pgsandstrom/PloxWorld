@@ -1,12 +1,61 @@
+Balanseringen går till såhär:
+
+sortera planeterna efter effektivitet i produktionen.
+
+Gå igenom andra planeter efter importance. 
+Senare förbättring: först egna nationen?
+
+Senare förbättring: Ska en planet höja behovet om saker går förlorade till pirater?
+
+Senare förbättring: blockerade planeter ska man inte skicka till alls...
+
+--------------
+
+stuff:
+
+money
+supply
+production <- material
+science <- crystal
+
+luxury goods (depend on supply)
+artifacts    (depend on prod)
+weapons	     (depend on prod)
+drugs        (depend on research)
+
+
+--------------
+
 planets has:
 
 	maxPop
 	pop
+	(freePop)
 	
 	supply
+	supplyMult
 	supplyProd
 	supplyNeed
 	supplyNeedImportance
+	
+	productionMult
+	productionProd
+	
+	material
+	materialMult
+	materialProd
+	materialNeed
+	materialNeedImportance
+	
+	science
+	scienceMult
+	scienceProd
+	
+	crystal
+	crystalMult
+	crystalProd
+	crystalNeed
+	crystalNeedImportance
 
 ---------------
 ---variables---

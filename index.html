@@ -77,14 +77,26 @@
 
                         <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
 
-                        <p>Supply: {{selectedPlanet.supply}} (+{{selectedPlanet.supplyProd}})</p>
+                        <p>Supply: {{selectedPlanet.supply}} (*{{selectedPlanet.supplyMultiplier}})</p>
 
-                        <p>Importance: {{selectedPlanet.importance}}</p>
+                        <p>EXPORT:</p>
+
+                        <div ng-repeat="object in selectedPlanet.export">
+                            export {{object.amount}} {{object.resource}} to
+                            <a ng-click="showPlanet(object.toPlanet)" href="javascript:void(0)">{{object.toPlanet.name}}</a>
+                        </div>
+
+                        <p>IMPORT:</p>
+
+                        <div ng-repeat="object in selectedPlanet.import">
+                            import {{object.amount}} {{object.resource}} from
+                            <a ng-click="showPlanet(object.fromPlanet)" href="javascript:void(0)">{{object.fromPlanet.name}}</a>
+                        </div>
                     </div>
 
                 </div>
 
-                <button class="close">&times;</button>
+                <button class="close" ng-click="hideTabs()">&times;</button>
             </div>
             <div id="overview-empires" class="dialog tab-pane">
 
@@ -98,7 +110,6 @@
 
                 <div id="selected-empire" ng-show="selectedEmpire">
 
-                    <button class="close">&times;</button>
 
                     <div class="dialog-content">
                         <h5>{{selectedEmpire.name}}</h5>
@@ -106,11 +117,12 @@
                             Leader: {{selectedEmpire.owner.name}}</a></h6>
                     </div>
                 </div>
+                <button class="close" ng-click="hideTabs()">&times;</button>
             </div>
 
             <div id="overview-persons" class="dialog tab-pane">
 
-                <div  class="float-left item-list">
+                <div class="float-left item-list">
                     ALL LE PERSONS:
                     <div ng-repeat="object in persons">
                         <a ng-click="showPerson(object)" href="javascript:void(0)">
@@ -119,8 +131,6 @@
                 </div>
 
                 <div id="selected-person" ng-show="selectedPerson">
-
-                    <button class="close">&times;</button>
 
                     <div class="dialog-content">
                         <h5>{{selectedPerson.name}}</h5>
@@ -132,6 +142,7 @@
                             Owner of {{selectedPerson.planet.name}}</a></h4>
                     </div>
                 </div>
+                <button class="close" ng-click="hideTabs()">&times;</button>
             </div>
             <div id="overview-hide" class="tab-pane">
                 <!--hax to hide tabs-->
