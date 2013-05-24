@@ -10,6 +10,7 @@
 
     //support methods:
     ploxworld.resetTraderoutes = function () {
+        //TODO maybe we should let them send everything they have in store, so to say?
         ploxworld.traderoutes.length = 0;
         ploxworld.traderouteParts = {};
     };

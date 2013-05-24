@@ -62,9 +62,8 @@
                 planet.export.push(tradeRoute);
                 planetExportTo.import.push(tradeRoute);
 
-                //TODO remove planetExportTo if it requires nothing more. If we remove, then we must clone first!
-
-                // one weakness in that we remove from the array and does not iterate everything: if planet x is only
+                //XXX remove planetExportTo if it requires nothing more. If we remove, then we must clone first!
+                // One weakness in that we remove from the array and does not iterate everything: if planet x is only
                 // allied to planet y and planet y imports, then planet y won't export to planet x
 
                 if (planet.freePop === 0 && supplyForExport === 0) {
@@ -75,7 +74,7 @@
     };
 
     ploxworld.calculateProductionScienceRoutes = function () {
-        var planetProductionList = ploxworld.planetList; // no cloning, for optimization :)
+        var planetProductionList = ploxworld.planetList.slice(0);
         planetProductionList.sort(function closest(a, b) {
             //TODO prefer planets that are bad at other stuff?
             return b.productionMultiplier - a.productionMultiplier;
@@ -88,7 +87,7 @@
 
         var planetScienceList = ploxworld.planetList.slice(0);
         planetScienceList.sort(function closest(a, b) {
-            //TODO prefer planets that already have a lot of science
+            //TODO prefer planets that are bad at other stuff?
             return b.scienceMultiplier - a.scienceMultiplier;
         });
         var planetCrystalList = ploxworld.planetList.slice(0);
@@ -97,10 +96,10 @@
             return b.crystalMultiplier - a.crystalMultiplier;
         });
 
-        //TODO take turn or something?
         var calculatePlanetProduction = calculateRoutes(ploxworld.RESOURCE_PRODUCTION, ploxworld.RESOURCE_MATERIAL, planetProductionList, planetMaterialList);
         var calculatePlanetScience = calculateRoutes(ploxworld.RESOURCE_SCIENCE, ploxworld.RESOURCE_CRYSTAL, planetScienceList, planetCrystalList);
 
+        //TODO currently takes turn, make it so AI can prioritize or whatever
         var continueProduction = true;
         var continueScience = true;
         while (continueProduction || continueScience) {
@@ -116,7 +115,9 @@
 
     var calculateRoutes = function (thingy, requiredThingy, thingyPlanetList, requiredThingyPlanetList) {
 
-        //XXX: Make two separate methods for production and science, this trickery with variable names sucks
+        //XXX: Maybe make two separate methods for production and science, this trickery with variable names sucks
+
+        //TODO we need to make sure planets stop producing requiredThingy if they are storing enough of it...
 
         var thingyIndex = 0;
         return function () {
@@ -137,9 +138,11 @@
                 }
 
                 if (planet === planetImportFrom) {
-                    //TODO
-                    console.log("lol solve it internally");
-                    continue;
+                    if (planet.freePop === planet.pop | 0) {
+                        console.log("lol solve " + thingy + " completey internally at " + planet.name);
+                    }
+                    solveInternally(planet, thingy, requiredThingy);
+                    break;
                 }
 
                 if (planetImportFrom.freePop === 0) {
@@ -159,19 +162,28 @@
 
                 //calculate the data:
                 var maxProduced = planet[thingy + "Multiplier"] * planet.freePop;
+                //build up a storage of requiredThingy:
+                if (maxProduced * ploxworld.PREFERED_MIN_STORAGE > planet[requiredThingy]) {
+                    //XXX does this logic work? maxProduced will be increased many times if you import from many planets...
+                    //TODO fix this
+//                    var increase = Math.ceil(planet.pop / 5);
+//                    console.log("ey lol lets build up " + requiredThingy + " at " + planet.name + " with " + increase);
+//                    maxProduced += increase;
+                }
                 var maxImported = planetImportFrom[requiredThingy + "Multiplier"] * planetImportFrom.freePop + planetImportFrom[requiredThingy + "ForExport"];
                 var actualProduced = Math.min(maxProduced, maxImported);
 
-                //XXX
-                if (actualProduced < 0) {
-                    console.log("wtf negative produced. actualProduced: " + actualProduced);
+                //XXX temp
+                if (actualProduced <= 0) {
+                    console.log("wtf negative produced at " + planet.name + ". actualProduced: " + actualProduced);
                     console.log("maxProduced: " + maxProduced);
                     console.log("maxImported: " + maxImported);
                     console.log("planetImportFrom.freePop: " + planetImportFrom.freePop);
+                    console.log("planet.freePop: " + planet.freePop);
                 }
 
                 //move workers:
-                var thingyWorkers = Math.ceil(actualProduced / planet[thingy + "Multiplier"]);
+                var thingyWorkers = Math.floor(actualProduced / planet[thingy + "Multiplier"]);
                 planet.freePop -= thingyWorkers;
                 planet[thingy + "Work"] += thingyWorkers;
                 var requiredThingExtraNeeded = actualProduced - planetImportFrom[requiredThingy + "ForExport"];
@@ -191,6 +203,27 @@
             //return if we are done:
             return thingyPlanetList.length !== thingyIndex;
         };
+    };
+
+    var solveInternally = function (planet, thingy, requiredThingy) {
+        var freePop = planet.freePop;
+        var thingyMultiplier = planet[thingy + "Multiplier"];
+        var requiredThingyMultiplier = planet[requiredThingy + "Multiplier"];
+
+        //used: (p-x) * a = x * b
+        // to   x = ap / (a+b)
+        var popForThingy = (requiredThingyMultiplier * freePop) / (requiredThingyMultiplier + thingyMultiplier);
+        popForThingy = Math.floor(popForThingy);
+        var popForRequiredThingy = freePop - popForThingy;
+
+        planet[thingy + "Work"] += popForThingy;
+        planet[requiredThingy + "Work"] += popForRequiredThingy;
+
+//        console.log("internal solution freePop: " + freePop);
+//        console.log("internal solution: " + popForThingy + " for " + thingy + " at " + thingyMultiplier);
+//        console.log("internal solution: " + popForRequiredThingy + " for " + requiredThingy + " at " + requiredThingyMultiplier);
+
+        planet.freePop = 0;
     };
 
 

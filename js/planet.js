@@ -2,8 +2,7 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    var PREFERED_MIN_STORAGE = 75; //planets wants to have storage that lasts this many turns
-    var MIN_SUPPLY_FOR_EXPORT = 50;
+    ploxworld.PREFERED_MIN_STORAGE = 75; //planets wants to have storage that lasts this many turns
     var POP_INCREASE = 1.001;
     var POP_DECREASE_AT_STARVATION = 1 / (POP_INCREASE * POP_INCREASE);
 
@@ -89,13 +88,13 @@
 
         this.credit = this.pop * _.random(50, 500);
 
-        this.supply = this.pop * PREFERED_MIN_STORAGE;
+        this.supply = this.pop * ploxworld.PREFERED_MIN_STORAGE;
         this.supplyMultiplier = _.random(1, 5);
 //        this.supplyWork;
 
         this.production = 50 + Math.random() * 50 | 0;
         this.productionMultiplier = _.random(1, 5);
-//        this.supplyWork;
+//        this.productionWork;
 
         this.material = 50 + Math.random() * 50 | 0;
         this.materialMultiplier = _.random(1, 5);
@@ -116,11 +115,37 @@
         return this.pop | 0;
     };
 
+    Planet.prototype.addCredits = function (credit) {
+        this.credit += credit;
+    };
+
     Planet.prototype.tic = function () {
 
-        this.supply += this.supplyWork * this.supplyMultiplier;
-        this.credit += this.pop * 20;
+        //money:
+        this.addCredits(this.pop * 20);
 
+        //resources:
+        this.material += this.materialWork * this.materialMultiplier;
+        this.crystal += this.crystalWork * this.crystalMultiplier;
+
+        var potentialProduction = this.productionWork * this.productionMultiplier;
+        if (potentialProduction > this.material) {
+            console.log("omg production starvation at " + this.name);
+        }
+        var newProduction = Math.min(potentialProduction, this.material);
+        this.production += newProduction;
+        this.material -= newProduction;
+
+        var potentialScience = this.scienceWork * this.scienceMultiplier;
+        if (potentialScience > this.crystal) {
+            console.log("omg science starvation at " + this.name);
+        }
+        var newScience = Math.min(potentialScience, this.crystal);
+        this.science += newScience;
+        this.crystal -= newScience;
+
+        //eating:
+        this.supply += this.supplyWork * this.supplyMultiplier;
         var eaten = this.getEaten();
         if (eaten < this.supply) {
             //XXX make this more dynamic or something:
@@ -172,12 +197,13 @@
     Planet.prototype.resetProduction = function () {
         this.freePop = this.pop | 0;
         this.supplyNeed = this.getEaten();
-        //maybe we wanna store some supply:
-        if (this.supply < this.getEaten() * PREFERED_MIN_STORAGE) {
-            this.supplyNeed += this.pop / 5 | 0;
+        //maybe we wanna store some supply: //XXX calculate need where we calculate need for other products
+        if (this.supply < this.getEaten() * ploxworld.PREFERED_MIN_STORAGE) {
+            this.supplyNeed += Math.ceil(this.pop / 5);
         }
         this.supplyWork = 0;
         this.supplyWork = 0;
+        this.productionWork = 0;
         this.materialWork = 0;
         this.scienceWork = 0;
         this.crystalWork = 0;

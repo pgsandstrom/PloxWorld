@@ -13,7 +13,7 @@
 
         var seed = Math.random() * 2000000 | 0;
         console.log("seed: " + seed);
-//        seed = 416035;
+        seed = 98982 ;
         Math.seedrandom(seed);
 
         var names = ['Mercurius', 'Venus', 'Tellus', 'Mars', 'Jupiter', 'Saturnus', 'Neptunus', 'Uranus', 'Pluto', 'X',
@@ -29,7 +29,7 @@
 
         //instanciate the global variables here, so we know they are reset when starting a new round!
         ploxworld.planets = {};
-        ploxworld.planetList = [];  //this array is currently re-sorted ALL the time, so don't count on its order
+        ploxworld.planetList = [];
 
         //all planets ordered after supply need:
         ploxworld.supplyNeedList = [];

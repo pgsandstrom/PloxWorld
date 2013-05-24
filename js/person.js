@@ -61,10 +61,16 @@
         this.ship = ship;
         this.ship.setOwner(this);
 
+        this.credit = 0;
+
         ploxworld.persons.add(this);
     };
 
     var Person = ploxworld.Person;
+
+    Person.prototype.addCredits = function (credits) {
+        this.credit += credits;
+    };
 
     Person.prototype.remove = function () {
         var me = this;
@@ -140,6 +146,12 @@
     var TradePerson = ploxworld.TradePerson;
 
     extend(Person, TradePerson);
+
+    TradePerson.prototype.remove = function () {
+        this.fromPlanet.addCredits(this.credit);
+        this.credit = 0;
+        Person.prototype.remove.call(this);
+    };
 
     TradePerson.prototype.tic = function () {
 //        console.log("tradeperson tic");

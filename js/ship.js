@@ -46,11 +46,11 @@
         }
     };
 
-    ploxworld.makeShip = function(planet, cargo) {
-        if(planet === undefined) {
+    ploxworld.makeShip = function (planet, cargo) {
+        if (planet === undefined) {
             ploxworld.getRandomPlanet();
         }
-        if(cargo === undefined) {
+        if (cargo === undefined) {
             cargo = {};
         }
 
@@ -82,10 +82,12 @@
      */
     Ship.prototype.offload = function (forced) {
         var me = this;
-        var credits;
-        _.forEach(this.cargo, function (value) {
-            value.addTo(me.position.planet);
+        var credits = 0;
+        _.forEach(this.cargo, function (resource) {
+            credits += resource.getPrice() * resource.amount;
+            resource.addTo(me.position.planet);
         });
+        this.owner.addCredits(credits);
     };
 
     Ship.prototype.tic = function () {

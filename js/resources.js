@@ -9,74 +9,36 @@
     ploxworld.RESOURCE_SCIENCE = "science";
     ploxworld.RESOURCE_CRYSTAL = "crystal";
 
-    ploxworld.price = {
-        "supply": 100,
-        "production": 150,
-        "material": 150,
-        "science": 250,
-        "crystal": 250
-    };
+    //TODO fix empire-specific prices by checking how effectively stuff is created within the empire
+    ploxworld.price = {};
+    ploxworld[ploxworld.RESOURCE_SUPPLY] = 100;
+    ploxworld[ploxworld.RESOURCE_MATERIAL] = 150;
+    ploxworld[ploxworld.RESOURCE_CRYSTAL] = 150;
+    ploxworld[ploxworld.RESOURCE_PRODUCTION] = 250;
+    ploxworld[ploxworld.RESOURCE_SCIENCE] = 250;
 
 
     ploxworld.makeResource = function (type, amount) {
 //        console.log("makeResource: " + type);
-        return ploxworld.RESOURCE_MAPPER[type](amount);
+        return new Resource(type, amount);
     };
 
-    ploxworld.makeSupply = function (amount) {
-        return new Supply(amount);
-    };
-
-    ploxworld.Supply = function Supply(amount) {
+    ploxworld.Resource = function Resource(type, amount) {
+        this.type = type;
         this.amount = amount;
     };
 
-    var Supply = ploxworld.Supply;
+    var Resource = ploxworld.Resource;
 
-    Supply.prototype.addTo = function (planet) {
+    Resource.prototype.addTo = function (planet) {
 //        console.log("offloading supply to " + planet.name);
-        planet.supply += this.amount;
+        planet[this.type] += this.amount;
         this.amount = 0;
     };
 
-    ploxworld.makeMaterial = function (amount) {
-//        console.log("make material");
-        return new Material(amount);
+    Resource.prototype.getPrice = function () {
+        return ploxworld.price[this.type];
     };
 
-    ploxworld.Material = function Material(amount) {
-        this.amount = amount;
-    };
-
-    var Material = ploxworld.Material;
-
-    Material.prototype.addTo = function (planet) {
-//        console.log("offloading material to " + planet.name);
-        planet.Material += this.amount;
-        this.amount = 0;
-    };
-
-    ploxworld.makeCrystal = function (amount) {
-        //        console.log("make crystal");
-        return new Crystal(amount);
-    };
-
-    ploxworld.Crystal = function Crystal(amount) {
-        this.amount = amount;
-    };
-
-    var Crystal = ploxworld.Crystal;
-
-    Crystal.prototype.addTo = function (planet) {
-//        console.log("offloading crystal to " + planet.name);
-        planet.Crystal += this.amount;
-        this.amount = 0;
-    };
-
-    ploxworld.RESOURCE_MAPPER = {
-        "supply": ploxworld.makeSupply,
-        "material": ploxworld.makeMaterial,
-        "crystal": ploxworld.makeCrystal
-    };
 
 })();
