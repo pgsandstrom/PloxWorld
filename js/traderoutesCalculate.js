@@ -115,7 +115,7 @@
 
     var calculateRoutes = function (thingy, requiredThingy, thingyPlanetList, requiredThingyPlanetList) {
 
-        //XXX: Maybe make two separate methods for production and science, this trickery with variable names sucks
+        //Warning: Silly trickery with variable names ahead!
 
         //TODO we need to make sure planets stop producing requiredThingy if they are storing enough of it...
 
@@ -125,7 +125,9 @@
             var planet = thingyPlanetList[thingyIndex];
             thingyIndex++;
             var requiredThingyIndex = 0;
+            var extraImportRequested = 0;
             while (true) {
+                //TODO dont break if extraImportRequested > 0
                 if (planet.freePop === 0) {
                     break;
                 }
@@ -169,6 +171,7 @@
 //                    var increase = Math.ceil(planet.pop / 5);
 //                    console.log("ey lol lets build up " + requiredThingy + " at " + planet.name + " with " + increase);
 //                    maxProduced += increase;
+                    extraImportRequested = Math.ceil(planet.pop / 5);
                 }
                 var maxImported = planetImportFrom[requiredThingy + "Multiplier"] * planetImportFrom.freePop + planetImportFrom[requiredThingy + "ForExport"];
                 var actualProduced = Math.min(maxProduced, maxImported);
@@ -186,16 +189,25 @@
                 var thingyWorkers = Math.floor(actualProduced / planet[thingy + "Multiplier"]);
                 planet.freePop -= thingyWorkers;
                 planet[thingy + "Work"] += thingyWorkers;
-                var requiredThingExtraNeeded = actualProduced - planetImportFrom[requiredThingy + "ForExport"];
+
+                var imported = actualProduced;
+                if (extraImportRequested > 0 && maxImported > actualProduced) {
+                    var importIncrease = Math.min(extraImportRequested, maxImported - actualProduced);
+                    extraImportRequested -= importIncrease;
+                    //XXX this is kind of ugly,
+                    imported += importIncrease;
+                }
+
+                var requiredThingExtraNeeded = imported - planetImportFrom[requiredThingy + "ForExport"];
                 var requiredThingyWorkers = Math.ceil(requiredThingExtraNeeded / planetImportFrom[requiredThingy + "Multiplier"]);
                 planetImportFrom.freePop -= requiredThingyWorkers;
                 planetImportFrom[requiredThingy + "Work"] += requiredThingyWorkers;
 
                 planetImportFrom[requiredThingy + "ForExport"] += requiredThingyWorkers * planetImportFrom[requiredThingy + "Multiplier"];
-                planetImportFrom[requiredThingy + "ForExport"] -= actualProduced;
+                planetImportFrom[requiredThingy + "ForExport"] -= imported;
 
                 //create trade route:
-                var tradeRoute = new ploxworld.TradeRoute(planetImportFrom, planet, requiredThingy, actualProduced);
+                var tradeRoute = new ploxworld.TradeRoute(planetImportFrom, planet, requiredThingy, imported);
                 planet.import.push(tradeRoute);
                 planetImportFrom.export.push(tradeRoute);
 

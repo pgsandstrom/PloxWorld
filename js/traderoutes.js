@@ -10,7 +10,12 @@
 
     //support methods:
     ploxworld.resetTraderoutes = function () {
-        //TODO maybe we should let them send everything they have in store, so to say?
+
+        //send what they are holding before deleting them:
+        _.forEach(ploxworld.traderoutes, function (traderoute) {
+            traderoute.sendShipment();
+        });
+
         ploxworld.traderoutes.length = 0;
         ploxworld.traderouteParts = {};
     };
@@ -38,10 +43,14 @@
         this.pending += this.amount;
         //send a tradeship something like every second to third turn
         if (this.pending > this.fromPlanet.pop * 6 || this.pending >= this.amount * 3) {
-            ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, this.pending)});
-            this.fromPlanet[this.resource] -= this.pending;
-            this.pending = 0;
+            this.sendShipment();
         }
+    };
+
+    TradeRoute.prototype.sendShipment = function () {
+        ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, this.pending)});
+        this.fromPlanet[this.resource] -= this.pending;
+        this.pending = 0;
     };
 
     function addRouteParts(tradeRoute) {
