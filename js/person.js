@@ -8,24 +8,18 @@
     };
 
     var takeMaleName = function () {
-        var index = Math.floor(Math.random() * ploxworld.maleNames.length);
-        var name = ploxworld.maleNames[index];
-        ploxworld.maleNames.remove(index);
-        return name;
+        return ploxworld.maleNames.takeRandom();
     };
 
     var takeFemaleName = function () {
-        var index = Math.floor(Math.random() * ploxworld.femaleNames.length);
-        var name = ploxworld.femaleNames[index];
-        ploxworld.femaleNames.remove(index);
-        return name;
+        return ploxworld.femaleNames.takeRandom();
     };
 
     var Relation = function (person1, person2, value) {
         this.person1 = person1;
         this.person2 = person2;
-        if(!value) {
-            value = (Math.random() * 200 - 100) | 0;
+        if (!value) {
+            value = _.random(-100, 100);
         }
         this.value = value;
     };
@@ -154,7 +148,7 @@
         //is at planet, make decision!
         if (position.positionType === ploxworld.POSITION_TYPE_PLANET) {
             if (position.planet === this.toPlanet) {
-                ship.offload();
+                ship.offload(false);
                 ploxworld.ships.remove(ship);
                 this.remove();
             } else {
@@ -171,7 +165,7 @@
                         this.decision = decisionTravelTo(nextPlanet);
                     } else {
                         console.log("forever lost, offloading");
-                        ship.offload();
+                        ship.offload(true);
                         ploxworld.ships.remove(ship);
                         this.remove();
                     }

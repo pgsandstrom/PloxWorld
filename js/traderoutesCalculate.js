@@ -120,7 +120,7 @@
 
         var thingyIndex = 0;
         return function () {
-            console.log("step for " + thingy + " and " + requiredThingy);
+//            console.log("step for " + thingy + " and " + requiredThingy);
             var planet = thingyPlanetList[thingyIndex];
             thingyIndex++;
             var requiredThingyIndex = 0;
@@ -139,9 +139,11 @@
                 if (planet === planetImportFrom) {
                     //TODO
                     console.log("lol solve it internally");
+                    continue;
                 }
 
                 if (planetImportFrom.freePop === 0) {
+                    //XXX could it be a good idea to move those planets from the list to avoid needless iterations?
                     continue;
                 }
 
@@ -160,11 +162,20 @@
                 var maxImported = planetImportFrom[requiredThingy + "Multiplier"] * planetImportFrom.freePop + planetImportFrom[requiredThingy + "ForExport"];
                 var actualProduced = Math.min(maxProduced, maxImported);
 
+                //XXX
+                if (actualProduced < 0) {
+                    console.log("wtf negative produced. actualProduced: " + actualProduced);
+                    console.log("maxProduced: " + maxProduced);
+                    console.log("maxImported: " + maxImported);
+                    console.log("planetImportFrom.freePop: " + planetImportFrom.freePop);
+                }
+
                 //move workers:
                 var thingyWorkers = Math.ceil(actualProduced / planet[thingy + "Multiplier"]);
                 planet.freePop -= thingyWorkers;
                 planet[thingy + "Work"] += thingyWorkers;
-                var requiredThingyWorkers = Math.ceil(actualProduced / planetImportFrom[requiredThingy + "Multiplier"]);
+                var requiredThingExtraNeeded = actualProduced - planetImportFrom[requiredThingy + "ForExport"];
+                var requiredThingyWorkers = Math.ceil(requiredThingExtraNeeded / planetImportFrom[requiredThingy + "Multiplier"]);
                 planetImportFrom.freePop -= requiredThingyWorkers;
                 planetImportFrom[requiredThingy + "Work"] += requiredThingyWorkers;
 

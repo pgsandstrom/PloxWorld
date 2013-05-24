@@ -87,22 +87,26 @@
 
 //        this.freePop;
 
+        this.credit = this.pop * _.random(50, 500);
+
         this.supply = this.pop * PREFERED_MIN_STORAGE;
-        this.supplyMultiplier = 1 + Math.random() * 5 | 0;
+        this.supplyMultiplier = _.random(1, 5);
 //        this.supplyWork;
 
-        this.productionMultiplier = 1 + Math.random() * 5 | 0;
+        this.production = 50 + Math.random() * 50 | 0;
+        this.productionMultiplier = _.random(1, 5);
 //        this.supplyWork;
 
         this.material = 50 + Math.random() * 50 | 0;
-        this.materialMultiplier = 1 + Math.random() * 5 | 0;
+        this.materialMultiplier = _.random(1, 5);
 //        this.materialWork;
 
-        this.scienceMultiplier = 1 + Math.random() * 5 | 0;
+        this.science = 50 + Math.random() * 50 | 0;
+        this.scienceMultiplier = _.random(1, 5);
 //        this.scienceWork;
 
         this.crystal = 50 + Math.random() * 50 | 0;
-        this.crystalMultiplier = 1 + Math.random() * 5 | 0;
+        this.crystalMultiplier = _.random(1, 5);
 //        this.crystalWork;
     };
 
@@ -115,6 +119,7 @@
     Planet.prototype.tic = function () {
 
         this.supply += this.supplyWork * this.supplyMultiplier;
+        this.credit += this.pop * 20;
 
         var eaten = this.getEaten();
         if (eaten < this.supply) {
@@ -173,7 +178,7 @@
         }
         this.supplyWork = 0;
         this.supplyWork = 0;
-        this.materialWork = 0;  //TODO storing material and crystal, how does that work?
+        this.materialWork = 0;
         this.scienceWork = 0;
         this.crystalWork = 0;
 
@@ -183,39 +188,6 @@
 
         this.export.length = 0;
         this.import.length = 0;
-    };
-
-    Planet.prototype.calculateTradeRoutes = function () {
-        //XXX a planet should still export even when insufficient food, if it is not important enough... or maybe not?
-        //XXX a planet should maybe export food to their own nation first... or maybe not?
-        //XXX possible optimization, figure it out
-
-        //negative supplyNeed means they can export
-        if (this.supplyNeed < 0 && this.supply > MIN_SUPPLY_FOR_EXPORT) {
-            for (var i = 0; i < ploxworld.supplyNeedList.length; i++) {
-
-                //abort if we have no more resources to export
-                if (this.supplyNeed >= 0) {
-                    break;
-                }
-                var planet = ploxworld.supplyNeedList[i];
-
-                //if relations are not good enough, ignore:
-                if (this.empire !== planet.empire && this.empire.getRelation(planet.empire).state < ploxworld.RELATION_STATE_FRIENDLY) {
-//                    console.log("not friends, no trade!");
-                    continue;
-                }
-
-                //does the planet need resources, and can we get to it?
-                if (planet.supplyNeed > 0 && this.safeWayTo[planet.name]) {
-                    var exportNumber = Math.min(planet.supplyNeed, -this.supplyNeed);
-                    var tradeRoute = new ploxworld.TradeRoute(this, planet, ploxworld.RESOURCE_SUPPLY, exportNumber);
-                    this.tradeRoutes.push(tradeRoute);
-                    this.supplyNeed += exportNumber;
-                    planet.supplyNeed -= exportNumber;
-                }
-            }
-        }
     };
 
 })();

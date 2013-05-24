@@ -40,8 +40,8 @@
             var empirePlanetCountMap = {};
             _.each(ploxworld.empires, function (empire) {
                 empire.planets = new Set();
-                empire.x = (Math.random() * (ploxworld.WORLD_SIZE_X - 200)) + 100;
-                empire.y = (Math.random() * (ploxworld.WORLD_SIZE_Y - 200)) + 100;
+                empire.x = _.random(100, ploxworld.WORLD_SIZE_X - 100);
+                empire.y = _.random(100, ploxworld.WORLD_SIZE_Y - 100);
                 empirePlanetCountMap[empire.name] = 0;
             });
 

@@ -36,7 +36,7 @@
     TradeRoute.prototype.tic = function () {
         this.pending += this.amount;
         //send a tradeship something like every second to third turn
-        if (this.pending > this.fromPlanet.pop * 3 || this.pending >= this.amount * 3) {
+        if (this.pending > this.fromPlanet.pop * 6 || this.pending >= this.amount * 3) {
             ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, this.pending)});
             this.fromPlanet[this.resource] -= this.pending;
             this.pending = 0;

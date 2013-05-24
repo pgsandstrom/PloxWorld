@@ -76,8 +76,13 @@
         this.owner = owner;
     };
 
-    Ship.prototype.offload = function () {
+    /**
+     *
+     * @param forced if the ship was forced to offload, maybe because it cannot reach the goal
+     */
+    Ship.prototype.offload = function (forced) {
         var me = this;
+        var credits;
         _.forEach(this.cargo, function (value) {
             value.addTo(me.position.planet);
         });
