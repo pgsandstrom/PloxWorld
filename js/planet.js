@@ -115,8 +115,13 @@
         return this.pop | 0;
     };
 
-    Planet.prototype.addCredits = function (credit) {
-        this.credit += credit;
+    Planet.prototype.addCredits = function (credits) {
+        //XXX temp
+        if(!$.isNumeric(credits)) {
+            console.log("error credits: "+credits);
+            throw new Error();
+        }
+        this.credit += credits;
     };
 
     Planet.prototype.tic = function () {

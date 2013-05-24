@@ -91,7 +91,6 @@
     };
 
     Ship.prototype.tic = function () {
-//        console.log("ship tic!");
         if (this.position.positionType === ploxworld.POSITION_TYPE_TRAVELING) {
             this.travel();
         } else {

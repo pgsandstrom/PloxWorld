@@ -127,7 +127,7 @@
             var requiredThingyIndex = 0;
             var extraImportRequested = 0;
             while (true) {
-                //TODO dont break if extraImportRequested > 0
+                //XXX dont break if extraImportRequested > 0
                 if (planet.freePop === 0) {
                     break;
                 }
@@ -140,9 +140,9 @@
                 }
 
                 if (planet === planetImportFrom) {
-                    if (planet.freePop === planet.pop | 0) {
-                        console.log("lol solve " + thingy + " completey internally at " + planet.name);
-                    }
+//                    if (planet.freePop === planet.pop | 0) {
+//                        console.log("lol solve " + thingy + " completey internally at " + planet.name);
+//                    }
                     solveInternally(planet, thingy, requiredThingy);
                     break;
                 }
@@ -227,6 +227,18 @@
         var popForThingy = (requiredThingyMultiplier * freePop) / (requiredThingyMultiplier + thingyMultiplier);
         popForThingy = Math.floor(popForThingy);
         var popForRequiredThingy = freePop - popForThingy;
+
+        var producedThing = popForThingy * thingyMultiplier;
+        var producedRequiredThingy = popForRequiredThingy * requiredThingyMultiplier;
+
+        //make sure we have stuff stored:
+        if (producedThing === producedRequiredThingy && popForThingy * thingyMultiplier * ploxworld.PREFERED_MIN_STORAGE > planet[requiredThingy] && popForThingy > 0) {
+            //XXX here we assume that everything is solved internally, but maybe we have already requested extra goods from another planet.
+            //that is not game breaking though...
+//            console.log("solved internally is storing extra at " + planet.name);
+            popForThingy--;
+            popForRequiredThingy++;
+        }
 
         planet[thingy + "Work"] += popForThingy;
         planet[requiredThingy + "Work"] += popForRequiredThingy;

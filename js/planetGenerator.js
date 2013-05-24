@@ -13,7 +13,7 @@
 
         var seed = Math.random() * 2000000 | 0;
         console.log("seed: " + seed);
-        seed = 98982 ;
+//        seed = 98982 ;
         Math.seedrandom(seed);
 
         var names = ['Mercurius', 'Venus', 'Tellus', 'Mars', 'Jupiter', 'Saturnus', 'Neptunus', 'Uranus', 'Pluto', 'X',

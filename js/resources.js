@@ -11,15 +11,14 @@
 
     //TODO fix empire-specific prices by checking how effectively stuff is created within the empire
     ploxworld.price = {};
-    ploxworld[ploxworld.RESOURCE_SUPPLY] = 100;
-    ploxworld[ploxworld.RESOURCE_MATERIAL] = 150;
-    ploxworld[ploxworld.RESOURCE_CRYSTAL] = 150;
-    ploxworld[ploxworld.RESOURCE_PRODUCTION] = 250;
-    ploxworld[ploxworld.RESOURCE_SCIENCE] = 250;
+    ploxworld.price[ploxworld.RESOURCE_SUPPLY] = 100;
+    ploxworld.price[ploxworld.RESOURCE_MATERIAL] = 150;
+    ploxworld.price[ploxworld.RESOURCE_CRYSTAL] = 150;
+    ploxworld.price[ploxworld.RESOURCE_PRODUCTION] = 250;
+    ploxworld.price[ploxworld.RESOURCE_SCIENCE] = 250;
 
 
     ploxworld.makeResource = function (type, amount) {
-//        console.log("makeResource: " + type);
         return new Resource(type, amount);
     };
 
@@ -37,7 +36,8 @@
     };
 
     Resource.prototype.getPrice = function () {
-        return ploxworld.price[this.type];
+        var price = ploxworld.price[this.type];
+        return price;
     };
 
 
