@@ -124,6 +124,15 @@
         this.credit += credits;
     };
 
+    Planet.prototype.removeCredits = function (credits) {
+        //XXX temp
+        if(!$.isNumeric(credits)) {
+            console.log("error credits: "+credits);
+            throw new Error();
+        }
+        this.credit -= credits;
+    };
+
     Planet.prototype.tic = function () {
 
         //money:

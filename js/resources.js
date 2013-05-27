@@ -14,8 +14,8 @@
     ploxworld.price[ploxworld.RESOURCE_SUPPLY] = 100;
     ploxworld.price[ploxworld.RESOURCE_MATERIAL] = 150;
     ploxworld.price[ploxworld.RESOURCE_CRYSTAL] = 150;
-    ploxworld.price[ploxworld.RESOURCE_PRODUCTION] = 250;
-    ploxworld.price[ploxworld.RESOURCE_SCIENCE] = 250;
+    ploxworld.price[ploxworld.RESOURCE_PRODUCTION] = 350;
+    ploxworld.price[ploxworld.RESOURCE_SCIENCE] = 350;
 
 
     ploxworld.makeResource = function (type, amount) {

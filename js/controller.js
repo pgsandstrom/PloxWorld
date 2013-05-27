@@ -5,12 +5,16 @@ function Controller($scope) {
 
     $scope.startGame = function () {
 
+        //TODO make it so ships aren't animated to new positions when pressing "new game"
+
         ploxworld.resetPersonNamePool();
-        ploxworld.persons = new Set();
+        ploxworld.persons = new Set();  // Only important persons (not traders etc)
+        ploxworld.personsAll = new Set();   // All persons
 
         $scope.tics = 0;
         $scope.planets = ploxworld.generatePlanets();
         $scope.persons = ploxworld.generatePersons();
+        $scope.personsAll = ploxworld.personsAll;
         $scope.empires = ploxworld.generateEmpires();
         ploxworld.calculateTradeMap();
 
@@ -36,7 +40,7 @@ function Controller($scope) {
         //TODO first ask player about command?
 
         //each person makes decision, like where to travel etc
-        angular.forEach($scope.persons, function (person) {
+        angular.forEach($scope.personsAll, function (person) {
             person.tic();
         });
 

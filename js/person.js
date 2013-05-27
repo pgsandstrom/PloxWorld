@@ -63,13 +63,22 @@
 
         this.credit = 0;
 
-        ploxworld.persons.add(this);
+        ploxworld.personsAll.add(this);
     };
 
     var Person = ploxworld.Person;
 
     Person.prototype.addCredits = function (credits) {
         this.credit += credits;
+    };
+
+    Person.prototype.removeCredits = function (credits) {
+        //XXX temp
+        if(!$.isNumeric(credits)) {
+            console.log("error credits: "+credits);
+            throw new Error();
+        }
+        this.credit -= credits;
     };
 
     Person.prototype.remove = function () {
@@ -82,6 +91,7 @@
         });
 
         ploxworld.persons.remove(this);
+        ploxworld.personsAll.remove(this);
         if (this.isMale) {
             ploxworld.maleNames.push(this.name);
         } else {
@@ -211,6 +221,8 @@
         this.empire = undefined; //which empire he owns
 
         Person.call(this, name, isMale, ship);
+
+        ploxworld.persons.add(this);
     };
 
     var AiPerson = ploxworld.AiPerson;

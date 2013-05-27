@@ -2,6 +2,9 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
+    ploxworld.SHIP_TYPE_TRADE = "ship_trade";
+    ploxworld.SHIP_TYPE_AI = "ship_ai";
+
     ploxworld.POSITION_TYPE_PLANET = 1;
     ploxworld.POSITION_TYPE_TRAVELING = 2;
 
@@ -65,12 +68,18 @@
         this.aim = 3;
         this.position = new ploxworld.Position(ploxworld.POSITION_TYPE_PLANET, planet, undefined);
         this.cargo = cargo;
+        this.imageName = ploxworld.SHIP_TYPE_TRADE;
 
         //this feels kind of haxxy...
         ploxworld.ships.add(this);
     };
 
     var Ship = ploxworld.Ship;
+
+    Ship.prototype.getImageName = function (owner) {
+        //TODO method for getting image size? Should that be hardcoded?
+        return this.imageName;
+    };
 
     Ship.prototype.setOwner = function (owner) {
         this.owner = owner;
@@ -87,6 +96,7 @@
             credits += resource.getPrice() * resource.amount;
             resource.addTo(me.position.planet);
         });
+        this.position.planet.removeCredits(credits);
         this.owner.addCredits(credits);
     };
 

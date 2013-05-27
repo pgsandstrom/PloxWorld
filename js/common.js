@@ -33,67 +33,10 @@ function extend(base, sub) {
     sub.prototype.constructor = sub;
 }
 
-// a bloody set implementation:
-(function () {
-    "use strict";
-
-    var keyCounter = -9007199254740992;
-
-    window.Set = function Set() {
-    };
-
-    Set.prototype.add = function (object) {
-        if (object.__hash === undefined) {
-            object.__hash = keyCounter;
-            keyCounter++;
-        }
-        this[object.__hash] = object;
-    };
-
-    Set.prototype.contains = function (object) {
-        if (object.__hash === undefined) {
-            return false;
-        }
-        return this[object.__hash] !== undefined;
-    };
-
-    Set.prototype.remove = function (object) {
-        delete this[object.__hash];
-    };
-
-    Set.prototype.getRandom = function () {
-        var result;
-        var count = 0;
-        for (var prop in this) {
-            if (this.hasOwnProperty(prop)) {
-                if (Math.random() < 1 / ++count) {
-                    result = prop;
-                }
-            }
-        }
-        return this[result];
-    };
-
-    Set.prototype.takeRandom = function () {
-        var result;
-        var count = 0;
-        for (var prop in this) {
-            if (Math.random() < 1 / ++count) {
-                result = prop;
-            }
-        }
-        this.remove(result);
-        return result;
-    };
-
-//    var mySet = new Set();
-//    mySet.add(new Object);
-})();
-
 /*
-    A simple Set and Map implementation.
-    It does not compare objects internally, new Object() is different from new Object().
-    So be careful if you use this for anything complex...
+ A simple Set and Map implementation.
+ It does not compare objects internally, new Object() is different from new Object().
+ So be careful if you use this for anything complex...
  */
 (function () {
     "use strict";
@@ -120,6 +63,14 @@ function extend(base, sub) {
 
     Set.prototype.remove = function (object) {
         delete this[object.__hash];
+    };
+
+    Set.prototype.empty = function () {
+        for (var prop in this) {
+            if (this.hasOwnProperty(prop)) {
+                delete this[prop];
+            }
+        }
     };
 
     Set.prototype.getRandom = function () {
@@ -177,6 +128,14 @@ function extend(base, sub) {
 
     Map.prototype.remove = function (key) {
         delete this[key.__hash];
+    };
+
+    Map.prototype.empty = function () {
+        for (var prop in this) {
+            if (this.hasOwnProperty(prop)) {
+                delete this[prop];
+            }
+        }
     };
 
     Map.prototype.getRandom = function () {

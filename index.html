@@ -46,7 +46,7 @@
             <!--ships-->
             <div ng-repeat="object in ships" class="absolute ship" ui-fade-toggle="object.position.x"
                  ng-style="{'top': (object.position.y-6)+'px','left': (object.position.x-3)+'px'}">
-                <img src="img/ship.png"/>
+                <img src="img/{{object.getImageName()}}.png"/>
             </div>
         </div>
 
@@ -116,8 +116,6 @@
                 </div>
 
                 <div id="selected-empire" ng-show="selectedEmpire">
-
-
                     <div class="dialog-content">
                         <h5>{{selectedEmpire.name}}</h5>
                         <h6><a ng-click="showPerson(selectedEmpire.owner)" href="javascript:void(0)">
