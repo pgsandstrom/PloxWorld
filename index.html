@@ -44,9 +44,11 @@
             </div>
 
             <!--ships-->
-            <div ng-repeat="object in ships" class="absolute ship" ui-fade-toggle="object.position.x"
-                 ng-style="{'top': (object.position.y-6)+'px','left': (object.position.x-3)+'px'}">
-                <img src="img/{{object.getImageName()}}.png"/>
+            <div ng-repeat="object in ships" class="absolute ship"
+                 ng-style="{'top': (object.position.y-25)+'px','left': (object.position.x-25)+'px'}">
+                <div class="ship-image-container">
+                    <img ng-src="img/{{object.getImageName()}}.png"/>
+                </div>
             </div>
         </div>
 
@@ -76,11 +78,21 @@
                         <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
 
                         <p>Credits: {{selectedPlanet.credit}}</p>
-                        <p>Supply: {{selectedPlanet.supply}} ({{selectedPlanet.supplyWork}}*{{selectedPlanet.supplyMultiplier}})</p>
-                        <p>Production: {{selectedPlanet.production}} ({{selectedPlanet.productionWork}}*{{selectedPlanet.productionMultiplier}})</p>
-                        <p>Material: {{selectedPlanet.material}} ({{selectedPlanet.materialWork}}*{{selectedPlanet.materialMultiplier}})</p>
-                        <p>Science: {{selectedPlanet.science}} ({{selectedPlanet.scienceWork}}*{{selectedPlanet.scienceMultiplier}})</p>
-                        <p>Crystal: {{selectedPlanet.crystal}} ({{selectedPlanet.crystalWork}}*{{selectedPlanet.crystalMultiplier}})</p>
+
+                        <p>Supply: {{selectedPlanet.supply}}
+                            ({{selectedPlanet.supplyWork}}*{{selectedPlanet.supplyMultiplier}})</p>
+
+                        <p>Production: {{selectedPlanet.production}}
+                            ({{selectedPlanet.productionWork}}*{{selectedPlanet.productionMultiplier}})</p>
+
+                        <p>Material: {{selectedPlanet.material}}
+                            ({{selectedPlanet.materialWork}}*{{selectedPlanet.materialMultiplier}})</p>
+
+                        <p>Science: {{selectedPlanet.science}}
+                            ({{selectedPlanet.scienceWork}}*{{selectedPlanet.scienceMultiplier}})</p>
+
+                        <p>Crystal: {{selectedPlanet.crystal}}
+                            ({{selectedPlanet.crystalWork}}*{{selectedPlanet.crystalMultiplier}})</p>
 
                         <p>EXPORT:</p>
 

@@ -13,6 +13,7 @@ function Controller($scope) {
 
         $scope.tics = 0;
         $scope.planets = ploxworld.generatePlanets();
+        $scope.player = ploxworld.makePlayerPerson("Player", true);
         $scope.persons = ploxworld.generatePersons();
         $scope.personsAll = ploxworld.personsAll;
         $scope.empires = ploxworld.generateEmpires();

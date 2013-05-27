@@ -140,7 +140,7 @@
      */
     ploxworld.makeTradePerson = function (atPlanet, toPlanet, cargo) {
 
-        var ship = ploxworld.makeShip(atPlanet, cargo);
+        var ship = ploxworld.makeShip(atPlanet, cargo, ploxworld.SHIP_SPRITE_TRADE);
 
         return new TradePerson(undefined, undefined, ship, atPlanet, toPlanet);
     };
@@ -197,10 +197,10 @@
     };
 
     /**
-     * Any undefined parameter is randomized
-     * @param name
-     * @param isMale
-     * @param planet
+     *
+     * @param name Randomized if undefined
+     * @param isMale Randomized if undefined
+     * @param planet Randomized if undefined
      * @returns {ploxworld.AiPerson}
      */
     ploxworld.makeAiPerson = function (name, isMale, planet) {
@@ -209,14 +209,22 @@
             planet = ploxworld.getRandomPlanet();
         }
 
-        var ship = ploxworld.makeShip(planet);
+        var ship = ploxworld.makeShip(planet, undefined, ploxworld.SHIP_SPRITE_AI);
 
-        return new AiPerson(name, isMale, ship);
+        return new AiPerson(false, name, isMale, ship);
     };
 
-    ploxworld.AiPerson = function AiPerson(name, isMale, ship) {
+    ploxworld.makePlayerPerson = function (name, isMale, planet) {
+        var ship = ploxworld.makeShip(planet, undefined, ploxworld.SHIP_SPRITE_PLAYER);
+        return new AiPerson(true, name, isMale, ship);
+    };
+
+    ploxworld.AiPerson = function AiPerson(playerControlled, name, isMale, ship) {
         //call makeAiPerson instead of this constructor
 
+        //TODO maybe not call it "aiPerson"?
+
+        this.playerControlled = playerControlled;
         this.planet = undefined; //which planet he owns
         this.empire = undefined; //which empire he owns
 

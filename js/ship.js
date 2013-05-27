@@ -2,8 +2,9 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    ploxworld.SHIP_TYPE_TRADE = "ship_trade";
-    ploxworld.SHIP_TYPE_AI = "ship_ai";
+    ploxworld.SHIP_SPRITE_TRADE = "ship_trade";
+    ploxworld.SHIP_SPRITE_AI = "ship_ai";
+    ploxworld.SHIP_SPRITE_PLAYER = "ship_player";
 
     ploxworld.POSITION_TYPE_PLANET = 1;
     ploxworld.POSITION_TYPE_TRAVELING = 2;
@@ -49,18 +50,18 @@
         }
     };
 
-    ploxworld.makeShip = function (planet, cargo) {
+    ploxworld.makeShip = function (planet, cargo, sprite) {
         if (planet === undefined) {
-            ploxworld.getRandomPlanet();
+            planet = ploxworld.getRandomPlanet();
         }
         if (cargo === undefined) {
             cargo = {};
         }
 
-        return new Ship(planet, cargo);
+        return new Ship(planet, cargo, sprite);
     };
 
-    ploxworld.Ship = function Ship(planet, cargo) {
+    ploxworld.Ship = function Ship(planet, cargo, sprite) {
         //call makeShip instead of this constructor
         this.speed = 30;
         this.health = 5;
@@ -68,7 +69,7 @@
         this.aim = 3;
         this.position = new ploxworld.Position(ploxworld.POSITION_TYPE_PLANET, planet, undefined);
         this.cargo = cargo;
-        this.imageName = ploxworld.SHIP_TYPE_TRADE;
+        this.imageName = sprite;
 
         //this feels kind of haxxy...
         ploxworld.ships.add(this);
