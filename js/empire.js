@@ -25,10 +25,19 @@
     ploxworld.Empire = function Empire(name, color) {
         this.name = name;
         this.color = color;
+        this.planetList = [];
         this.empireRelations = {};
     };
 
     var Empire = ploxworld.Empire;
+
+    Empire.prototype.addPlanet = function(planet) {
+        this.planetList.push(planet);
+    };
+
+    Empire.prototype.removePlanet = function(planet) {
+        this.planetList.removeObject(planet);
+    };
 
     Empire.prototype.setOwner = function (person, randomizeRelations) {
         var me = this;

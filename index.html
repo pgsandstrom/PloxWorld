@@ -55,13 +55,12 @@
             </div>
 
             <!-- planet dropdown -->
-            <div class="dropdown" id="menu1" ng-style="{'top': (selectedPlanet.y)+'px','left': (selectedPlanet.x)+'px'}">
+            <div class="dropdown" id="menu1" ng-style="{'top': (selectedPlanet.y-20)+'px','left': (selectedPlanet.x-20)+'px'}">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1" id="foo"></a>
                 <ul class="dropdown-menu">
                     <li><a ng-click="showPlanet()" href="javascript:void(0)">1. Inspect</a></li>
-                    <li><a ng-click="SOMETHING()" href="javascript:void(0)">2. Travel fast</a></li>
-                    <li><a ng-click="SOMETHING_ELSE()" href="javascript:void(0)">3. Travel smart</a></li>
-                    <li><a href="#">4. DESTROY</a></li>
+                    <li><a ng-click="SOMETHING()" href="javascript:void(0)">2. Travel to</a></li>
+                    <li><a href="#">3. DESTROY</a></li>
                     <li class="divider"></li>
                     <li><a href="#">cuddle</a></li>
                 </ul>
@@ -73,7 +72,7 @@
             <div id="overview-planets" class="dialog tab-pane">
 
                 <div class="float-left item-list">
-                    ALL LE PLANETS:
+                    All planets:
                     <div ng-repeat="object in planets">
                         <a ng-click="showPlanet(object)" href="javascript:void(0)"><span
                                 ng-style="{'color': (object.getColor())}">{{object.name}}</span></a>
@@ -91,7 +90,7 @@
                         <h6><a ng-click="showPerson(selectedPlanet.owner)" href="javascript:void(0)">
                             Leader: {{selectedPlanet.owner.name}}</a></h6>
 
-                        <p>Population: {{selectedPlanet.pop}} ({{selectedPlanet.maxPop}})</p>
+                        <p>Population: {{(selectedPlanet.pop)}} ({{selectedPlanet.maxPop}})</p>
 
                         <p>Credits: {{selectedPlanet.credit}}</p>
 
@@ -107,13 +106,13 @@
                         <p>Science: {{selectedPlanet.science}}
                             ({{selectedPlanet.scienceWork}}*{{selectedPlanet.scienceMultiplier}})</p>
 
-                        <p>Crystal: {{selectedPlanet.crystal}}
+                        <p><i class="crystal"></i>Crystals: {{selectedPlanet.crystal}}
                             ({{selectedPlanet.crystalWork}}*{{selectedPlanet.crystalMultiplier}})</p>
 
                         <p>EXPORT:</p>
 
                         <div ng-repeat="object in selectedPlanet.export">
-                            export {{object.amount}} {{object.resource}} to
+                            {{object.amount}} {{object.resource}} <i class="icon-arrow-right"></i>
                             <a ng-click="showPlanet(object.toPlanet)" href="javascript:void(0)"
                                ng-style="{'color': (object.toPlanet.getColor())}">
                                 {{object.toPlanet.name}}</a>
@@ -122,7 +121,7 @@
                         <p>IMPORT:</p>
 
                         <div ng-repeat="object in selectedPlanet.import">
-                            import {{object.amount}} {{object.resource}} from
+                            import {{object.amount}} {{object.resource}} <i class="icon-arrow-left"></i>
                             <a ng-click="showPlanet(object.fromPlanet)" href="javascript:void(0)"
                                ng-style="{'color': (object.fromPlanet.getColor())}">
                                 {{object.fromPlanet.name}}</a>
@@ -136,7 +135,7 @@
             <div id="overview-empires" class="dialog tab-pane">
 
                 <div class="float-left item-list">
-                    ALL LE EMPIRES:
+                    All empires:
                     <div ng-repeat="object in empires">
                         <a ng-click="showEmpire(object)" href="javascript:void(0)"><span
                                 ng-style="{'color': (object.getColor())}">{{object.name}}</span></a>
@@ -156,7 +155,7 @@
             <div id="overview-persons" class="dialog tab-pane">
 
                 <div class="float-left item-list">
-                    ALL LE PERSONS:
+                    All persons:
                     <div ng-repeat="object in persons">
                         <a ng-click="showPerson(object)" href="javascript:void(0)">
                             <span>{{object.name}}</span></a>

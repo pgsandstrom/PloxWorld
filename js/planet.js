@@ -55,6 +55,8 @@
         ploxworld.calculateSupplyRoutes();
         ploxworld.calculateProductionScienceRoutes();
 
+        ploxworld.calculatePrices();
+
         ploxworld.drawTraderoutes();
     };
 
@@ -219,6 +221,10 @@
     };
 
     Planet.prototype.setEmpire = function (empire) {
+        if (this.empire) {
+            this.empire.removePlanet(this);
+        }
+        empire.addPlanet(this);
         this.empire = empire;
     };
 
@@ -236,7 +242,7 @@
         this.supplyNeed = this.getEaten();
         //maybe we wanna store some supply: //XXX calculate need where we calculate need for other products
         if (this.supply < this.getEaten() * ploxworld.PREFERED_MIN_STORAGE) {
-            this.supplyNeed += Math.ceil(this.pop / 5);
+            this.supplyNeed += Math.ceil(this.pop / 4);
         }
         this.supplyWork = 0;
         this.supplyWork = 0;

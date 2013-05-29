@@ -91,8 +91,7 @@
 
     var Ship = ploxworld.Ship;
 
-    Ship.prototype.getImageName = function (owner) {
-        //TODO method for getting image size? Should that be hardcoded?
+    Ship.prototype.getImageName = function () {
         return this.imageName;
     };
 

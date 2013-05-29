@@ -16,7 +16,7 @@
      * @param empire The empire the path is tied to (wont travel through it's enemies etc) (can be undefined)
      */
     ploxworld.findPath = function (planet, maxDistance, saveIn, withKey, empire) {
-        console.log("findPath started");
+//        console.log("findPath started");
         //XXX optimize by adding routes not only to the original planet u know etc
 
         saveIn[withKey] = {};

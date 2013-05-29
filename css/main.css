@@ -77,7 +77,7 @@ body {
 }
 
 .ship {
-    pointer-events:none;
+    pointer-events: none;
 }
 
 .ship-image-container {
@@ -87,4 +87,20 @@ body {
     text-align: center;
     vertical-align: middle;
     position: static;
+}
+
+/* TODO icons below, make them smart in one image instead */
+
+.crystal {
+    display: inline-block;
+    width: 11px;
+    height: 13px;
+    background-image: url("../img/crystal.png");
+}
+
+.worker {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("../img/worker.png");
 }

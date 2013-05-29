@@ -5,6 +5,17 @@ Array.prototype.remove = function (from, to) {
     return this.push.apply(this, rest);
 };
 
+/**
+ * Will only remove the first instance
+ * @param object
+ */
+Array.prototype.removeObject = function (object) {
+    var index = this.indexOf(object);
+    if(index > -1) {
+        this.splice(index, 1);
+    }
+};
+
 Array.prototype.getRandom = function () {
     return this[Math.floor(Math.random() * this.length)];
 };

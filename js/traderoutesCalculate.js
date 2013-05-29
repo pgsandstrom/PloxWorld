@@ -127,6 +127,7 @@
             thingyIndex++;
             var requiredThingyIndex = 0;
             var extraImportRequested = 0;
+            var extraImportDone = false;
             while (true) {
                 //XXX dont break if extraImportRequested > 0
                 if (planet.freePop === 0) {
@@ -141,9 +142,6 @@
                 }
 
                 if (planet === planetImportFrom) {
-//                    if (planet.freePop === planet.pop | 0) {
-//                        console.log("lol solve " + thingy + " completey internally at " + planet.name);
-//                    }
                     solveInternally(planet, thingy, requiredThingy);
                     break;
                 }
@@ -154,7 +152,6 @@
                 }
 
                 //check if we can create a trade route:
-//                if (!planet.safeWayTo[planetImportFrom.name]) {
                 if (!planetImportFrom.getPath(planet, ploxworld.TRADE_SHIP_DISTANCE, planetImportFrom.empire)) {
                     continue;
                 }
@@ -167,13 +164,11 @@
                 //calculate the data:
                 var maxProduced = planet[thingy + "Multiplier"] * planet.freePop;
                 //build up a storage of requiredThingy:
-                if (maxProduced * ploxworld.PREFERED_MIN_STORAGE > planet[requiredThingy]) {
-                    //XXX does this logic work? maxProduced will be increased many times if you import from many planets...
-                    //TODO fix this
-//                    var increase = Math.ceil(planet.pop / 5);
-//                    console.log("ey lol lets build up " + requiredThingy + " at " + planet.name + " with " + increase);
-//                    maxProduced += increase;
-                    extraImportRequested = Math.ceil(planet.pop / 5);
+                if (!extraImportDone && maxProduced * ploxworld.PREFERED_MIN_STORAGE > planet[requiredThingy]) {
+                    //XXX does this logic work? Sometimes planets seem to import waaay more than they should...
+                    extraImportRequested = Math.ceil(planet.pop / 4);
+                    console.log("ey lol lets build up " + requiredThingy + " at " + planet.name + " with " + extraImportRequested);
+                    extraImportDone = true;
                 }
                 var maxImported = planetImportFrom[requiredThingy + "Multiplier"] * planetImportFrom.freePop + planetImportFrom[requiredThingy + "ForExport"];
                 var actualProduced = Math.min(maxProduced, maxImported);
