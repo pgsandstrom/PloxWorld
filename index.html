@@ -30,8 +30,11 @@
 
     <div id="map-container">
         <div id="map">
-            <div id="canvas-container" class="absolute">
-                <canvas width="960" height="600" id="canvas"/>
+            <div class="absolute">
+                <canvas width="960" height="600" id="canvas-trade"/>
+            </div>
+            <div class="absolute">
+                <canvas width="960" height="600" id="canvas-travel"/>
             </div>
 
             <!--planets-->
@@ -39,7 +42,7 @@
             <div ng-repeat="object in planets" class="absolute"
                  ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
                 <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
-                <a ng-click="showPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
+                <a ng-click="showPlanetDropdown(object)" ng-mouseover="hoverPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
                 <span ng-style="{'color': (object.getColor())}">{{object.name}}</span>
             </div>
 
@@ -49,6 +52,19 @@
                 <div class="ship-image-container">
                     <img ng-src="img/{{object.getImageName()}}.png"/>
                 </div>
+            </div>
+
+            <!-- planet dropdown -->
+            <div class="dropdown" id="menu1" ng-style="{'top': (selectedPlanet.y)+'px','left': (selectedPlanet.x)+'px'}">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1" id="foo"></a>
+                <ul class="dropdown-menu">
+                    <li><a ng-click="showPlanet()" href="javascript:void(0)">1. Inspect</a></li>
+                    <li><a ng-click="SOMETHING()" href="javascript:void(0)">2. Travel fast</a></li>
+                    <li><a ng-click="SOMETHING_ELSE()" href="javascript:void(0)">3. Travel smart</a></li>
+                    <li><a href="#">4. DESTROY</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">cuddle</a></li>
+                </ul>
             </div>
         </div>
 
@@ -235,10 +251,10 @@
 <!--XXX use cdn when all is said and done-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>-->
-<script src="js/underscore-min.js"></script>
 <script src="js/jquery.min.js"></script>
-<script src="js/angular.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/angular.min.js"></script>
 <script src="js/seedrandom.js"></script>
 
 <script src="js/common.js"></script>

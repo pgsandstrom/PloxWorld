@@ -8,12 +8,14 @@
     var PLANETS_MIN_DISTANCE = 40;
     var PLANET_COUNT = 25;
 
+//    var TRAVEL_COST_FACTOR = 1.3;
+
     //XXX rename to "generate universe" or something
     ploxworld.generatePlanets = function () {
 
         var seed = Math.random() * 2000000 | 0;
         console.log("seed: " + seed);
-//        seed = 98982 ;
+        seed = 1662495; //TODO why does pathing not work for this seed?
         Math.seedrandom(seed);
 
         var names = ['Mercurius', 'Venus', 'Tellus', 'Mars', 'Jupiter', 'Saturnus', 'Neptunus', 'Uranus', 'Pluto', 'X',
@@ -35,6 +37,7 @@
         ploxworld.supplyNeedList = [];
         ploxworld.ships = new Set();
 
+        var planet;
         var planetCount = PLANET_COUNT;
         while (planetCount) {
             var x;
@@ -44,7 +47,7 @@
                 y = (Math.random() * (ploxworld.WORLD_SIZE_Y - BORDER * 2)) + BORDER;
             } while (!validPosition(x, y));
 
-            var planet = new ploxworld.Planet(takeFreeName(), x, y);
+            planet = new ploxworld.Planet(takeFreeName(), x, y);
             ploxworld.planets[planet.name] = planet;
             ploxworld.planetList.push(planet);
             planetCount--;
@@ -63,14 +66,22 @@
                 var xDiff = Math.abs(planet1.x - planet2.x);
                 var yDiff = Math.abs(planet1.y - planet2.y);
                 var realDistance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-                var costDistance = Math.pow(realDistance, 1.1);
+//                var costDistance = Math.pow(realDistance, TRAVEL_COST_FACTOR);
 //                console.log(planet1.name + " to " + planet2.name + " distance: " + realDistance);
 //                console.log(planet1.name + " to " + planet2.name + " cost: " + costDistance);
-                planet1.setPlanetDistanceCost(planet2, costDistance);
-                planet1.setPlanetDistance(planet2, costDistance);
-                planet2.setPlanetDistanceCost(planet1, costDistance);
-                planet2.setPlanetDistance(planet1, costDistance);
+//                planet1.setPlanetDistanceCost(planet2, costDistance);
+                planet1.setPlanetDistance(planet2, realDistance);
+//                planet2.setPlanetDistanceCost(planet1, costDistance);
+                planet2.setPlanetDistance(planet1, realDistance);
             }
+        }
+
+        //sort all planets planetDistance:
+        for (i = 0; i < ploxworld.planetList.length; i++) {
+            planet = ploxworld.planetList[i];
+            planet.planetDistanceList.sort(function closest(a, b) {
+                return a.planetDistance[planet.name] - b.planetDistance[planet.name];
+            });
         }
 
 //        for (i2 = 0; i2 < ploxworld.planets.length; i2++) {

@@ -38,7 +38,7 @@ function Controller($scope) {
     $scope.tic = ploxworld.tic = function () {
         $scope.tics++;
 
-        //TODO first ask player about command?
+        //XXX first ask player about command?
 
         //each person makes decision, like where to travel etc
         angular.forEach($scope.personsAll, function (person) {
@@ -149,6 +149,21 @@ function Controller($scope) {
         });
     };
 
+    $scope.hoverPlanet = function (planet) {
+        ploxworld.drawTravel($scope.player, planet);
+    };
+
+    $scope.showPlanetDropdown = function (planet) {
+        console.log("showPlanetDropdown");
+        if (planet) {
+            $scope.selectedPlanet = planet;
+        }
+
+        setTimeout(function () {
+            $('.dropdown-toggle').dropdown('toggle');
+        }, 1);
+    };
+
     $scope.showPlanet = function (planet) {
         if (planet) {
             $scope.selectedPlanet = planet;
@@ -180,6 +195,8 @@ function Controller($scope) {
         if (event.target.tagName === 'BUTTON' && (event.which === 32 || event.which === 13)) { // space and enter
             return;
         }
+
+        //TODO the bootstrap dropdown overridew esc-key. After closing the dropdown, pressing esc again opens it...
 //        console.log("keydown: " + event.which);
 
         switch (event.which) {

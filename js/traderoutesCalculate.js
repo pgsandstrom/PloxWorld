@@ -4,7 +4,7 @@
     ploxworld.calculateSupplyRoutes = function () {
         var planetSupplyList = ploxworld.planetList; // no cloning, for optimization :)
         planetSupplyList.sort(function closest(a, b) {
-            //TODO prefer planets that are bad at other stuff?
+            //XXX prefer planets that are bad at other stuff?
             return b.supplyMultiplier - a.supplyMultiplier;
         });
 
@@ -38,7 +38,8 @@
                 }
 
                 //check if we can create a trade route:
-                if (!planet.safeWayTo[planetExportTo.name]) {
+//                if (!planet.safeWayTo[planetExportTo.name]) {
+                if (!planet.getPath(planetExportTo, ploxworld.TRADE_SHIP_DISTANCE, planet.empire)) {
                     continue;
                 }
 
@@ -76,23 +77,23 @@
     ploxworld.calculateProductionScienceRoutes = function () {
         var planetProductionList = ploxworld.planetList.slice(0);
         planetProductionList.sort(function closest(a, b) {
-            //TODO prefer planets that are bad at other stuff?
+            //XXX prefer planets that are bad at other stuff?
             return b.productionMultiplier - a.productionMultiplier;
         });
         var planetMaterialList = ploxworld.planetList.slice(0);
         planetMaterialList.sort(function closest(a, b) {
-            //TODO prefer planets that are bad at other stuff?
+            //XXX prefer planets that are bad at other stuff?
             return b.materialMultiplier - a.materialMultiplier;
         });
 
         var planetScienceList = ploxworld.planetList.slice(0);
         planetScienceList.sort(function closest(a, b) {
-            //TODO prefer planets that are bad at other stuff?
+            //XXX prefer planets that are bad at other stuff?
             return b.scienceMultiplier - a.scienceMultiplier;
         });
         var planetCrystalList = ploxworld.planetList.slice(0);
         planetCrystalList.sort(function closest(a, b) {
-            //TODO prefer planets that are bad at other stuff?
+            //XXX prefer planets that are bad at other stuff?
             return b.crystalMultiplier - a.crystalMultiplier;
         });
 
@@ -153,7 +154,8 @@
                 }
 
                 //check if we can create a trade route:
-                if (!planet.safeWayTo[planetImportFrom.name]) {
+//                if (!planet.safeWayTo[planetImportFrom.name]) {
+                if (!planetImportFrom.getPath(planet, ploxworld.TRADE_SHIP_DISTANCE, planetImportFrom.empire)) {
                     continue;
                 }
 

@@ -2,6 +2,8 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
+    ploxworld.TRADE_SHIP_DISTANCE = 250;
+
     ploxworld.SHIP_SPRITE_TRADE = "ship_trade";
     ploxworld.SHIP_SPRITE_AI = "ship_ai";
     ploxworld.SHIP_SPRITE_PLAYER = "ship_player";
@@ -58,12 +60,24 @@
             cargo = {};
         }
 
-        return new Ship(planet, cargo, sprite);
+        return new Ship(planet, cargo, sprite, 200);
     };
 
-    ploxworld.Ship = function Ship(planet, cargo, sprite) {
+    ploxworld.makeShipTrade = function (planet, cargo) {
+        if (planet === undefined) {
+            planet = ploxworld.getRandomPlanet();
+        }
+        if (cargo === undefined) {
+            cargo = {};
+        }
+
+        return new Ship(planet, cargo, ploxworld.SHIP_SPRITE_TRADE, ploxworld.TRADE_SHIP_DISTANCE);
+    };
+
+    ploxworld.Ship = function Ship(planet, cargo, sprite, distance) {
         //call makeShip instead of this constructor
         this.speed = 30;
+        this.distance = distance;
         this.health = 5;
         this.attack = 2;
         this.aim = 3;

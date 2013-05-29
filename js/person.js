@@ -74,8 +74,8 @@
 
     Person.prototype.removeCredits = function (credits) {
         //XXX temp
-        if(!$.isNumeric(credits)) {
-            console.log("error credits: "+credits);
+        if (!$.isNumeric(credits)) {
+            console.log("error credits: " + credits);
             throw new Error();
         }
         this.credit -= credits;
@@ -140,7 +140,7 @@
      */
     ploxworld.makeTradePerson = function (atPlanet, toPlanet, cargo) {
 
-        var ship = ploxworld.makeShip(atPlanet, cargo, ploxworld.SHIP_SPRITE_TRADE);
+        var ship = ploxworld.makeShipTrade(atPlanet, cargo);
 
         return new TradePerson(undefined, undefined, ship, atPlanet, toPlanet);
     };
@@ -175,13 +175,14 @@
                 this.remove();
             } else {
                 //travel to next planet:
-                var nextPlanet = position.planet.safeWayTo[this.toPlanet.name];
+//                var nextPlanet = position.planet.safeWayTo[this.toPlanet.name];
+                var nextPlanet = position.planet.getPath(this.toPlanet, ship.distance, this.fromPlanet.empire);
                 if (nextPlanet !== undefined) {
                     this.decision = decisionTravelTo(nextPlanet);
                 } else {
                     console.log("omg no way to travel");
                     this.toPlanet = this.fromPlanet;
-                    nextPlanet = this.position.planet.safeWayTo[this.toPlanet.name];
+                    nextPlanet = position.planet.getPath(this.toPlanet, ship.distance, this.fromPlanet.empire);
                     if (nextPlanet !== undefined) {
                         console.log("returning home");
                         this.decision = decisionTravelTo(nextPlanet);

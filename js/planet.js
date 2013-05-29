@@ -32,16 +32,11 @@
                     }
                 }
                 planet.closestNonEnemy.sort(function closest(a, b) {
-                    return planet.planetDistanceCost[a.name] - planet.planetDistanceCost[b.name];
+                    return planet.planetDistance[a.name] - planet.planetDistance[b.name];
                 });
 
             }
         }
-        _.each(ploxworld.planets, function (planet) {
-            //calculate how to get to allies:
-            ploxworld.findPathAllied(planet);
-        });
-
 
         ploxworld.calculateTradeRoutes();
     };
@@ -60,7 +55,7 @@
         ploxworld.calculateSupplyRoutes();
         ploxworld.calculateProductionScienceRoutes();
 
-        ploxworld.draw();
+        ploxworld.drawTraderoutes();
     };
 
     //object:
@@ -70,9 +65,11 @@
         this.y = y;
 
         this.planetDistance = {};   //name -> distance  (calculated once)
-        this.planetDistanceCost = {};   //name -> distanceCost  (calculated once)
-        this.closestNonEnemy = [];    //closest non-enemy planet. Used for navigating traders
-        this.safeWayTo = {};    //name -> planet. The next stop to reach a planet   //TODO use set instead?
+        this.planetDistanceList = []; //sorted, closest planet first
+        this.closestNonEnemy = [];  //closest non-enemy planet. Used for navigating traders
+        //TODO this one will have to be cleaned when empire relations change:
+        this.wayToWithEmpire = {};  //empireName+maxDistance+planetName -> planet. The next stop to reach a planet. //XXX refactor this shit...
+        this.wayTo = {};            //maxDistance+planetName -> planet. The next stop to reach a planet. //XXX refactor this shit...
         this.export = [];
         this.import = [];
 
@@ -111,14 +108,44 @@
 
     var Planet = ploxworld.Planet;
 
+    /**
+     *
+     * @param toPlanet
+     * @param maxDistance
+     * @param empire If person is tied to an empire, define it here
+     * @returns {*}
+     */
+    Planet.prototype.getPath = function (toPlanet, maxDistance, empire) {
+
+        var pathMap;
+        var keyName;
+        if (empire) {
+            pathMap = this.wayToWithEmpire;
+            keyName = empire.name + maxDistance + this.name;
+        } else {
+            pathMap = this.wayTo;
+            keyName = maxDistance + this.name;
+        }
+        if (!pathMap[keyName]) {
+            ploxworld.findPath(this, maxDistance, pathMap, keyName, empire);
+        }
+
+        //XXX temp
+        if (!pathMap[keyName]) {
+            throw new Error();
+        }
+
+        return pathMap[keyName][toPlanet.name];
+    };
+
     Planet.prototype.getEaten = function () {
         return this.pop | 0;
     };
 
     Planet.prototype.addCredits = function (credits) {
         //XXX temp
-        if(!$.isNumeric(credits)) {
-            console.log("error credits: "+credits);
+        if (!$.isNumeric(credits)) {
+            console.log("error credits: " + credits);
             throw new Error();
         }
         this.credit += credits;
@@ -126,8 +153,8 @@
 
     Planet.prototype.removeCredits = function (credits) {
         //XXX temp
-        if(!$.isNumeric(credits)) {
-            console.log("error credits: "+credits);
+        if (!$.isNumeric(credits)) {
+            console.log("error credits: " + credits);
             throw new Error();
         }
         this.credit -= credits;
@@ -201,11 +228,7 @@
 
     Planet.prototype.setPlanetDistance = function (planet, distance) {
         this.planetDistance[planet.name] = distance;
-    };
-
-    Planet.prototype.setPlanetDistanceCost = function (planet, distanceCost) {
-//        console.log(this.name + " distanceCost to " + planet.name + " is " + distanceCost);
-        this.planetDistanceCost[planet.name] = distanceCost;
+        this.planetDistanceList.push(planet);
     };
 
     Planet.prototype.resetProduction = function () {
