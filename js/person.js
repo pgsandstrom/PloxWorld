@@ -170,7 +170,7 @@
         //is at planet, make decision!
         if (position.positionType === ploxworld.POSITION_TYPE_PLANET) {
             if (position.planet === this.toPlanet) {
-                ship.offload(false);
+                this.sellCargo(false);
                 ploxworld.ships.remove(ship);
                 this.remove();
             } else {
@@ -188,13 +188,34 @@
                         this.decision = decisionTravelTo(nextPlanet);
                     } else {
                         console.log("forever lost, offloading");
-                        ship.offload(true);
+                        this.sellCargo(true);
                         ploxworld.ships.remove(ship);
                         this.remove();
                     }
                 }
             }
         }
+    };
+
+    /**
+     *
+     * @param forced If the ship was forced to offload, maybe because it cannot reach the goal
+     */
+    TradePerson.prototype.sellCargo = function (forced) {
+        var me = this;
+        var credits = 0;
+
+        _.forEach(this.ship.cargo, function (resource) {
+            credits += resource.getPriceReal(me.fromPlanet);
+        });
+
+        if (forced) {
+            credits = ( credits / 2) | 0;
+        }
+        this.ship.position.planet.removeCredits(credits);
+        this.addCredits(credits);
+
+        this.ship.offloadAll();
     };
 
     /**

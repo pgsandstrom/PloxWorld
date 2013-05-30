@@ -99,19 +99,16 @@
         this.owner = owner;
     };
 
-    /**
-     *
-     * @param forced if the ship was forced to offload, maybe because it cannot reach the goal
-     */
-    Ship.prototype.offload = function (forced) {
+    Ship.prototype.offloadAll = function () {
+        if (this.position.positionType !== ploxworld.POSITION_TYPE_PLANET) {
+            throw new Error("offloadAll when not at planet");
+        }
+
         var me = this;
-        var credits = 0;
         _.forEach(this.cargo, function (resource) {
-            credits += resource.getPrice() * resource.amount;
             resource.addTo(me.position.planet);
         });
-        this.position.planet.removeCredits(credits);
-        this.owner.addCredits(credits);
+        this.cargo = {};
     };
 
     Ship.prototype.tic = function () {

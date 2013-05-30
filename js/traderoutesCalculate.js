@@ -59,9 +59,7 @@
                 supplyForExport -= actualExport;
                 planet.freePop -= popToSupply;
                 planet.supplyWork += popToSupply;
-                var tradeRoute = new ploxworld.TradeRoute(planet, planetExportTo, ploxworld.RESOURCE_SUPPLY, actualExport);
-                planet.export.push(tradeRoute);
-                planetExportTo.import.push(tradeRoute);
+                ploxworld.makeTradeRoute(planet, planetExportTo, ploxworld.RESOURCE_SUPPLY, actualExport);
 
                 //XXX remove planetExportTo if it requires nothing more. If we remove, then we must clone first!
                 // One weakness in that we remove from the array and does not iterate everything: if planet x is only
@@ -129,8 +127,7 @@
             var extraImportRequested = 0;
             var extraImportDone = false;
             while (true) {
-                //XXX dont break if extraImportRequested > 0
-                if (planet.freePop === 0) {
+                if (planet.freePop === 0 && extraImportRequested === 0) {
                     break;
                 }
 
@@ -167,14 +164,14 @@
                 if (!extraImportDone && maxProduced * ploxworld.PREFERED_MIN_STORAGE > planet[requiredThingy]) {
                     //XXX does this logic work? Sometimes planets seem to import waaay more than they should...
                     extraImportRequested = Math.ceil(planet.pop / 4);
-                    console.log("ey lol lets build up " + requiredThingy + " at " + planet.name + " with " + extraImportRequested);
+//                    console.log("Lets build up " + requiredThingy + " at " + planet.name + " with " + extraImportRequested);
                     extraImportDone = true;
                 }
                 var maxImported = planetImportFrom[requiredThingy + "Multiplier"] * planetImportFrom.freePop + planetImportFrom[requiredThingy + "ForExport"];
                 var actualProduced = Math.min(maxProduced, maxImported);
 
                 //XXX temp
-                if (actualProduced <= 0) {
+                if (actualProduced < 0) {
                     console.log("wtf negative produced at " + planet.name + ". actualProduced: " + actualProduced);
                     console.log("maxProduced: " + maxProduced);
                     console.log("maxImported: " + maxImported);
@@ -191,7 +188,7 @@
                 if (extraImportRequested > 0 && maxImported > actualProduced) {
                     var importIncrease = Math.min(extraImportRequested, maxImported - actualProduced);
                     extraImportRequested -= importIncrease;
-                    //XXX this is kind of ugly,
+//                    console.log("importIncrease: " + importIncrease);
                     imported += importIncrease;
                 }
 
@@ -204,10 +201,7 @@
                 planetImportFrom[requiredThingy + "ForExport"] -= imported;
 
                 //create trade route:
-                var tradeRoute = new ploxworld.TradeRoute(planetImportFrom, planet, requiredThingy, imported);
-                planet.import.push(tradeRoute);
-                planetImportFrom.export.push(tradeRoute);
-
+                ploxworld.makeTradeRoute(planetImportFrom, planet, requiredThingy, imported);
             }
             //return if we are done:
             return thingyPlanetList.length !== thingyIndex;
@@ -232,7 +226,6 @@
         if (producedThing === producedRequiredThingy && popForThingy * thingyMultiplier * ploxworld.PREFERED_MIN_STORAGE > planet[requiredThingy] && popForThingy > 0) {
             //XXX here we assume that everything is solved internally, but maybe we have already requested extra goods from another planet.
             //that is not game breaking though...
-//            console.log("solved internally is storing extra at " + planet.name);
             popForThingy--;
             popForRequiredThingy++;
         }

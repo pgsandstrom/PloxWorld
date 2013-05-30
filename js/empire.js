@@ -41,7 +41,6 @@
 
     Empire.prototype.setOwner = function (person, randomizeRelations) {
         var me = this;
-        console.log("empire owner: " + person.name);
         this.owner = person;
 
         //calculate the new relations:

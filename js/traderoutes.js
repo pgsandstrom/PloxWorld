@@ -20,8 +20,20 @@
         ploxworld.traderouteParts = {};
     };
 
-    //object:
-    ploxworld.TradeRoute = function TradeRoute(fromPlanet, toPlanet, resource, amount) {
+    ploxworld.makeTradeRoute = function (fromPlanet, toPlanet, resource, amount) {
+        var tradeRoute = new TradeRoute(fromPlanet, toPlanet, resource, amount);
+        ploxworld.traderoutes.push(tradeRoute);
+//        console.log("trade from " + fromPlanet.name + " to " + toPlanet.name);
+        addRouteParts(tradeRoute);
+        fromPlanet.export.push(tradeRoute);
+        toPlanet.import.push(tradeRoute);
+    };
+
+    /**
+     * DONE USE THIS CONSTRUCTOR! Use makeTradeRoute()-method
+     * @constructor
+     */
+    var TradeRoute = function TradeRoute(fromPlanet, toPlanet, resource, amount) {
         if (!fromPlanet) {
             throw new Error("fromPlanet was false");
         }
@@ -33,13 +45,7 @@
         this.resource = resource;
         this.amount = amount;
         this.pending = 0; //the amount of resources that should already have been sent
-        ploxworld.traderoutes.push(this);
-
-//        console.log("trade from " + fromPlanet.name + " to " + toPlanet.name);
-        addRouteParts(this);
     };
-
-    var TradeRoute = ploxworld.TradeRoute;
 
     TradeRoute.prototype.tic = function () {
         this.pending += this.amount;
@@ -54,6 +60,21 @@
         this.fromPlanet[this.resource] -= this.pending;
         this.pending = 0;
     };
+
+//    TradeRoute.prototype.tic = function () {
+//        this.pending += this.amount;
+//        var amountSent = Math.min(this.fromPlanet[this.resource], this.pending);
+//        //send a tradeship something like every second to third turn
+//        if (amountSent > 0 && (this.pending > this.fromPlanet.pop * 6 || this.pending >= this.amount * 3)) {
+//            this.sendShipment(amountSent);
+//        }
+//    };
+//
+//    TradeRoute.prototype.sendShipment = function (amountSent) {
+//        ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, amountSent)});
+//        this.fromPlanet[this.resource] -= amountSent;
+//        this.pending -= amountSent;
+//    };
 
     function addRouteParts(tradeRoute) {
 

@@ -51,6 +51,7 @@ function Controller($scope) {
         });
 
         //trade routes create ships
+        console.log("traderoute length: "+$scope.tradeRoutes.length);
         angular.forEach($scope.tradeRoutes, function (tradeRoute) {
             tradeRoute.tic();
         });
