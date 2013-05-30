@@ -12,7 +12,7 @@
      * @param name
      * @param color
      * @param owner
-     * @returns {ploxworld.Empire}
+     * @returns {Empire}
      */
     ploxworld.makeEmpire = function (name, color, owner) {
         var empire = new Empire(name, color);
@@ -22,14 +22,12 @@
         return empire;
     };
 
-    ploxworld.Empire = function Empire(name, color) {
+    var Empire = function Empire(name, color) {
         this.name = name;
         this.color = color;
         this.planetList = [];
         this.empireRelations = {};
     };
-
-    var Empire = ploxworld.Empire;
 
     Empire.prototype.addPlanet = function(planet) {
         this.planetList.push(planet);
@@ -78,7 +76,7 @@
      * @param value The relation value between the rulers
      * @constructor
      */
-    ploxworld.EmpireRelation = function EmpireRelation(value) {
+    var EmpireRelation = function EmpireRelation(value) {
         if (value < -50) {
             this.state = ploxworld.RELATION_STATE_WAR;
         } else if (value > 50) {
@@ -89,8 +87,6 @@
             this.state = ploxworld.RELATION_STATE_NEUTRAL;
         }
     };
-
-    var EmpireRelation = ploxworld.EmpireRelation;
 
     EmpireRelation.prototype.getColor = function () {
         switch (this.state) {

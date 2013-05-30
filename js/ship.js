@@ -74,22 +74,20 @@
         return new Ship(planet, cargo, ploxworld.SHIP_SPRITE_TRADE, ploxworld.TRADE_SHIP_DISTANCE);
     };
 
-    ploxworld.Ship = function Ship(planet, cargo, sprite, distance) {
+    var Ship = function Ship(planet, cargo, sprite, distance) {
         //call makeShip instead of this constructor
         this.speed = 30;
         this.distance = distance;
         this.health = 5;
         this.attack = 2;
         this.aim = 3;
-        this.position = new ploxworld.Position(ploxworld.POSITION_TYPE_PLANET, planet, undefined);
+        this.position = new Position(ploxworld.POSITION_TYPE_PLANET, planet, undefined);
         this.cargo = cargo;
         this.imageName = sprite;
 
         //this feels kind of haxxy...
         ploxworld.ships.add(this);
     };
-
-    var Ship = ploxworld.Ship;
 
     Ship.prototype.getImageName = function () {
         return this.imageName;

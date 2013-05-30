@@ -29,10 +29,6 @@
         toPlanet.import.push(tradeRoute);
     };
 
-    /**
-     * DONE USE THIS CONSTRUCTOR! Use makeTradeRoute()-method
-     * @constructor
-     */
     var TradeRoute = function TradeRoute(fromPlanet, toPlanet, resource, amount) {
         if (!fromPlanet) {
             throw new Error("fromPlanet was false");

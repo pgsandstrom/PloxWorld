@@ -136,7 +136,7 @@
      *
      * @param name
      * @param planet
-     * @returns {ploxworld.TradePerson}
+     * @returns {TradePerson}
      */
     ploxworld.makeTradePerson = function (atPlanet, toPlanet, cargo) {
 
@@ -145,15 +145,11 @@
         return new TradePerson(undefined, undefined, ship, atPlanet, toPlanet);
     };
 
-    ploxworld.TradePerson = function TradePerson(name, isMale, ship, atPlanet, toPlanet) {
-        //call makeTradePerson instead of this constructor
-
+    var TradePerson = function TradePerson(name, isMale, ship, atPlanet, toPlanet) {
         this.fromPlanet = atPlanet;
         this.toPlanet = toPlanet;
         Person.call(this, name, isMale, ship);
     };
-
-    var TradePerson = ploxworld.TradePerson;
 
     extend(Person, TradePerson);
 
@@ -223,7 +219,7 @@
      * @param name Randomized if undefined
      * @param isMale Randomized if undefined
      * @param planet Randomized if undefined
-     * @returns {ploxworld.AiPerson}
+     * @returns {AiPerson}
      */
     ploxworld.makeAiPerson = function (name, isMale, planet) {
 
@@ -241,9 +237,7 @@
         return new AiPerson(true, name, isMale, ship);
     };
 
-    ploxworld.AiPerson = function AiPerson(playerControlled, name, isMale, ship) {
-        //call makeAiPerson instead of this constructor
-
+    var AiPerson = function AiPerson(playerControlled, name, isMale, ship) {
         //TODO maybe not call it "aiPerson"?
 
         this.playerControlled = playerControlled;
@@ -254,8 +248,6 @@
 
         ploxworld.persons.add(this);
     };
-
-    var AiPerson = ploxworld.AiPerson;
 
     extend(Person, AiPerson);
 
