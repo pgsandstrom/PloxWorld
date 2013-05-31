@@ -18,7 +18,31 @@
 
     ploxworld.workerPrices = {};
 
+
+    ploxworld.getPriceBase = function (resourceType) {
+        var price = ploxworld.BASE_PRICE[resourceType];
+        return price;
+    };
+
+    /**
+     * Here is our primite algorithm for calculating the price of merchandise depending on the average efficiency of the product
+     * @param resourceType
+     * @param planetProducedAt
+     * @returns {number}
+     */
+    ploxworld.getPriceReal = function (resourceType, planetProducedAt) {
+        var price = ploxworld.workerPrices[resourceType];
+        var actualPrice = ((ploxworld.BASE_PRICE[resourceType]) + (price / planetProducedAt[resourceType + "Multiplier"])) / 2;
+//        console.log("getPriceReal: " + actualPrice);
+        //currently we have to do this, since production and trade routes are calculated at the same time...
+        if (isNaN(actualPrice)) {
+            return 0;
+        }
+        return actualPrice;
+    };
+
     ploxworld.calculatePrices = function () {
+        console.log("calculatePrices");
         //XXX Currently only calculates universal averages, could maybe be smarter and go for own+allies prices or something
 
         var supplyWorker = 0;
@@ -79,30 +103,15 @@
         return new Resource(type, amount);
     };
 
-    ploxworld.Resource = function Resource(type, amount) {
+    var Resource = function Resource(type, amount) {
         this.type = type;
         this.amount = amount;
     };
-
-    var Resource = ploxworld.Resource;
 
     Resource.prototype.addTo = function (planet) {
 //        console.log("offloading supply to " + planet.name);
         planet[this.type] += this.amount;
         this.amount = 0;
     };
-
-    Resource.prototype.getPriceBase = function () {
-        var price = ploxworld.BASE_PRICE[this.type];
-        return price;
-    };
-
-    Resource.prototype.getPriceReal = function (planetProducedAt) {
-        var price = ploxworld.workerPrices[this.type];
-        var actualPrice = ((ploxworld.BASE_PRICE[this.type]) + (price / planetProducedAt[this.type + "Multiplier"])) / 2;
-//        console.log("getPriceReal: " + actualPrice);
-        return actualPrice;
-    };
-
 
 })();

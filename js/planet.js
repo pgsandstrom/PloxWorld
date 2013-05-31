@@ -56,7 +56,6 @@
         ploxworld.calculateProductionScienceRoutes();
 
         ploxworld.calculatePrices();
-
         ploxworld.drawTraderoutes();
     };
 
@@ -235,6 +234,16 @@
 
     Planet.prototype.getColor = function () {
         return this.empire.color;
+    };
+
+    Planet.prototype.getPrice = function (resourceType) {
+        //XXX this should take the persons trade-skill in consideration
+        var price = this[resourceType + "Worth"];
+        if (price === 0) {
+            price = ploxworld.BASE_PRICE[resourceType];
+        }
+//        console.log("getPrice: " + price);
+        return price;
     };
 
     Planet.prototype.setPlanetDistance = function (planet, distance) {

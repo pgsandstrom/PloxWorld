@@ -164,6 +164,36 @@ function Controller($scope) {
         }, 1);
     };
 
+    $scope.hidePlanetDropdown = function () {
+        console.log("hidePlanetDropdown");
+        setTimeout(function () {
+            $('.dropdown-toggle').dropdown('toggle');
+        }, 1);
+    };
+
+    var isPlanetDropdownShowing = function () {
+        return $('.dropdown-menu').is(":visible");
+    };
+
+    var planetDropdownShortcuts = function (event) {
+        console.log("planetDropdownShortcuts");
+        switch (event.which) {
+            case 49: // 1
+                $scope.showPlanet();
+                $scope.hidePlanetDropdown();
+                event.preventDefault();
+
+                //a ugly fudging hack to prevent bootstrap dropdown from having focus and thus stealing the escape keyboard press
+                setTimeout(function () {
+                    $("#tab-overview-persons-link").focus();
+                }, 1);
+                break;
+            case 50: // 2
+                //TODO travel to
+                break;
+        }
+    };
+
     $scope.showPlanet = function (planet) {
         if (planet) {
             $scope.selectedPlanet = planet;
@@ -197,7 +227,10 @@ function Controller($scope) {
         }
 
         //TODO the bootstrap dropdown overridew esc-key. After closing the dropdown, pressing esc again opens it...
-//        console.log("keydown: " + event.which);
+        if (isPlanetDropdownShowing()) {
+            planetDropdownShortcuts(event);
+            return;
+        }
 
         switch (event.which) {
             case 27: // esc
@@ -216,7 +249,7 @@ function Controller($scope) {
             case 50: // 2
                 $scope.showPlanet();
                 break;
-            case 51: // 2
+            case 51: // 3
                 $scope.showEmpire();
                 break;
         }

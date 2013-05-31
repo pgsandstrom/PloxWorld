@@ -21,7 +21,7 @@
 <div class="float-left">
 
     <ul id="navbar" class="nav nav-pills">
-        <li id="tab-overview-persons"><a href="#overview-persons" data-toggle="tab">1. Persons</a></li>
+        <li id="tab-overview-persons"><a id="tab-overview-persons-link" href="#overview-persons" data-toggle="tab">1. Persons</a></li>
         <li id="tab-overview-planets"><a href="#overview-planets" data-toggle="tab">2. Planets</a></li>
         <li id="tab-overview-empires"><a href="#overview-empires" data-toggle="tab">3. Empires</a></li>
         <li id="tab-overview-hide" class="hide"><a href="#overview-hide" data-toggle="tab"></a></li>
@@ -41,7 +41,6 @@
             <!-- -15 comes from half the planet size, so the center of the planet image always is the planet position -->
             <div ng-repeat="object in planets" class="absolute"
                  ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
-                <!--<button ng-click="showPlanet(object)" class="planet"></button>-->
                 <a ng-click="showPlanetDropdown(object)" ng-mouseover="hoverPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
                 <span ng-style="{'color': (object.getColor())}">{{object.name}}</span>
             </div>
@@ -55,7 +54,7 @@
             </div>
 
             <!-- planet dropdown -->
-            <div class="dropdown" id="menu1" ng-style="{'top': (selectedPlanet.y-20)+'px','left': (selectedPlanet.x-20)+'px'}">
+            <div class="dropdown" id="menu1" ng-style="{'top': (selectedPlanet.y-20)+'px','left': (selectedPlanet.x-20)+'px'}" >
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1" id="foo"></a>
                 <ul class="dropdown-menu">
                     <li><a ng-click="showPlanet()" href="javascript:void(0)">1. Inspect</a></li>
@@ -95,24 +94,24 @@
                         <p>Credits: {{selectedPlanet.credit}}</p>
 
                         <p>Supply: {{selectedPlanet.supply}}
-                            ({{selectedPlanet.supplyWork}}*{{selectedPlanet.supplyMultiplier}})</p>
+                            ({{selectedPlanet.supplyWork}}*{{selectedPlanet.supplyMultiplier}}). ${{selectedPlanet.getPrice("supply")}}</p>
 
                         <p>Production: {{selectedPlanet.production}}
-                            ({{selectedPlanet.productionWork}}*{{selectedPlanet.productionMultiplier}})</p>
+                            ({{selectedPlanet.productionWork}}*{{selectedPlanet.productionMultiplier}}). ${{selectedPlanet.getPrice("production")}}</p>
 
                         <p>Material: {{selectedPlanet.material}}
-                            ({{selectedPlanet.materialWork}}*{{selectedPlanet.materialMultiplier}})</p>
+                            ({{selectedPlanet.materialWork}}*{{selectedPlanet.materialMultiplier}}). ${{selectedPlanet.getPrice("material")}}</p>
 
                         <p>Science: {{selectedPlanet.science}}
-                            ({{selectedPlanet.scienceWork}}*{{selectedPlanet.scienceMultiplier}})</p>
+                            ({{selectedPlanet.scienceWork}}*{{selectedPlanet.scienceMultiplier}}). ${{selectedPlanet.getPrice("science")}}</p>
 
                         <p><i class="crystal"></i>Crystals: {{selectedPlanet.crystal}}
-                            ({{selectedPlanet.crystalWork}}*{{selectedPlanet.crystalMultiplier}})</p>
+                            ({{selectedPlanet.crystalWork}}*{{selectedPlanet.crystalMultiplier}}). ${{selectedPlanet.getPrice("crystal")}}</p>
 
                         <p>EXPORT:</p>
 
                         <div ng-repeat="object in selectedPlanet.export">
-                            {{object.amount}} {{object.resource}} <i class="icon-arrow-right"></i>
+                            {{object.amount}} {{object.resourceType}} <i class="icon-arrow-right"></i>
                             <a ng-click="showPlanet(object.toPlanet)" href="javascript:void(0)"
                                ng-style="{'color': (object.toPlanet.getColor())}">
                                 {{object.toPlanet.name}}</a>
@@ -121,7 +120,7 @@
                         <p>IMPORT:</p>
 
                         <div ng-repeat="object in selectedPlanet.import">
-                            import {{object.amount}} {{object.resource}} <i class="icon-arrow-left"></i>
+                            import {{object.amount}} {{object.resourceType}} <i class="icon-arrow-left"></i>
                             <a ng-click="showPlanet(object.fromPlanet)" href="javascript:void(0)"
                                ng-style="{'color': (object.fromPlanet.getColor())}">
                                 {{object.fromPlanet.name}}</a>

@@ -202,7 +202,7 @@
         var credits = 0;
 
         _.forEach(this.ship.cargo, function (resource) {
-            credits += resource.getPriceReal(me.fromPlanet);
+            credits += ploxworld.getPriceReal(resource.type, me.fromPlanet);
         });
 
         if (forced) {

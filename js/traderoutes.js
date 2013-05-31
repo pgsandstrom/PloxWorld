@@ -13,23 +13,31 @@
 
         //send what they are holding before deleting them:
         _.forEach(ploxworld.traderoutes, function (traderoute) {
-            traderoute.sendShipment();
+            traderoute.sendShipment(traderoute.pending);
         });
 
         ploxworld.traderoutes.length = 0;
         ploxworld.traderouteParts = {};
     };
 
-    ploxworld.makeTradeRoute = function (fromPlanet, toPlanet, resource, amount) {
-        var tradeRoute = new TradeRoute(fromPlanet, toPlanet, resource, amount);
+    ploxworld.makeTradeRoute = function (fromPlanet, toPlanet, resourceType, amount) {
+        var tradeRoute = new TradeRoute(fromPlanet, toPlanet, resourceType, amount);
         ploxworld.traderoutes.push(tradeRoute);
 //        console.log("trade from " + fromPlanet.name + " to " + toPlanet.name);
         addRouteParts(tradeRoute);
         fromPlanet.export.push(tradeRoute);
         toPlanet.import.push(tradeRoute);
+
+        var price = ploxworld.getPriceReal(resourceType, fromPlanet);
+        if (fromPlanet[resourceType + "Worth"] < price) {
+            fromPlanet[resourceType + "Worth"] = price;
+        }
+        if (toPlanet[resourceType + "Worth"] < price) {
+            toPlanet[resourceType + "Worth"] = price;
+        }
     };
 
-    var TradeRoute = function TradeRoute(fromPlanet, toPlanet, resource, amount) {
+    var TradeRoute = function TradeRoute(fromPlanet, toPlanet, resourceType, amount) {
         if (!fromPlanet) {
             throw new Error("fromPlanet was false");
         }
@@ -38,39 +46,30 @@
         }
         this.fromPlanet = fromPlanet;
         this.toPlanet = toPlanet;
-        this.resource = resource;
+        this.resourceType = resourceType;
         this.amount = amount;
         this.pending = 0; //the amount of resources that should already have been sent
     };
 
     TradeRoute.prototype.tic = function () {
         this.pending += this.amount;
+
+        var amountSent = Math.min(this.fromPlanet[this.resourceType], this.pending);
+        if (amountSent !== this.pending) {
+            console.log(this.fromPlanet.name + " could not deliver " + this.resourceType);
+        }
+
         //send a tradeship something like every second to third turn
-        if (this.pending > this.fromPlanet.pop * 6 || this.pending >= this.amount * 3) {
-            this.sendShipment();
+        if (amountSent > 0 && (this.pending > this.fromPlanet.pop * 6 || this.pending >= this.amount * 3)) {
+            this.sendShipment(amountSent);
         }
     };
 
-    TradeRoute.prototype.sendShipment = function () {
-        ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, this.pending)});
-        this.fromPlanet[this.resource] -= this.pending;
-        this.pending = 0;
+    TradeRoute.prototype.sendShipment = function (amountSent) {
+        ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resourceType: ploxworld.makeResource(this.resourceType, amountSent)});
+        this.fromPlanet[this.resourceType] -= amountSent;
+        this.pending -= amountSent;
     };
-
-//    TradeRoute.prototype.tic = function () {
-//        this.pending += this.amount;
-//        var amountSent = Math.min(this.fromPlanet[this.resource], this.pending);
-//        //send a tradeship something like every second to third turn
-//        if (amountSent > 0 && (this.pending > this.fromPlanet.pop * 6 || this.pending >= this.amount * 3)) {
-//            this.sendShipment(amountSent);
-//        }
-//    };
-//
-//    TradeRoute.prototype.sendShipment = function (amountSent) {
-//        ploxworld.makeTradePerson(this.fromPlanet, this.toPlanet, {resource: ploxworld.makeResource(this.resource, amountSent)});
-//        this.fromPlanet[this.resource] -= amountSent;
-//        this.pending -= amountSent;
-//    };
 
     function addRouteParts(tradeRoute) {
 
