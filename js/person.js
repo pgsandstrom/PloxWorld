@@ -53,6 +53,9 @@
             }
         }
 
+        this.decision = undefined;
+        this.shipOrder = undefined;
+
         this.name = name;
         this.isMale = isMale;
         this.relations = new Map(); // person -> Relation
@@ -149,6 +152,7 @@
         this.fromPlanet = atPlanet;
         this.toPlanet = toPlanet;
         Person.call(this, name, isMale, ship);
+        this.decision = tradePersonDecision;
     };
 
     extend(Person, TradePerson);
@@ -160,7 +164,11 @@
     };
 
     TradePerson.prototype.tic = function () {
-//        console.log("tradeperson tic");
+        //we never make new decisions
+        this.decision();
+    };
+
+    var tradePersonDecision = function () {
         var ship = this.ship;
         var position = ship.position;
         //is at planet, make decision!
@@ -174,14 +182,16 @@
 //                var nextPlanet = position.planet.safeWayTo[this.toPlanet.name];
                 var nextPlanet = position.planet.getPath(this.toPlanet, ship.distance, this.fromPlanet.empire);
                 if (nextPlanet !== undefined) {
-                    this.decision = decisionTravelTo(nextPlanet);
+//                    this.decision = decisionTravelTo(this, nextPlanet);
+                    this.shipOrder = shipOrderTravelTo(this, nextPlanet);
                 } else {
                     console.log("omg no way to travel");
                     this.toPlanet = this.fromPlanet;
                     nextPlanet = position.planet.getPath(this.toPlanet, ship.distance, this.fromPlanet.empire);
                     if (nextPlanet !== undefined) {
                         console.log("returning home");
-                        this.decision = decisionTravelTo(nextPlanet);
+//                        this.decision = decisionTravelTo(this, nextPlanet);
+                        this.shipOrder = shipOrderTravelTo(this, nextPlanet);
                     } else {
                         console.log("forever lost, offloading");
                         this.sellCargo(true);
@@ -260,23 +270,65 @@
     };
 
     AiPerson.prototype.tic = function () {
-        //TODO
-        this.decision = decisionWait();
+        if (this.playerControlled) {
+            //TODO just use whatever was set by the user :)
+            if (!this.shipOrder) {
+                this.shipOrder = shipOrderWait();
+            }
+            if (this.decision) {
+                this.decision();
+            }
+        } else {
+            if (!this.decision) {
+                //TODO make a real decision, call decision the last thing u do in this method, and dont set shipOrder here
+                if (!this.shipOrder) {
+                    this.shipOrder = shipOrderWait();
+                }
+            }
+        }
+//        this.decision();
     };
 
-    //the decisions that persons can make, that the ship executes:
+    AiPerson.prototype.travelTo = function (planet) {
+        this.decision = decisionTravelTo(this, planet);
+    };
 
-    var decisionWait = function () {
-        return function (ship) {
-//            console.log("wait");
+    //the persons decision:
+    var decisionTravelTo = function decisionTravelTo(person, toPlanet) {
+        return function () {
+            var ship = person.ship;
+            if (ship.position.positionType !== ploxworld.POSITION_TYPE_PLANET) {
+                return;
+            }
+
+            if (ship.position.planet === toPlanet) {
+                //omg we have arrived, clear decision!
+                person.decision = undefined;
+                return;
+            }
+
+            var nextPlanet = ship.position.planet.getPath(toPlanet, ship.distance, undefined);
+            this.shipOrder = shipOrderTravelTo(person, nextPlanet);
         };
     };
 
-    var decisionTravelTo = function (toPlanet) {
+    //the ships order:
+    var shipOrderWait = function shipOrderWait() {
         return function (ship) {
-//            console.log("travel to " + toPlanet.name);
+        };
+    };
+
+    var shipOrderTravelTo = function shipOrderTravelTo(person, toPlanet) {
+//        console.log("shipOrderTravelTo: " + toPlanet.name);
+        return function (ship) {
+//            console.log("travel to " + toPlanet.name + " with " + ship);
             ship.position = new ploxworld.Position(ploxworld.POSITION_TYPE_TRAVELING, ship.position.planet, toPlanet);
-            ship.travel();
+            if (ship.travel()) {
+                //TODO move shipOrder to ship.js?
+                person.shipOrder = undefined;
+//                console.log("we have arrived!");
+                person.decision();
+            }
         };
     };
 

@@ -33,6 +33,11 @@
 
     var Position = ploxworld.Position;
 
+    /**
+     *
+     * @param speed
+     * @returns {boolean} True if we arrived at our target
+     */
     Position.prototype.travel = function (speed) {
         this.distanceLeft -= speed;
 
@@ -111,17 +116,27 @@
 
     Ship.prototype.tic = function () {
         if (this.position.positionType === ploxworld.POSITION_TYPE_TRAVELING) {
-            this.travel();
+            if(this.travel()) {
+                //our traveling is done, remove the order.
+                this.owner.shipOrder = undefined;
+            }
         } else {
-            this.owner.decision(this);
+            this.owner.shipOrder(this);
         }
     };
 
+    /**
+     *
+     * @returns {boolean} True if we arrived at our target
+     */
     Ship.prototype.travel = function () {
         if (this.position.travel(this.speed)) {
             //arrived!
+//            console.log("ship travel arrived");
             this.position = new Position(ploxworld.POSITION_TYPE_PLANET, this.position.toPlanet);
+            return true;
         }
+        return false;
     };
 
 })();

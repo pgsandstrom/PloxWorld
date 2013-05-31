@@ -56,9 +56,9 @@
             <!-- planet dropdown -->
             <div class="dropdown" id="menu1" ng-style="{'top': (selectedPlanet.y-20)+'px','left': (selectedPlanet.x-20)+'px'}" >
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1" id="foo"></a>
-                <ul class="dropdown-menu">
+                <ul id="planet-dropdown-menu" class="dropdown-menu">
                     <li><a ng-click="showPlanet()" href="javascript:void(0)">1. Inspect</a></li>
-                    <li><a ng-click="SOMETHING()" href="javascript:void(0)">2. Travel to</a></li>
+                    <li><a ng-click="travelTo(selectedPlanet)" href="javascript:void(0)">2. Travel to</a></li>
                     <li><a href="#">3. DESTROY</a></li>
                     <li class="divider"></li>
                     <li><a href="#">cuddle</a></li>

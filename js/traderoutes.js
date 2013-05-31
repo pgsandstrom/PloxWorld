@@ -81,16 +81,7 @@
 
         // iterate step by step adding TradeRoutePart:s until we reach the target planet:
         while (true) {
-//            var nextPlanet = fromPlanet.safeWayTo[toPlanet.name];
             var nextPlanet = fromPlanet.getPath(toPlanet, ploxworld.TRADE_SHIP_DISTANCE, originalPlanet.empire);
-
-//            console.log("step from " + fromPlanet.name + " to " + nextPlanet.name);
-
-            //FIXME temp:
-            if (!nextPlanet) {
-                console.log("failed to travel between " + originalPlanet.name + " to " + toPlanet.name + ". Error at " + fromPlanet.name);
-                break;
-            }
 
             var key;
             //make sure they always come in the same alphabetical order:

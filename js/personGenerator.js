@@ -2,9 +2,11 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    var PERSON_COUNT = 50;
+    //FIXME temp
+    var PERSON_COUNT = 0;
 
     ploxworld.generatePersons = function () {
+
 
         var personCount = PERSON_COUNT;
         while (personCount) {

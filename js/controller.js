@@ -35,6 +35,11 @@ function Controller($scope) {
         });
     };
 
+    $scope.travelTo = function (planet) {
+        console.log("controller travelto");
+        $scope.player.travelTo(planet);
+    };
+
     $scope.tic = ploxworld.tic = function () {
         $scope.tics++;
 
@@ -125,36 +130,12 @@ function Controller($scope) {
         container.append(root);
     };
 
-    $scope.addTodo = function () {
-        $scope.todos.push({text: $scope.todoText, done: false});
-        $scope.todoText = '';
-    };
-
-    $scope.remaining = function () {
-        var count = 0;
-        angular.forEach($scope.todos, function (todo) {
-            count += todo.done ? 0 : 1;
-        });
-        return count;
-    };
-
-    $scope.archive = function () {
-        var oldTodos = $scope.todos;
-        $scope.todos = [];
-        angular.forEach(oldTodos, function (todo) {
-            if (!todo.done) {
-                $scope.todos.push(todo);
-            }
-
-        });
-    };
-
     $scope.hoverPlanet = function (planet) {
         ploxworld.drawTravel($scope.player, planet);
     };
 
     $scope.showPlanetDropdown = function (planet) {
-        console.log("showPlanetDropdown");
+//        console.log("showPlanetDropdown");
         if (planet) {
             $scope.selectedPlanet = planet;
         }
@@ -165,7 +146,7 @@ function Controller($scope) {
     };
 
     $scope.hidePlanetDropdown = function () {
-        console.log("hidePlanetDropdown");
+//        console.log("hidePlanetDropdown");
         setTimeout(function () {
             $('.dropdown-toggle').dropdown('toggle');
         }, 1);
@@ -179,17 +160,21 @@ function Controller($scope) {
         console.log("planetDropdownShortcuts");
         switch (event.which) {
             case 49: // 1
-                $scope.showPlanet();
-                $scope.hidePlanetDropdown();
+            case 50: // 2
+
+                //kind of hacky, find the list item and click it...
+                //TODO find "1. " in the list instead :)
+                var dropdown = $("#planet-dropdown-menu");
+                var children = dropdown.children();
+                var child = children[event.which - 49];
+                child.children[0].click();
+
                 event.preventDefault();
 
                 //a ugly fudging hack to prevent bootstrap dropdown from having focus and thus stealing the escape keyboard press
                 setTimeout(function () {
                     $("#tab-overview-persons-link").focus();
                 }, 1);
-                break;
-            case 50: // 2
-                //TODO travel to
                 break;
         }
     };
@@ -226,7 +211,6 @@ function Controller($scope) {
             return;
         }
 
-        //TODO the bootstrap dropdown overridew esc-key. After closing the dropdown, pressing esc again opens it...
         if (isPlanetDropdownShowing()) {
             planetDropdownShortcuts(event);
             return;
