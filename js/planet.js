@@ -176,17 +176,17 @@
         this.crystal += this.crystalWork * this.crystalMultiplier;
 
         var potentialProduction = this.productionWork * this.productionMultiplier;
-        if (potentialProduction > this.material) {
-            console.log("production starvation at " + this.name);
-        }
+//        if (potentialProduction > this.material) {
+//            console.log("production starvation at " + this.name);
+//        }
         var newProduction = Math.min(potentialProduction, this.material);
         this.production += newProduction;
         this.material -= newProduction;
 
         var potentialScience = this.scienceWork * this.scienceMultiplier;
-        if (potentialScience > this.crystal) {
-            console.log("science starvation at " + this.name);
-        }
+//        if (potentialScience > this.crystal) {
+//            console.log("science starvation at " + this.name);
+//        }
         var newScience = Math.min(potentialScience, this.crystal);
         this.science += newScience;
         this.crystal -= newScience;

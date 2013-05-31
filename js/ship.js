@@ -121,7 +121,7 @@
                 this.owner.shipOrder = undefined;
             }
         } else {
-            this.owner.shipOrder(this);
+            this.owner.shipOrder.tic(this);
         }
     };
 
