@@ -275,9 +275,9 @@
         if (this.playerControlled) {
             //TODO just use whatever was set by the user :)
 
-//            if (!this.shipOrder) {
-//                this.shipOrder = shipOrderWait();
-//            }
+            if (!this.shipOrder) {
+                this.shipOrder = shipOrderWait();
+            }
 
             if (this.decision) {
                 this.decision.tic();
