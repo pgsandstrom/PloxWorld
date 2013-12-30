@@ -11,7 +11,7 @@
 <body ng-controller="Controller">
 
 <div id="title" class="clear">
-    {{ 'World' | greet }}
+    <!--{{ 'World' | greet }}-->
 </div>
 
 <div id="menu">
@@ -242,20 +242,25 @@
     <button ng-click="tic()" class="btn-primary">tic</button>
     <button ng-click="startGame()" class="btn-primary">new game</button>
     <button ng-click="calculateTradeMap()" class="btn-primary">test</button>
+    <button ng-click="openTrade()" class="btn-primary">Trade</button>
     <p>Current decision: {{player.decision.toString()}}</p>
     <p>Current ship order: {{player.shipOrder.toString()}}</p>
 </div>
+
+
 
 <!--XXX use minimilized angular someday in the FUTURE-->
 <!--XXX do we need sanitize?-->
 <!--XXX use cdn when all is said and done-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>-->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/underscore-min.js"></script>
-<script src="js/angular.min.js"></script>
-<script src="js/seedrandom.js"></script>
+<script src="js/moduls/jquery.min.js"></script>
+<script src="js/moduls/bootstrap.min.js"></script>
+<script src="js/moduls/underscore-min.js"></script>
+<script src="js/moduls/angular.min.js"></script>
+<script src="js/moduls/ui-bootstrap-custom-0.7.0.js"></script>
+<script src="js/moduls/ui-bootstrap-custom-tpls-0.7.0.js"></script>
+<script src="js/moduls/seedrandom.js"></script>
 
 <script src="js/common.js"></script>
 <script src="js/canvas.js"></script>

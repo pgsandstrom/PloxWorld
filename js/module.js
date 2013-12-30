@@ -1,12 +1,12 @@
-var myAppModule = angular.module('module', []);
-
-myAppModule.filter('greet', function () {
-    "use strict";
-
-    return function (name) {
-        return 'Hello, ' + name + '!';
-    };
-});
+//var myAppModule = angular.module('module', []);
+//
+//myAppModule.filter('greet', function () {
+//    "use strict";
+//
+//    return function (name) {
+//        return 'Hello, ' + name + '!';
+//    };
+//});
 
 //var fadeToggleDirective = function () {
 //    "use strict";

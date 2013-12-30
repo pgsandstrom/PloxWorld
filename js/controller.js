@@ -1,4 +1,5 @@
-function Controller($scope) {
+angular.module('module', ['ui.bootstrap']);
+function Controller($scope, $modal, $log) {
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
@@ -204,6 +205,27 @@ function Controller($scope) {
         $("#tab-overview-hide a").tab('show');
     };
 
+    $scope.items = ['item1', 'item2', 'item3'];
+
+    $scope.openTrade = function () {
+
+        var modalInstance = $modal.open({
+            templateUrl: 'tradeWindow.html',
+            controller: ModalInstanceCtrl,
+            resolve: {
+                items: function () {
+                    return $scope.items;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
     //must be keydown to prevent window from scrolling on space etc.
     $(document).keydown(function (event) {
         //code to ignore buttons, if I would like that:
@@ -240,25 +262,21 @@ function Controller($scope) {
     });
 
     $scope.startGame();
-
-    //some failed jquery code, FUCK that shit:
-
-//    $("#test").click(function () {
-////        var planetName = this.getAttribute("planet-name");
-////        $scope.selectedPlanet = ploxworld.planets[planetName];
-//        $scope.selectedPlanet = ploxworld.getRandomPlanet();
-////        console.log("clicked name: " + planetName);
-//        console.log("selected planet: " + $scope.selectedPlanet.name);
-//        $("#selected-planet").show();
-//    });
-//
-//    $("#map").on('click', '.planet', function () {
-//        var planetName = this.getAttribute("planet-name");
-//        $scope.selectedPlanet = ploxworld.planets[planetName];
-//        console.log("clicked name: " + planetName);
-//        console.log("selected planet: " + $scope.selectedPlanet.name);
-////        $("#selected-planet").show();
-//    });
-
-//    $("#tab-empires a").tab('show');
 }
+
+var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+    "use strict";
+
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+};
