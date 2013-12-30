@@ -130,7 +130,7 @@
     <button ng-click="tic()" class="btn-primary">tic</button>
     <button ng-click="startGame()" class="btn-primary">new game</button>
     <button ng-click="calculateTradeMap()" class="btn-primary">test</button>
-    <button ng-click="openTrade()" class="btn-primary">Trade</button>
+    <button ng-click="openTrade()" class="btn-primary {{isPlayerAtPlanet()?'':'hide'}}">Trade</button>
     <p>Current decision: {{player.decision.toString()}}</p>
     <p>Current ship order: {{player.shipOrder.toString()}}</p>
 </div>

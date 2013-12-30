@@ -2,7 +2,7 @@
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
-    ploxworld.PREFERED_MIN_STORAGE = 75; //planets wants to have storage that lasts this many turns
+    ploxworld.PREFERED_MIN_STORAGE = 75; // planets wants to have storage that lasts this many turns
     var POP_INCREASE = 1.001;
     var POP_DECREASE_AT_STARVATION = 1 / (POP_INCREASE * POP_INCREASE);
 

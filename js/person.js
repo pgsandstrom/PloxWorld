@@ -19,6 +19,7 @@
         this.person1 = person1;
         this.person2 = person2;
         if (!value) {
+            //TODO används min seed-random?
             value = _.random(-100, 100);
         }
         this.value = value;
@@ -59,7 +60,6 @@
         this.name = name;
         this.isMale = isMale;
         this.relations = new Map(); // person -> Relation
-//        this.decision = ;
 
         this.ship = ship;
         this.ship.setOwner(this);
@@ -133,6 +133,10 @@
 
     Person.prototype.removeRelation = function (person) {
         this.relations.remove(person);
+    };
+
+    Person.prototype.isAtPlanet = function () {
+        return this.ship.position.positionType === ploxworld.POSITION_TYPE_PLANET;
     };
 
     /**

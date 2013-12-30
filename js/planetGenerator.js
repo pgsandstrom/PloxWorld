@@ -23,6 +23,10 @@
             'Terra', 'Eve', 'Ada', 'Omega', 'Orion'];
 
         var takeFreeName = function () {
+            if(names.length === 0) {
+                //fullösning för att kunna testa med många planeter (namnen tar slut):
+                return _.random(0, 10000).toString();
+            }
             var index = Math.floor(Math.random() * names.length);
             var name = names[index];
             names.remove(index);
@@ -66,12 +70,7 @@
                 var xDiff = Math.abs(planet1.x - planet2.x);
                 var yDiff = Math.abs(planet1.y - planet2.y);
                 var realDistance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-//                var costDistance = Math.pow(realDistance, TRAVEL_COST_FACTOR);
-//                console.log(planet1.name + " to " + planet2.name + " distance: " + realDistance);
-//                console.log(planet1.name + " to " + planet2.name + " cost: " + costDistance);
-//                planet1.setPlanetDistanceCost(planet2, costDistance);
                 planet1.setPlanetDistance(planet2, realDistance);
-//                planet2.setPlanetDistanceCost(planet1, costDistance);
                 planet2.setPlanetDistance(planet1, realDistance);
             }
         }
@@ -84,22 +83,12 @@
             });
         }
 
-//        for (i2 = 0; i2 < ploxworld.planets.length; i2++) {
-//            var planet = ploxworld.planets[i2];
-//            console.log("iterating " + planet.name);
-//            for (var otherPlanetName in  planet.planetDistanceCost) {
-//                console.log(planet.name + " to " + otherPlanetName + " is " + planet.planetDistanceCost[otherPlanetName]);
-//            }
-//        }
-
         return ploxworld.planets;
     };
 
     function validPosition(x, y) {
         for (var i2 = 0; i2 < ploxworld.planetList.length; i2++) {
-//            console.log("distance: " + ploxworld.planetList[i2].getDistance(x, y));
             if (ploxworld.planetList[i2].getDistance(x, y) < PLANETS_MIN_DISTANCE) {
-//                console.log("lol to close");
                 return false;
             }
         }

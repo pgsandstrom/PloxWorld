@@ -211,7 +211,7 @@ function Controller($scope, $modal, $log) {
 
         var modalInstance = $modal.open({
             templateUrl: 'tradeWindow.html',
-            controller: ModalInstanceCtrl,
+            controller: TradeWindowCtrl,
             resolve: {
                 items: function () {
                     return $scope.items;
@@ -220,10 +220,15 @@ function Controller($scope, $modal, $log) {
         });
 
         modalInstance.result.then(function (selectedItem) {
+            $log.info('2 Modal dismissed at: ' + new Date());
             $scope.selected = selectedItem;
         }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
+            $log.info('1 Modal dismissed at: ' + new Date());
         });
+    };
+
+    $scope.isPlayerAtPlanet = function () {
+        return $scope.player.isAtPlanet();
     };
 
     //must be keydown to prevent window from scrolling on space etc.
@@ -264,7 +269,7 @@ function Controller($scope, $modal, $log) {
     $scope.startGame();
 }
 
-var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
+var TradeWindowCtrl = function ($scope, $modalInstance, items) {
     "use strict";
 
     $scope.items = items;
