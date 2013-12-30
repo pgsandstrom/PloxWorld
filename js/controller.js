@@ -208,23 +208,7 @@ function Controller($scope, $modal, $log) {
     $scope.items = ['item1', 'item2', 'item3'];
 
     $scope.openTrade = function () {
-
-        var modalInstance = $modal.open({
-            templateUrl: 'tradeWindow.html',
-            controller: TradeWindowCtrl,
-            resolve: {
-                items: function () {
-                    return $scope.items;
-                }
-            }
-        });
-
-        modalInstance.result.then(function (selectedItem) {
-            $log.info('2 Modal dismissed at: ' + new Date());
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info('1 Modal dismissed at: ' + new Date());
-        });
+        ploxworld.tradeWindow.openTrade($scope, $modal, $log);
     };
 
     $scope.isPlayerAtPlanet = function () {
@@ -268,20 +252,3 @@ function Controller($scope, $modal, $log) {
 
     $scope.startGame();
 }
-
-var TradeWindowCtrl = function ($scope, $modalInstance, items) {
-    "use strict";
-
-    $scope.items = items;
-    $scope.selected = {
-        item: $scope.items[0]
-    };
-
-    $scope.ok = function () {
-        $modalInstance.close($scope.selected.item);
-    };
-
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
-};
