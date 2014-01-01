@@ -139,6 +139,10 @@
         return this.ship.position.positionType === ploxworld.POSITION_TYPE_PLANET;
     };
 
+    Person.prototype.getPlanet = function () {
+        return this.ship.getPlanet();
+    };
+
     /**
      *
      * @param name

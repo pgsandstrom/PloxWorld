@@ -9,6 +9,8 @@
     ploxworld.RESOURCE_SCIENCE = "science";
     ploxworld.RESOURCE_CRYSTAL = "crystal";
 
+    ploxworld.RESOURCE_LIST = [ploxworld.RESOURCE_SUPPLY, ploxworld.RESOURCE_PRODUCTION, ploxworld.RESOURCE_MATERIAL, ploxworld.RESOURCE_SCIENCE, ploxworld.RESOURCE_CRYSTAL];
+
     ploxworld.BASE_PRICE = {};
     ploxworld.BASE_PRICE[ploxworld.RESOURCE_SUPPLY] = 100;
     ploxworld.BASE_PRICE[ploxworld.RESOURCE_MATERIAL] = 150;

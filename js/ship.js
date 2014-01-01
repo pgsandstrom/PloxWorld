@@ -57,6 +57,14 @@
         }
     };
 
+    Position.prototype.getPlanet = function () {
+        if (this.positionType === ploxworld.POSITION_TYPE_PLANET) {
+            return this.planet;
+        } else {
+            return undefined;
+        }
+    };
+
     ploxworld.makeShip = function (planet, cargo, sprite) {
         if (planet === undefined) {
             planet = ploxworld.getRandomPlanet();
@@ -138,5 +146,9 @@
         }
         return false;
     };
+
+    Ship.prototype.getPlanet = function () {
+        return this.position.getPlanet();
+    }
 
 })();

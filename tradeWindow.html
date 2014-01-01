@@ -1,15 +1,51 @@
+<!-- Inspired from http://angular-ui.github.io/bootstrap/ -->
 <div class="modal-header">
-    <h3>I'm a modal!</h3>
+    <h3>Trade screen</h3>
 </div>
 <div class="modal-body">
-    <ul>
-        <li ng-repeat="item in items">
-            <a ng-click="selected.item = item">{{ item }}</a>
-        </li>
-    </ul>
-    Selected: <b>{{ selected.item }}</b>
+
+    <div>
+        player: {{person.name}}
+    </div>
+    <div>
+        planet: {{planet.name}}
+    </div>
+
+    <div class="block">
+        <div class="tradeRowItem border-light">
+
+        </div>
+        <div class="tradeRowItem border-light">
+            Planet
+        </div>
+        <div class="tradeRowItem border-light">
+            Transfer
+        </div>
+        <div class="tradeRowItem border-light">
+            Ship
+        </div>
+    </div>
+
+
+    <div>
+        <div ng-repeat="resourceType in resourceList" class="border-light">
+            <div class="tradeRowItem border-light">
+                {{resourceType}}
+            </div>
+            <div class="tradeRowItem border-light">
+                Planet
+            </div>
+            <div class="tradeRowItem border-light">
+                Transfer
+            </div>
+            <div class="tradeRowItem border-light">
+                Ship
+            </div>
+        </div>
+    </div>
+
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="ok()">Done</button>
+    <!--<button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
 </div>

@@ -89,6 +89,10 @@ body {
     position: static;
 }
 
+.border-light {
+    border: 1px solid #ddd
+}
+
 /* TODO icons below, make them smart in one image instead */
 
 .crystal {
