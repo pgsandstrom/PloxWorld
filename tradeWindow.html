@@ -13,7 +13,7 @@
 
     <div class="block">
         <div class="tradeRowItem border-light">
-
+            &nbsp;
         </div>
         <div class="tradeRowItem border-light">
             Planet
@@ -27,22 +27,21 @@
     </div>
 
 
-    <div>
-        <div ng-repeat="resourceType in resourceList" class="border-light">
-            <div class="tradeRowItem border-light">
-                {{resourceType}}
-            </div>
-            <div class="tradeRowItem border-light">
-                Planet
-            </div>
-            <div class="tradeRowItem border-light">
-                Transfer
-            </div>
-            <div class="tradeRowItem border-light">
-                Ship
-            </div>
+    <div ng-repeat="resourceType in resourceList" class="block">
+        <div class="tradeRowItem border-light">
+            {{resourceType}}
+        </div>
+        <div class="tradeRowItem border-light">
+            Planet
+        </div>
+        <div class="tradeRowItem border-light">
+            Transfer
+        </div>
+        <div class="tradeRowItem border-light">
+            Ship
         </div>
     </div>
+
 
 </div>
 <div class="modal-footer">
