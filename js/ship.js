@@ -102,6 +102,10 @@
         ploxworld.ships.add(this);
     };
 
+    Ship.prototype.getCargo = function (resource) {
+
+    }
+
     Ship.prototype.getImageName = function () {
         return this.imageName;
     };

@@ -61,6 +61,7 @@
 
     //object:
     ploxworld.Planet = function Planet(name, x, y) {
+        var planet = this;
         this.name = name;
         this.x = x;
         this.y = y;
@@ -86,33 +87,24 @@
 
         this.credit = this.pop * _.random(50, 500);
 
-        this.supply = this.pop * ploxworld.PREFERED_MIN_STORAGE;
-        this.supplyMultiplier = _.random(1, 5);
-        this.supplyWork = 0;
-        this.supplyWorth = 0;
-
-        this.production = 50 + Math.random() * 50 | 0;
-        this.productionMultiplier = _.random(1, 5);
-        this.productionWork = 0;
-        this.productionWorth = 0;
-
-        this.material = 50 + Math.random() * 50 | 0;
-        this.materialMultiplier = _.random(1, 5);
-        this.materialWork = 0;
-        this.materialWorth = 0;
-
-        this.science = 50 + Math.random() * 50 | 0;
-        this.scienceMultiplier = _.random(1, 5);
-        this.scienceWork = 0;
-        this.scienceWorth = 0;
-
-        this.crystal = 50 + Math.random() * 50 | 0;
-        this.crystalMultiplier = _.random(1, 5);
-        this.crystalWork = 0;
-        this.crystalWorth = 0;
+        //TODO vi kanske ska ha egna "resource"-objekt istället?
+        ploxworld.RESOURCE_LIST.forEach(function (resource) {
+            if (resource === "supply") {
+                planet[resource] = planet.pop * ploxworld.PREFERED_MIN_STORAGE;
+            } else {
+                planet[resource] = 50 + Math.random() * 50 | 0;
+            }
+            planet[resource + "Multiplier"] = _.random(1, 5);
+            planet[resource + "Work"] = 0;
+            planet[resource + "Worth"] = 0;
+        });
     };
 
     var Planet = ploxworld.Planet;
+
+    Planet.prototype.getStored = function(resource) {
+        return planet[resource];
+    };
 
     /**
      *
@@ -253,10 +245,11 @@
 
     Planet.prototype.resetProduction = function () {
         this.freePop = this.pop | 0;
-        this.supplyNeed = this.getEaten();
-        //maybe we wanna store some supply: //XXX calculate need where we calculate need for other products?
+        //Increase need for supply if we dont have large storage: //XXX calculate need where we calculate need for other products?
         if (this.supply < this.getEaten() * ploxworld.PREFERED_MIN_STORAGE) {
             this.supplyNeed += Math.ceil(this.pop / 4);
+        } else {
+            this.supplyNeed = this.getEaten();
         }
         this.supplyWork = 0;
         this.supplyWork = 0;

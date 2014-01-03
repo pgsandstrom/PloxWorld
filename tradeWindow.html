@@ -27,18 +27,18 @@
     </div>
 
 
-    <div ng-repeat="resourceType in resourceList" class="block">
+    <div ng-repeat="resource in resourceList" class="block">
         <div class="tradeRowItem border-light">
-            {{resourceType}}
+            {{resource}}
         </div>
         <div class="tradeRowItem border-light">
-            Planet
+            {{planet.getStored(resource)}}
         </div>
         <div class="tradeRowItem border-light">
             Transfer
         </div>
         <div class="tradeRowItem border-light">
-            Ship
+            {{player.ship.cargo[resource]}}
         </div>
     </div>
 
