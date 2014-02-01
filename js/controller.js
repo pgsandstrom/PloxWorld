@@ -1,8 +1,19 @@
-angular.module('module', ['ui.bootstrap']);
-function Controller($scope, $modal, $log) {
+var myApp = angular.module('ploxworld', ['ui.bootstrap']);
+
+myApp.run(function($rootScope, $templateCache) {
+    $rootScope.$on('$viewContentLoaded', function() {
+        console.log("cleaning cache");
+        $templateCache.removeAll();
+    });
+});
+
+function Controller($scope, $modal, $log, $templateCache) {
     "use strict";
     var ploxworld = window.ploxworld = window.ploxworld || {};
 
+    $scope.clearCache = function () {
+        $templateCache.removeAll();
+    };
 
     $scope.startGame = function () {
 

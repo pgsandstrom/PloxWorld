@@ -106,7 +106,7 @@
     };
 
     var Resource = function Resource(type, amount) {
-        this.type = type;
+        this.type = type;   //TODO byt till name
         this.amount = amount;
     };
 

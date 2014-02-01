@@ -95,16 +95,20 @@
         this.attack = 2;
         this.aim = 3;
         this.position = new Position(ploxworld.POSITION_TYPE_PLANET, planet, undefined);
-        this.cargo = cargo;
+        this.cargo = cargo; //resourceName -> resource-object
         this.imageName = sprite;
 
         //this feels kind of haxxy...
         ploxworld.ships.add(this);
     };
 
-    Ship.prototype.getCargo = function (resource) {
-
-    }
+    Ship.prototype.getCargoCount = function (resourceName) {
+        if(this.cargo[resourceName] !== undefined) {
+            return this.cargo[resourceName].amount;
+        } else {
+            return 0;
+        }
+    };
 
     Ship.prototype.getImageName = function () {
         return this.imageName;
@@ -114,17 +118,17 @@
         this.owner = owner;
     };
 
-    Ship.prototype.offloadAll = function () {
-        if (this.position.positionType !== ploxworld.POSITION_TYPE_PLANET) {
-            throw new Error("offloadAll when not at planet");
-        }
-
-        var me = this;
-        _.forEach(this.cargo, function (resource) {
-            resource.addTo(me.position.planet);
-        });
-        this.cargo = {};
-    };
+//    Ship.prototype.offloadAll = function () {
+//        if (this.position.positionType !== ploxworld.POSITION_TYPE_PLANET) {
+//            throw new Error("offloadAll when not at planet");
+//        }
+//
+//        var me = this;
+//        _.forEach(this.cargo, function (resource) {
+//            resource.addTo(me.position.planet);
+//        });
+//        this.cargo = {};
+//    };
 
     Ship.prototype.tic = function () {
         if (this.position.positionType === ploxworld.POSITION_TYPE_TRAVELING) {

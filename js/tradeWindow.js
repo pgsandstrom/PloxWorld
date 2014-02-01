@@ -13,39 +13,42 @@
             return;
         }
 
+        //TODO is this in their own scope?
         var modalInstance = $modal.open({
             templateUrl: 'tradeWindow.html',
             controller: TradeWindowCtrl,
+            backdrop: 'static',
             windowClass: 'hello',
             resolve: {
-                planet: function () {
-                    return playerCurrentPlanet;
+                planetCopy: function () {
+                    return $.extend({}, playerCurrentPlanet);
                 },
-                person: function () {
+                planetReal: function () {
+                    return $.extend({}, playerCurrentPlanet);
+                },
+                personCopy: function () {
+                    return $.extend({}, $scope.player);
+                },
+                personReal: function () {
                     return $scope.player;
-                },
-                resourceList: function() {
-                    return ploxworld.RESOURCE_LIST;
                 }
             }
         });
 
         modalInstance.result.then(function (selectedItem) {
-            $log.info('2 Modal dismissed at: ' + new Date());
-//            $scope.selected = selectedItem;
+            $log.info('2 Modal dismissed with ok');
         }, function () {
-            $log.info('1 Modal dismissed at: ' + new Date());
+            $log.info('2 Modal dismissed with cancel');
         });
     };
 
-    var TradeWindowCtrl = function ($scope, $modalInstance, planet, person, resourceList) {
+    var TradeWindowCtrl = function ($scope, $modalInstance, planetCopy, planetReal, personCopy, personReal) {
 
-        $scope.planet = planet;
-        $scope.person = person;
-        $scope.resourceList = resourceList;
-//        $scope.selected = {
-//            item: $scope.items[0]
-//        };
+        $scope.planetCopy = planetCopy;
+        $scope.planetReal = planetReal;
+        $scope.personCopy = personCopy;
+        $scope.personReal = personReal;
+        $scope.resourceNameList = ploxworld.RESOURCE_LIST;
 
         $scope.ok = function () {
             $modalInstance.close();
@@ -53,6 +56,14 @@
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
+        };
+
+        $scope.buy = function(resource) {
+
+        };
+
+        $scope.sell = function(resource) {
+
         };
     };
 

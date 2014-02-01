@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="module">
+<html ng-app="ploxworld">
 <head>
     <meta charset="utf-8">
     <title>PloxWorld</title>
@@ -101,6 +101,8 @@
     <button ng-click="startGame()" class="btn-primary">new game</button>
     <button ng-click="calculateTradeMap()" class="btn-primary">test</button>
     <button ng-click="openTrade()" class="btn-primary {{isPlayerAtPlanet()?'':'hide'}}">Trade</button>
+    <button ng-click="clearCache()" class="btn-primary">Clear cache</button>
+
     <p>Current decision: {{player.decision.toString()}}</p>
     <p>Current ship order: {{player.shipOrder.toString()}}</p>
 </div>
@@ -135,8 +137,8 @@
 <script src="js/empireGenerator.js"></script>
 <script src="js/person.js"></script>
 <script src="js/personGenerator.js"></script>
+<script src="js/tradeLogic.js"></script>
 
-<script src="js/module.js"></script>
 <script src="js/controller.js"></script>
 </body>
 </html>

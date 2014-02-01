@@ -46,7 +46,9 @@
         }
         this.fromPlanet = fromPlanet;
         this.toPlanet = toPlanet;
+        //TODO: resourceType byt namn till resourceName
         this.resourceType = resourceType;
+        //TODO byt ut amount mot count
         this.amount = amount;
         this.pending = 0; //the amount of resources that should already have been sent
     };

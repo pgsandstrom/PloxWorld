@@ -102,8 +102,8 @@
 
     var Planet = ploxworld.Planet;
 
-    Planet.prototype.getStored = function(resource) {
-        return planet[resource];
+    Planet.prototype.getStored = function(resourceName) {
+        return this[resourceName];
     };
 
     /**
@@ -150,6 +150,7 @@
     };
 
     Planet.prototype.removeCredits = function (credits) {
+        //TODO kan vi ta bort denna funktionen?
         //XXX temp
         if (!$.isNumeric(credits)) {
             console.log("error credits: " + credits);

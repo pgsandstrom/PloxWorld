@@ -72,10 +72,16 @@
     var Person = ploxworld.Person;
 
     Person.prototype.addCredits = function (credits) {
+        //XXX temp
+        if (!$.isNumeric(credits)) {
+            console.log("error credits: " + credits);
+            throw new Error();
+        }
         this.credit += credits;
     };
 
     Person.prototype.removeCredits = function (credits) {
+        //TODO kan vi ta bort denn?
         //XXX temp
         if (!$.isNumeric(credits)) {
             console.log("error credits: " + credits);
@@ -215,23 +221,23 @@
 
     /**
      *
-     * @param forced If the ship was forced to offload, maybe because it cannot reach the goal
+     * @param forced If the ship was forced to offload, maybe because it cannot reach the goal (thus is paid less).
      */
     TradePerson.prototype.sellCargo = function (forced) {
         var me = this;
         var credits = 0;
 
         _.forEach(this.ship.cargo, function (resource) {
-            credits += ploxworld.getPriceReal(resource.type, me.fromPlanet);
+            credits += ploxworld.getPriceReal(resource.type, me.fromPlanet) * resource.count;
         });
 
-        if (forced) {
-            credits = ( credits / 2) | 0;
-        }
-        this.ship.position.planet.removeCredits(credits);
-        this.addCredits(credits);
+//        if (forced) {
+//            credits = ( credits / 2) | 0;
+//        }
+//        this.ship.position.planet.removeCredits(credits);
+//        this.addCredits(credits);
 
-        this.ship.offloadAll();
+//        this.ship.offloadAll();
     };
 
     /**

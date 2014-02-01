@@ -5,10 +5,10 @@
 <div class="modal-body">
 
     <div>
-        player: {{person.name}}
+        player: {{personCopy.name}}
     </div>
     <div>
-        planet: {{planet.name}}
+        planet: {{planetCopy.name}}
     </div>
 
     <div class="block">
@@ -18,8 +18,14 @@
         <div class="tradeRowItem border-light">
             Planet
         </div>
+        <div class="tradeRowButton border-light">
+            &nbsp;
+        </div>
         <div class="tradeRowItem border-light">
             Transfer
+        </div>
+        <div class="tradeRowButton border-light">
+            &nbsp;
         </div>
         <div class="tradeRowItem border-light">
             Ship
@@ -27,18 +33,24 @@
     </div>
 
 
-    <div ng-repeat="resource in resourceList" class="block">
+    <div ng-repeat="resourceName in resourceNameList" class="block">
         <div class="tradeRowItem border-light">
-            {{resource}}
+            {{resourceName}}
         </div>
         <div class="tradeRowItem border-light">
-            {{planet.getStored(resource)}}
+            {{planetCopy.getStored(resourceName)}}
+        </div>
+        <div class="tradeRowButton border-light">
+            <button ng-click="sell(resourceName)" class="btn"></button>
         </div>
         <div class="tradeRowItem border-light">
-            Transfer
+            Transfer!
+        </div>
+        <div class="tradeRowButton border-light">
+            <button ng-click="buy(resourceName)" class="btn"></button>
         </div>
         <div class="tradeRowItem border-light">
-            {{player.ship.cargo[resource]}}
+            {{personCopy.ship.getCargoCount(resourceName)}}
         </div>
     </div>
 
@@ -46,5 +58,5 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="ok()">Done</button>
-    <!--<button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
