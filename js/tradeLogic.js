@@ -8,7 +8,7 @@
      * @param person
      * @param planet
      * @param resource
-     * @param count
+     * @param amount
      * @param penaltyPercent
      */
     ploxworld.tradeLogic.transaction = function (person, planet, resource, amount, penaltyPercent) {

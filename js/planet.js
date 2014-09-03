@@ -248,7 +248,7 @@
         this.freePop = this.pop | 0;
         //Increase need for supply if we dont have large storage: //XXX calculate need where we calculate need for other products?
         if (this.supply < this.getEaten() * ploxworld.PREFERED_MIN_STORAGE) {
-            this.supplyNeed += Math.ceil(this.pop / 4);
+			this.supplyNeed = Math.ceil(this.getEaten() * 1.25);
         } else {
             this.supplyNeed = this.getEaten();
         }

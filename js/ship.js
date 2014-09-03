@@ -118,17 +118,17 @@
         this.owner = owner;
     };
 
-//    Ship.prototype.offloadAll = function () {
-//        if (this.position.positionType !== ploxworld.POSITION_TYPE_PLANET) {
-//            throw new Error("offloadAll when not at planet");
-//        }
-//
-//        var me = this;
-//        _.forEach(this.cargo, function (resource) {
-//            resource.addTo(me.position.planet);
-//        });
-//        this.cargo = {};
-//    };
+    Ship.prototype.offloadAll = function () {
+        if (this.position.positionType !== ploxworld.POSITION_TYPE_PLANET) {
+            throw new Error("offloadAll when not at planet");
+        }
+
+        var me = this;
+        _.forEach(this.cargo, function (resource) {
+            resource.addTo(me.position.planet);
+        });
+        this.cargo = {};
+    };
 
     Ship.prototype.tic = function () {
         if (this.position.positionType === ploxworld.POSITION_TYPE_TRAVELING) {

@@ -228,16 +228,16 @@
         var credits = 0;
 
         _.forEach(this.ship.cargo, function (resource) {
-            credits += ploxworld.getPriceReal(resource.type, me.fromPlanet) * resource.count;
+            credits += ploxworld.getPriceReal(resource.type, me.fromPlanet) * resource.amount;
         });
 
-//        if (forced) {
-//            credits = ( credits / 2) | 0;
-//        }
-//        this.ship.position.planet.removeCredits(credits);
-//        this.addCredits(credits);
+        if (forced) {
+            credits = ( credits / 2) | 0;
+        }
+        this.ship.position.planet.removeCredits(credits);
+        this.addCredits(credits);
 
-//        this.ship.offloadAll();
+        this.ship.offloadAll();
     };
 
     /**
