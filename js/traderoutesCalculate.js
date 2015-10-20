@@ -1,30 +1,30 @@
 (function () {
 	"use strict";
 
-	ploxworld.calculateSupplyRoutes = function () {
-		var planetSupplyList = ploxworld.planetList; // no cloning, for optimization :)
-		planetSupplyList.sort(function closest(a, b) {
+	ploxworld.calculateCommodityRoutes = function () {
+		var planetCommodityList = ploxworld.planetList; // no cloning, for optimization :)
+		planetCommodityList.sort(function closest(a, b) {
 			//XXX prefer planets that are bad at other stuff?
-			return b.supplyMultiplier - a.supplyMultiplier;
+			return b.commodityMultiplier - a.commodityMultiplier;
 		});
 
 
-		for (var i = 0; i < planetSupplyList.length; i++) {
-			var planet = planetSupplyList[i];
-//            console.log("supply multiplier: " + planet.supplyMultiplier);
-			var supplyForExport = 0;
-			var popToSupply;
-			if (planet.supplyNeed > 0) {
-				popToSupply = Math.ceil(planet.supplyNeed / planet.supplyMultiplier);
-				var supplyCreated = popToSupply * planet.supplyMultiplier;
-				supplyForExport += supplyCreated - planet.supplyNeed;
-				planet.supplyNeed = 0;
-				planet.freePop -= popToSupply;
-				planet.supplyWork += popToSupply;
+		for (var i = 0; i < planetCommodityList.length; i++) {
+			var planet = planetCommodityList[i];
+//            console.log("commodity multiplier: " + planet.commodityMultiplier);
+			var commodityForExport = 0;
+			var popToCommodity;
+			if (planet.commodityNeed > 0) {
+				popToCommodity = Math.ceil(planet.commodityNeed / planet.commodityMultiplier);
+				var commodityCreated = popToCommodity * planet.commodityMultiplier;
+				commodityForExport += commodityCreated - planet.commodityNeed;
+				planet.commodityNeed = 0;
+				planet.freePop -= popToCommodity;
+				planet.commodityWork += popToCommodity;
 			}
-			var index = planetSupplyList.length - 1;
+			var index = planetCommodityList.length - 1;
 			while (true) {
-				var planetExportTo = planetSupplyList[index];
+				var planetExportTo = planetCommodityList[index];
 				index--;
 
 				if (planet === planetExportTo) {
@@ -33,7 +33,7 @@
 					break;
 				}
 
-				if (planetExportTo.supplyNeed === 0) {
+				if (planetExportTo.commodityNeed === 0) {
 					continue;
 				}
 
@@ -49,23 +49,23 @@
 				}
 
 				//calculate the data:
-				var popToSupplyNeeded = Math.ceil((planetExportTo.supplyNeed - supplyForExport) / planet.supplyMultiplier);
-				popToSupply = Math.min(planet.freePop, popToSupplyNeeded);
-				supplyForExport += popToSupply * planet.supplyMultiplier;
-				var actualExport = Math.min(supplyForExport, planetExportTo.supplyNeed);
+				var popToCommodityNeeded = Math.ceil((planetExportTo.commodityNeed - commodityForExport) / planet.commodityMultiplier);
+				popToCommodity = Math.min(planet.freePop, popToCommodityNeeded);
+				commodityForExport += popToCommodity * planet.commodityMultiplier;
+				var actualExport = Math.min(commodityForExport, planetExportTo.commodityNeed);
 
 				//perform the changes:
-				planetExportTo.supplyNeed -= actualExport;
-				supplyForExport -= actualExport;
-				planet.freePop -= popToSupply;
-				planet.supplyWork += popToSupply;
-				ploxworld.makeTradeRoute(planet, planetExportTo, ploxworld.RESOURCE_SUPPLY, actualExport);
+				planetExportTo.commodityNeed -= actualExport;
+				commodityForExport -= actualExport;
+				planet.freePop -= popToCommodity;
+				planet.commodityWork += popToCommodity;
+				ploxworld.makeTradeRoute(planet, planetExportTo, ploxworld.RESOURCE_COMMODITY, actualExport);
 
 				//XXX remove planetExportTo if it requires nothing more. If we remove, then we must clone first!
 				// One weakness in that we remove from the array and does not iterate everything: if planet x is only
 				// allied to planet y and planet y imports, then planet y won't export to planet x
 
-				if (planet.freePop === 0 && supplyForExport === 0) {
+				if (planet.freePop === 0 && commodityForExport === 0) {
 					break;
 				}
 			}

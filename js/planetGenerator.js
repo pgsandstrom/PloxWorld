@@ -37,8 +37,8 @@
 		ploxworld.planets = {};
 		ploxworld.planetList = [];
 
-		//all planets ordered after supply need:
-		ploxworld.supplyNeedList = [];
+		//all planets ordered after commodity need:
+		ploxworld.commodityNeedList = [];
 		ploxworld.ships = new Set();
 
 		var planet;

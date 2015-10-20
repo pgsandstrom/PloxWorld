@@ -52,7 +52,7 @@
 
 		ploxworld.resetTraderoutes();
 
-		ploxworld.calculateSupplyRoutes();
+		ploxworld.calculateCommodityRoutes();
 		ploxworld.calculateProductionScienceRoutes();
 
 		ploxworld.calculatePrices();
@@ -89,7 +89,7 @@
 
 		//TODO vi kanske ska ha egna "resource"-objekt istället?
 		ploxworld.RESOURCE_LIST.forEach(function (resource) {
-			if (resource === "supply") {
+			if (resource === "commodity") {
 				planet[resource] = planet.pop * ploxworld.PREFERED_MIN_STORAGE;
 			} else {
 				planet[resource] = 50 + Math.random() * 50 | 0;
@@ -136,7 +136,7 @@
 		return pathMap[keyName][toPlanet.name];
 	};
 
-	Planet.prototype.getEaten = function () {
+	Planet.prototype.getCommodityUsed = function () {
 		return this.pop | 0;
 	};
 
@@ -184,25 +184,21 @@
 		this.science += newScience;
 		this.crystal -= newScience;
 
-		//eating:
-		this.supply += this.supplyWork * this.supplyMultiplier;
-		var eaten = this.getEaten();
-		if (eaten < this.supply) {
-			//XXX make this more dynamic or something:
-			this.supply = this.supply - eaten;
-			if (this.supply > 0) {
-				if (this.pop < this.maxPop) {
-					this.pop = this.pop * POP_INCREASE;
-					if (this.pop > this.maxPop) {
-						this.pop = this.maxPop;
-					}
-				}
-			}
+		//commodity:
+		this.commodity += this.commodityWork * this.commodityMultiplier;
+		var commodityUsed = this.getCommodityUsed();
+		if (commodityUsed < this.commodity) {
+			this.credit += commodityUsed*100;
 		} else {
-			//starvation!
-			console.log("starvation at " + this.name);
-			//TODO just reorganize if not blockaded
-			this.pop = Math.max(this.pop * POP_DECREASE_AT_STARVATION, 1);
+			this.credit += commodityUsed*30;
+		}
+
+		//population:
+		if (this.pop < this.maxPop) {
+			this.pop = this.pop * POP_INCREASE;
+			if (this.pop > this.maxPop) {
+				this.pop = this.maxPop;
+			}
 		}
 
 	};
@@ -246,20 +242,19 @@
 
 	Planet.prototype.resetProduction = function () {
 		this.freePop = this.pop | 0;
-		//Increase need for supply if we dont have large storage: //XXX calculate need where we calculate need for other products?
-		if (this.supply < this.getEaten() * ploxworld.PREFERED_MIN_STORAGE) {
-			this.supplyNeed = Math.ceil(this.getEaten() * 1.25);
+		//Increase need for commodity if we dont have large storage: //XXX calculate need where we calculate need for other products?
+		if (this.commodity < this.getCommodityUsed() * ploxworld.PREFERED_MIN_STORAGE) {
+			this.commodityNeed = Math.ceil(this.getCommodityUsed() * 1.25);
 		} else {
-			this.supplyNeed = this.getEaten();
+			this.commodityNeed = this.getCommodityUsed();
 		}
-		this.supplyWork = 0;
-		this.supplyWork = 0;
+		this.commodityWork = 0;
 		this.productionWork = 0;
 		this.materialWork = 0;
 		this.scienceWork = 0;
 		this.crystalWork = 0;
 
-		this.supplyWorth = 0;
+		this.commodityWorth = 0;
 		this.productionWorth = 0;
 		this.materialWorth = 0;
 		this.scienceWorth = 0;

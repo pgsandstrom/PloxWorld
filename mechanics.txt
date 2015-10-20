@@ -2,27 +2,14 @@ Balanseringen går till såhär:
 
 sortera planeterna efter effektivitet i produktionen.
 
-Gå igenom andra planeter efter importance. 
-Senare förbättring: först egna nationen?
-
-Senare förbättring: Ska en planet höja behovet om saker går förlorade till pirater?
-
-Senare förbättring: blockerade planeter ska man inte skicka till alls...
-
 --------------
 
 stuff:
 
 money
-supply
+commodity
 production <- material
 science <- crystal
-
-luxury goods (depend on supply)
-artifacts    (depend on prod)
-weapons	     (depend on prod)
-drugs        (depend on research)
-
 
 --------------
 
@@ -32,11 +19,11 @@ planets has:
 	pop
 	(freePop)
 	
-	supply
-	supplyMult
-	supplyProd
-	supplyNeed
-	supplyNeedImportance
+	commodity
+	commodityMult
+	commodityProd
+	commodityNeed
+	commodityNeedImportance
 	
 	productionMult
 	productionProd
@@ -62,14 +49,14 @@ planets has:
 ---------------
 
 population
-	- consumes supply
+	- consumes commodity
 	- amplifies everything
 
 	
 ----------------
 ---production---
 ----------------
-supply
+commodity
 	- enables population
 	- requires nothing?
 	
@@ -79,6 +66,6 @@ supply
 ---calculating needs---
 -----------------------
 
-turns supply will last:	t
+turns commodity will last:	t
 importance:	 			i = set by emperor
 need:					n = 

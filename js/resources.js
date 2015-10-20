@@ -3,16 +3,16 @@
 	var ploxworld = window.ploxworld = window.ploxworld || {};
 
 	//resources:
-	ploxworld.RESOURCE_SUPPLY = "supply";
+	ploxworld.RESOURCE_COMMODITY = "commodity";
 	ploxworld.RESOURCE_PRODUCTION = "production";
 	ploxworld.RESOURCE_MATERIAL = "material";
 	ploxworld.RESOURCE_SCIENCE = "science";
 	ploxworld.RESOURCE_CRYSTAL = "crystal";
 
-	ploxworld.RESOURCE_LIST = [ploxworld.RESOURCE_SUPPLY, ploxworld.RESOURCE_PRODUCTION, ploxworld.RESOURCE_MATERIAL, ploxworld.RESOURCE_SCIENCE, ploxworld.RESOURCE_CRYSTAL];
+	ploxworld.RESOURCE_LIST = [ploxworld.RESOURCE_COMMODITY, ploxworld.RESOURCE_PRODUCTION, ploxworld.RESOURCE_MATERIAL, ploxworld.RESOURCE_SCIENCE, ploxworld.RESOURCE_CRYSTAL];
 
 	ploxworld.BASE_PRICE = {};
-	ploxworld.BASE_PRICE[ploxworld.RESOURCE_SUPPLY] = 100;
+	ploxworld.BASE_PRICE[ploxworld.RESOURCE_COMMODITY] = 100;
 	ploxworld.BASE_PRICE[ploxworld.RESOURCE_MATERIAL] = 150;
 	ploxworld.BASE_PRICE[ploxworld.RESOURCE_CRYSTAL] = 150;
 	ploxworld.BASE_PRICE[ploxworld.RESOURCE_PRODUCTION] = 350;
@@ -47,8 +47,8 @@
 		console.log("calculatePrices");
 		//XXX Currently only calculates universal averages, could maybe be smarter and go for own+allies prices or something
 
-		var supplyWorker = 0;
-		var supplyProduced = 0;
+		var commodityWorker = 0;
+		var commodityProduced = 0;
 
 		var materialWorker = 0;
 		var materialProduced = 0;
@@ -62,10 +62,10 @@
 		var scienceWorker = 0;
 		var scienceProduced = 0;
 		_.forEach(ploxworld.planetList, function (planet) {
-			supplyWorker += planet.supplyWork;
-			supplyProduced += planet.supplyWork * planet.supplyMultiplier;
-//            if (planet.supplyWork > 0) {
-//                console.log("omg supply worker: " + planet.supplyMultiplier);
+			commodityWorker += planet.commodityWork;
+			commodityProduced += planet.commodityWork * planet.commodityMultiplier;
+//            if (planet.commodityWork > 0) {
+//                console.log("omg commodity worker: " + planet.commodityMultiplier);
 //            }
 
 			materialWorker += planet.materialWork;
@@ -88,13 +88,13 @@
 		});
 
 		var workerPrices = ploxworld.workerPrices = {};
-		workerPrices[ploxworld.RESOURCE_SUPPLY] = (supplyProduced / supplyWorker) * ploxworld.BASE_PRICE[ploxworld.RESOURCE_SUPPLY];
+		workerPrices[ploxworld.RESOURCE_COMMODITY] = (commodityProduced / commodityWorker) * ploxworld.BASE_PRICE[ploxworld.RESOURCE_COMMODITY];
 		workerPrices[ploxworld.RESOURCE_MATERIAL] = (materialProduced / materialWorker) * ploxworld.BASE_PRICE[ploxworld.RESOURCE_MATERIAL];
 		workerPrices[ploxworld.RESOURCE_PRODUCTION] = (productionProduced / productionWorker) * ploxworld.BASE_PRICE[ploxworld.RESOURCE_PRODUCTION];
 		workerPrices[ploxworld.RESOURCE_CRYSTAL] = (crystalProduced / crystalWorker) * ploxworld.BASE_PRICE[ploxworld.RESOURCE_CRYSTAL];
 		workerPrices[ploxworld.RESOURCE_SCIENCE] = (scienceProduced / scienceWorker) * ploxworld.BASE_PRICE[ploxworld.RESOURCE_SCIENCE];
 
-//        console.log("final supply worker price: " + workerPrices[ploxworld.RESOURCE_SUPPLY]);
+//        console.log("final commodity worker price: " + workerPrices[ploxworld.RESOURCE_COMMODITY]);
 //        console.log("final material worker price: " + workerPrices[ploxworld.RESOURCE_MATERIAL]);
 //        console.log("final production worker price: " + workerPrices[ploxworld.RESOURCE_PRODUCTION]);
 //        console.log("final crystal worker price: " + workerPrices[ploxworld.RESOURCE_CRYSTAL]);
@@ -111,7 +111,7 @@
 	};
 
 	Resource.prototype.addTo = function (planet) {
-//        console.log("offloading supply to " + planet.name);
+//        console.log("offloading commodity to " + planet.name);
 		planet[this.type] += this.amount;
 		this.amount = 0;
 	};
