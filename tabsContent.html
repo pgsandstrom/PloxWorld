@@ -1,113 +1,114 @@
 <div class="tab-content">
 
-    <div id="overview-planets" class="dialog tab-pane">
+	<div id="overview-planets" class="dialog tab-pane">
 
-        <div class="float-left item-list">
-            All planets:
-            <div ng-repeat="object in planets">
-                <a ng-click="showPlanet(object)" href="javascript:void(0)"><span
-                        ng-style="{'color': (object.getColor())}">{{object.name}}</span></a>
-            </div>
-        </div>
+		<div class="float-left item-list">
+			All planets:
+			<div ng-repeat="object in planets">
+				<a ng-click="showPlanet(object)" href="javascript:void(0)"><span
+						ng-style="{'color': (object.getColor())}">{{object.name}}</span></a>
+			</div>
+		</div>
 
-        <div id="selected-planet" ng-show="selectedPlanet">
+		<div id="selected-planet" ng-show="selectedPlanet">
 
-            <div class="dialog-content">
-                <h5>{{selectedPlanet.name}}</h5>
-                <h6><a ng-click="showEmpire(selectedPlanet.empire)" href="javascript:void(0)"
-                       ng-style="{'color': (selectedPlanet.getColor())}">
-                    Part of {{selectedPlanet.empire.name}}</a></h6>
+			<div class="dialog-content">
+				<h5>{{selectedPlanet.name}}</h5>
+				<h6><a ng-click="showEmpire(selectedPlanet.empire)" href="javascript:void(0)"
+					   ng-style="{'color': (selectedPlanet.getColor())}">
+					Part of {{selectedPlanet.empire.name}}</a></h6>
 
-                <h6><a ng-click="showPerson(selectedPlanet.owner)" href="javascript:void(0)">
-                    Leader: {{selectedPlanet.owner.name}}</a></h6>
+				<h6><a ng-click="showPerson(selectedPlanet.owner)" href="javascript:void(0)">
+					Leader: {{selectedPlanet.owner.name}}</a></h6>
 
-                <p>Population: {{(selectedPlanet.pop)}} ({{selectedPlanet.maxPop}})</p>
+				<p>Population: {{(selectedPlanet.pop)}} ({{selectedPlanet.maxPop}})</p>
 
-                <p>Credits: {{selectedPlanet.credit}}</p>
+				<p>Credits: {{selectedPlanet.credit}}</p>
 
-                <p>Supply: {{selectedPlanet.supply}}
-                    ({{selectedPlanet.supplyWork}}*{{selectedPlanet.supplyMultiplier}}). ${{selectedPlanet.getPrice("supply")}}</p>
+				<p>Supply: {{selectedPlanet.supply}}
+				   ({{selectedPlanet.supplyWork}}*{{selectedPlanet.supplyMultiplier}}). ${{selectedPlanet.getPrice("supply")}}</p>
 
-                <p>Production: {{selectedPlanet.production}}
-                    ({{selectedPlanet.productionWork}}*{{selectedPlanet.productionMultiplier}}). ${{selectedPlanet.getPrice("production")}}</p>
+				<p>Production: {{selectedPlanet.production}}
+				   ({{selectedPlanet.productionWork}}*{{selectedPlanet.productionMultiplier}}). ${{selectedPlanet.getPrice("production")}}</p>
 
-                <p>Material: {{selectedPlanet.material}}
-                    ({{selectedPlanet.materialWork}}*{{selectedPlanet.materialMultiplier}}). ${{selectedPlanet.getPrice("material")}}</p>
+				<p>Material: {{selectedPlanet.material}}
+				   ({{selectedPlanet.materialWork}}*{{selectedPlanet.materialMultiplier}}). ${{selectedPlanet.getPrice("material")}}</p>
 
-                <p>Science: {{selectedPlanet.science}}
-                    ({{selectedPlanet.scienceWork}}*{{selectedPlanet.scienceMultiplier}}). ${{selectedPlanet.getPrice("science")}}</p>
+				<p>Science: {{selectedPlanet.science}}
+				   ({{selectedPlanet.scienceWork}}*{{selectedPlanet.scienceMultiplier}}). ${{selectedPlanet.getPrice("science")}}</p>
 
-                <p><i class="crystal"></i>Crystals: {{selectedPlanet.crystal}}
-                    ({{selectedPlanet.crystalWork}}*{{selectedPlanet.crystalMultiplier}}). ${{selectedPlanet.getPrice("crystal")}}</p>
+				<p><i class="crystal"></i>Crystals: {{selectedPlanet.crystal}}
+										  ({{selectedPlanet.crystalWork}}*{{selectedPlanet.crystalMultiplier}}). ${{selectedPlanet.getPrice("crystal")}}
+				</p>
 
-                <p>EXPORT:</p>
+				<p>EXPORT:</p>
 
-                <div ng-repeat="object in selectedPlanet.export">
-                    {{object.amount}} {{object.resourceType}} <i class="icon-arrow-right"></i>
-                    <a ng-click="showPlanet(object.toPlanet)" href="javascript:void(0)"
-                       ng-style="{'color': (object.toPlanet.getColor())}">
-                        {{object.toPlanet.name}}</a>
-                </div>
+				<div ng-repeat="object in selectedPlanet.export">
+					{{object.amount}} {{object.resourceType}} <i class="icon-arrow-right"></i>
+					<a ng-click="showPlanet(object.toPlanet)" href="javascript:void(0)"
+					   ng-style="{'color': (object.toPlanet.getColor())}">
+						{{object.toPlanet.name}}</a>
+				</div>
 
-                <p>IMPORT:</p>
+				<p>IMPORT:</p>
 
-                <div ng-repeat="object in selectedPlanet.import">
-                    import {{object.amount}} {{object.resourceType}} <i class="icon-arrow-left"></i>
-                    <a ng-click="showPlanet(object.fromPlanet)" href="javascript:void(0)"
-                       ng-style="{'color': (object.fromPlanet.getColor())}">
-                        {{object.fromPlanet.name}}</a>
-                </div>
-            </div>
+				<div ng-repeat="object in selectedPlanet.import">
+					import {{object.amount}} {{object.resourceType}} <i class="icon-arrow-left"></i>
+					<a ng-click="showPlanet(object.fromPlanet)" href="javascript:void(0)"
+					   ng-style="{'color': (object.fromPlanet.getColor())}">
+						{{object.fromPlanet.name}}</a>
+				</div>
+			</div>
 
-        </div>
+		</div>
 
-        <button class="close" ng-click="hideTabs()">&times;</button>
-    </div>
-    <div id="overview-empires" class="dialog tab-pane">
+		<button class="close" ng-click="hideTabs()">&times;</button>
+	</div>
+	<div id="overview-empires" class="dialog tab-pane">
 
-        <div class="float-left item-list">
-            All empires:
-            <div ng-repeat="object in empires">
-                <a ng-click="showEmpire(object)" href="javascript:void(0)"><span
-                        ng-style="{'color': (object.getColor())}">{{object.name}}</span></a>
-            </div>
-        </div>
+		<div class="float-left item-list">
+			All empires:
+			<div ng-repeat="object in empires">
+				<a ng-click="showEmpire(object)" href="javascript:void(0)"><span
+						ng-style="{'color': (object.getColor())}">{{object.name}}</span></a>
+			</div>
+		</div>
 
-        <div id="selected-empire" ng-show="selectedEmpire">
-            <div class="dialog-content">
-                <h5>{{selectedEmpire.name}}</h5>
-                <h6><a ng-click="showPerson(selectedEmpire.owner)" href="javascript:void(0)">
-                    Leader: {{selectedEmpire.owner.name}}</a></h6>
-            </div>
-        </div>
-        <button class="close" ng-click="hideTabs()">&times;</button>
-    </div>
+		<div id="selected-empire" ng-show="selectedEmpire">
+			<div class="dialog-content">
+				<h5>{{selectedEmpire.name}}</h5>
+				<h6><a ng-click="showPerson(selectedEmpire.owner)" href="javascript:void(0)">
+					Leader: {{selectedEmpire.owner.name}}</a></h6>
+			</div>
+		</div>
+		<button class="close" ng-click="hideTabs()">&times;</button>
+	</div>
 
-    <div id="overview-persons" class="dialog tab-pane">
+	<div id="overview-persons" class="dialog tab-pane">
 
-        <div class="float-left item-list">
-            All persons:
-            <div ng-repeat="object in persons">
-                <a ng-click="showPerson(object)" href="javascript:void(0)">
-                    <span>{{object.name}}</span></a>
-            </div>
-        </div>
+		<div class="float-left item-list">
+			All persons:
+			<div ng-repeat="object in persons">
+				<a ng-click="showPerson(object)" href="javascript:void(0)">
+					<span>{{object.name}}</span></a>
+			</div>
+		</div>
 
-        <div id="selected-person" ng-show="selectedPerson">
+		<div id="selected-person" ng-show="selectedPerson">
 
-            <div class="dialog-content">
-                <h5>{{selectedPerson.name}}</h5>
-                <h4 ng-show="selectedPerson.empire"><a ng-click="showEmpire(selectedPerson.empire)"
-                                                       href="javascript:void(0)">
-                    Leader of {{selectedPerson.empire.name}}</a></h4>
-                <h4 ng-show="selectedPerson.planet"><a ng-click="showPlanet(selectedPerson.planet)"
-                                                       href="javascript:void(0)">
-                    Owner of {{selectedPerson.planet.name}}</a></h4>
-            </div>
-        </div>
-        <button class="close" ng-click="hideTabs()">&times;</button>
-    </div>
-    <div id="overview-hide" class="tab-pane">
-        <!--hax to hide tabs-->
-    </div>
+			<div class="dialog-content">
+				<h5>{{selectedPerson.name}}</h5>
+				<h4 ng-show="selectedPerson.empire"><a ng-click="showEmpire(selectedPerson.empire)"
+													   href="javascript:void(0)">
+					Leader of {{selectedPerson.empire.name}}</a></h4>
+				<h4 ng-show="selectedPerson.planet"><a ng-click="showPlanet(selectedPerson.planet)"
+													   href="javascript:void(0)">
+					Owner of {{selectedPerson.planet.name}}</a></h4>
+			</div>
+		</div>
+		<button class="close" ng-click="hideTabs()">&times;</button>
+	</div>
+	<div id="overview-hide" class="tab-pane">
+		<!--hax to hide tabs-->
+	</div>
 </div>

@@ -1,112 +1,112 @@
 <!DOCTYPE html>
 <html ng-app="ploxworld">
 <head>
-    <meta charset="utf-8">
-    <title>PloxWorld</title>
-    <link rel="stylesheet" type="text/css" href="css/common.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/tradeWindow.css">
-    <link rel="stylesheet" type="text/css" href="css/animation.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<meta charset="utf-8">
+	<title>PloxWorld</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/tradeWindow.css">
+	<link rel="stylesheet" type="text/css" href="css/animation.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body ng-controller="Controller">
 
 <div id="title" class="clear">
-    <!--{{ 'World' | greet }}-->
+	<!--{{ 'World' | greet }}-->
 </div>
 
 <div id="menu">
-    menus lol
+	menus lol
 </div>
 
 <div class="float-left">
 
-    <ul id="navbar" class="nav nav-pills">
-        <li id="tab-overview-persons"><a id="tab-overview-persons-link" href="#overview-persons" data-toggle="tab">1. Persons</a></li>
-        <li id="tab-overview-planets"><a href="#overview-planets" data-toggle="tab">2. Planets</a></li>
-        <li id="tab-overview-empires"><a href="#overview-empires" data-toggle="tab">3. Empires</a></li>
-        <li id="tab-overview-hide" class="hide"><a href="#overview-hide" data-toggle="tab"></a></li>
-        <!--hax to hide tabs-->
-    </ul>
+	<ul id="navbar" class="nav nav-pills">
+		<li id="tab-overview-persons"><a id="tab-overview-persons-link" href="#overview-persons" data-toggle="tab">1. Persons</a></li>
+		<li id="tab-overview-planets"><a href="#overview-planets" data-toggle="tab">2. Planets</a></li>
+		<li id="tab-overview-empires"><a href="#overview-empires" data-toggle="tab">3. Empires</a></li>
+		<li id="tab-overview-hide" class="hide"><a href="#overview-hide" data-toggle="tab"></a></li>
+		<!--hax to hide tabs-->
+	</ul>
 
-    <div id="map-container">
-        <div id="map">
-            <div class="absolute">
-                <canvas width="960" height="600" id="canvas-trade"/>
-            </div>
-            <div class="absolute">
-                <canvas width="960" height="600" id="canvas-travel"/>
-            </div>
+	<div id="map-container">
+		<div id="map">
+			<div class="absolute">
+				<canvas width="960" height="600" id="canvas-trade"/>
+			</div>
+			<div class="absolute">
+				<canvas width="960" height="600" id="canvas-travel"/>
+			</div>
 
-            <!--planets-->
-            <!-- -15 comes from half the planet size, so the center of the planet image always is the planet position -->
-            <div ng-repeat="object in planets" class="absolute"
-                 ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
-                <a ng-click="showPlanetDropdown(object)" ng-mouseover="hoverPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
-                <span ng-style="{'color': (object.getColor())}">{{object.name}}</span>
-            </div>
+			<!--planets-->
+			<!-- -15 comes from half the planet size, so the center of the planet image always is the planet position -->
+			<div ng-repeat="object in planets" class="absolute"
+				 ng-style="{'top': (object.y-15)+'px','left': (object.x-15)+'px'}">
+				<a ng-click="showPlanetDropdown(object)" ng-mouseover="hoverPlanet(object)" href="javascript:void(0)"><img src="img/planet.png"/></a>
+				<span ng-style="{'color': (object.getColor())}">{{object.name}}</span>
+			</div>
 
-            <!--ships-->
-            <div ng-repeat="object in ships" class="absolute ship"
-                 ng-style="{'top': (object.position.y-25)+'px','left': (object.position.x-25)+'px'}">
-                <div class="ship-image-container">
-                    <img ng-src="img/{{object.getImageName()}}.png"/>
-                </div>
-            </div>
+			<!--ships-->
+			<div ng-repeat="object in ships" class="absolute ship"
+				 ng-style="{'top': (object.position.y-25)+'px','left': (object.position.x-25)+'px'}">
+				<div class="ship-image-container">
+					<img ng-src="img/{{object.getImageName()}}.png"/>
+				</div>
+			</div>
 
-            <!-- planet dropdown -->
-            <div class="dropdown" id="menu1" ng-style="{'top': (selectedPlanet.y-20)+'px','left': (selectedPlanet.x-20)+'px'}" >
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1" id="foo"></a>
-                <ul id="planet-dropdown-menu" class="dropdown-menu">
-                    <li><a ng-click="showPlanet()" href="javascript:void(0)">1. Inspect</a></li>
-                    <li><a ng-click="travelTo(selectedPlanet)" href="javascript:void(0)">2. Travel to</a></li>
-                    <li><a ng-click="trade(selectedPlanet)" href="javascript:void(0)">3. Trade</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">cuddle</a></li>
-                </ul>
-            </div>
-        </div>
+			<!-- planet dropdown -->
+			<div class="dropdown" id="menu1" ng-style="{'top': (selectedPlanet.y-20)+'px','left': (selectedPlanet.x-20)+'px'}">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#menu1" id="foo"></a>
+				<ul id="planet-dropdown-menu" class="dropdown-menu">
+					<li><a ng-click="showPlanet()" href="javascript:void(0)">1. Inspect</a></li>
+					<li><a ng-click="travelTo(selectedPlanet)" href="javascript:void(0)">2. Travel to</a></li>
+					<li><a ng-click="trade(selectedPlanet)" href="javascript:void(0)">3. Trade</a></li>
+					<li class="divider"></li>
+					<li><a href="#">cuddle</a></li>
+				</ul>
+			</div>
+		</div>
 
-        <div ng-include src="'tabsContent.html'"></div>
-    </div>
+		<div ng-include src="'tabsContent.html'"></div>
+	</div>
 </div>
 
 <div id="info">
-    <ul class="nav nav-tabs">
-        <li id="tab-galaxy"><a href="#tab1" data-toggle="tab">Galaxy</a></li>
-        <li id="tab-empires" class="active"><a href="#tab2" data-toggle="tab">Empires</a></li>
-        <li id="tab-whaeva"><a href="#">whaeva</a></li>
-    </ul>
+	<ul class="nav nav-tabs">
+		<li id="tab-galaxy"><a href="#tab1" data-toggle="tab">Galaxy</a></li>
+		<li id="tab-empires" class="active"><a href="#tab2" data-toggle="tab">Empires</a></li>
+		<li id="tab-whaeva"><a href="#">whaeva</a></li>
+	</ul>
 
-    <div class="tab-content">
-        <div id="tab1" class="tab-pane">
-            <p> Stardate: {{4000+tics/10}}</p>
+	<div class="tab-content">
+		<div id="tab1" class="tab-pane">
+			<p> Stardate: {{4000+tics/10}}</p>
 
-            <p> Total population: {{totPop}}</p>
-        </div>
+			<p> Total population: {{totPop}}</p>
+		</div>
 
-        <div id="tab2" class="tab-pane active">
+		<div id="tab2" class="tab-pane active">
 
-            <h5>Empire relations</h5>
+			<h5>Empire relations</h5>
 
-            <div id="empire-relations"></div>
-            <!-- filled with jquery currently... -->
+			<div id="empire-relations"></div>
+			<!-- filled with jquery currently... -->
 
-        </div>
-    </div>
+		</div>
+	</div>
 </div>
 
 <div id="actions">
-    <button ng-click="tic()" class="btn-primary">tic</button>
-    <button ng-click="startGame()" class="btn-primary">new game</button>
-    <button ng-click="calculateTradeMap()" class="btn-primary">test</button>
-    <button ng-click="openTrade()" class="btn-primary {{isPlayerAtPlanet()?'':'hide'}}">Trade</button>
-    <button ng-click="clearCache()" class="btn-primary">Clear cache</button>
+	<button ng-click="tic()" class="btn-primary">tic</button>
+	<button ng-click="startGame()" class="btn-primary">new game</button>
+	<button ng-click="calculateTradeMap()" class="btn-primary">test</button>
+	<button ng-click="openTrade()" class="btn-primary {{isPlayerAtPlanet()?'':'hide'}}">Trade</button>
+	<button ng-click="clearCache()" class="btn-primary">Clear cache</button>
 
-    <p>Current decision: {{player.decision.toString()}}</p>
-    <p>Current ship order: {{player.shipOrder.toString()}}</p>
+	<p>Current decision: {{player.decision.toString()}}</p>
+
+	<p>Current ship order: {{player.shipOrder.toString()}}</p>
 </div>
-
 
 
 <!--XXX use minimilized angular someday in the FUTURE-->

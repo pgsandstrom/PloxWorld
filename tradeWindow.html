@@ -1,62 +1,62 @@
 <!-- Inspired from http://angular-ui.github.io/bootstrap/ -->
 <div class="modal-header">
-    <h3>Trade screen</h3>
+	<h3>Trade screen</h3>
 </div>
 <div class="modal-body">
 
-    <div>
-        player: {{personCopy.name}}
-    </div>
-    <div>
-        planet: {{planetCopy.name}}
-    </div>
+	<div>
+		player: {{personCopy.name}}
+	</div>
+	<div>
+		planet: {{planetCopy.name}}
+	</div>
 
-    <div class="block">
-        <div class="tradeRowItem border-light">
-            &nbsp;
-        </div>
-        <div class="tradeRowItem border-light">
-            Planet
-        </div>
-        <div class="tradeRowButton border-light">
-            &nbsp;
-        </div>
-        <div class="tradeRowItem border-light">
-            Transfer
-        </div>
-        <div class="tradeRowButton border-light">
-            &nbsp;
-        </div>
-        <div class="tradeRowItem border-light">
-            Ship
-        </div>
-    </div>
+	<div class="block">
+		<div class="tradeRowItem border-light">
+			&nbsp;
+		</div>
+		<div class="tradeRowItem border-light">
+			Planet
+		</div>
+		<div class="tradeRowButton border-light">
+			&nbsp;
+		</div>
+		<div class="tradeRowItem border-light">
+			Transfer
+		</div>
+		<div class="tradeRowButton border-light">
+			&nbsp;
+		</div>
+		<div class="tradeRowItem border-light">
+			Ship
+		</div>
+	</div>
 
 
-    <div ng-repeat="resourceName in resourceNameList" class="block">
-        <div class="tradeRowItem border-light">
-            {{resourceName}}
-        </div>
-        <div class="tradeRowItem border-light">
-            {{planetCopy.getStored(resourceName)}}
-        </div>
-        <div class="tradeRowButton border-light">
-            <button ng-click="sell(resourceName)" class="btn"></button>
-        </div>
-        <div class="tradeRowItem border-light">
-            Transfer!
-        </div>
-        <div class="tradeRowButton border-light">
-            <button ng-click="buy(resourceName)" class="btn"></button>
-        </div>
-        <div class="tradeRowItem border-light">
-            {{personCopy.ship.getCargoCount(resourceName)}}
-        </div>
-    </div>
+	<div ng-repeat="resourceName in resourceNameList" class="block">
+		<div class="tradeRowItem border-light">
+			{{resourceName}}
+		</div>
+		<div class="tradeRowItem border-light">
+			{{planetCopy.getStored(resourceName)}}
+		</div>
+		<div class="tradeRowButton border-light">
+			<button ng-click="sell(resourceName)" class="btn"></button>
+		</div>
+		<div class="tradeRowItem border-light">
+			Transfer!
+		</div>
+		<div class="tradeRowButton border-light">
+			<button ng-click="buy(resourceName)" class="btn"></button>
+		</div>
+		<div class="tradeRowItem border-light">
+			{{personCopy.ship.getCargoCount(resourceName)}}
+		</div>
+	</div>
 
 
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">Done</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	<button class="btn btn-primary" ng-click="ok()">Done</button>
+	<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
